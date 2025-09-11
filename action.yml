@@ -4,7 +4,9 @@ author: Timothy Willard
 
 inputs:
   config:
-    description: Either a file path or a YAML string containing the configuration for the issues to create.
+    description:
+      Either a file path or a YAML string containing the configuration for the
+      issues to create.
     required: true
 
 outputs:
