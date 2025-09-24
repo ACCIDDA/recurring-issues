@@ -8,6 +8,10 @@ inputs:
       Either a file path or a YAML string containing the configuration for the
       issues to create.
     required: true
+  timezone:
+    description: The timezone to use for scheduling (i.e. 'UTC').
+    required: false
+    default: UTC
 
 outputs:
   issues:

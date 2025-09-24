@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import { parseConfig } from './parse.js'
 
 /**
  * The main function for the action.
@@ -7,15 +8,12 @@ import * as core from '@actions/core'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    // Get inputs defined in action metadata file
+    const config: string = core.getInput('config')
+    const timezone: string = core.getInput('timezone')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
-
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await new Promise((resolve) => setTimeout(resolve, Number(ms)))
-    core.debug(new Date().toTimeString())
+    // Parse the configuration
+    const parsed = parseConfig(config)
 
     // Set outputs for other workflow steps to use
     core.setOutput('time', new Date().toTimeString())
