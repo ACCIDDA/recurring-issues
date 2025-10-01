@@ -1,22 +1,26 @@
-name: Recurring Issues
-description: Create recurring issues on a schedule.
-author: Timothy Willard
+name: 'Recurring Issues'
+description: 'Create recurring issues on a schedule.'
+author: 'Timothy Willard'
 
 inputs:
+  token:
+    description: 'The GitHub token to use to create issues.'
+    required: true
+    default: '${{ github.token }}'
   config:
-    description:
-      Either a file path or a YAML string containing the configuration for the
+    description: >
+      Either a file path or a YAML string containing  the configuration for the
       issues to create.
     required: true
   timezone:
-    description: The timezone to use for scheduling (i.e. 'UTC').
+    description: "The timezone to use for scheduling (i.e. 'UTC')."
     required: false
-    default: UTC
+    default: 'UTC'
 
 outputs:
   issues:
-    description: A comma separated list of the issues created by this action.
+    description: 'A comma separated list of the issues created by this action.'
 
 runs:
-  using: node24
-  main: dist/index.js
+  using: 'node24'
+  main: 'dist/index.js'
