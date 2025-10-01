@@ -2,7 +2,7 @@ import { readFileSync } from 'fs'
 import { load } from 'js-yaml'
 import * as z from 'zod'
 
-const IssueSchema = z.object({
+export const IssueSchema = z.object({
   title: z.string(),
   body: z.string().optional(),
   labels: z.array(z.string()).optional(),
@@ -15,7 +15,7 @@ const IssueSchema = z.object({
     .default(() => new Date())
 })
 
-const ConfigSchema = z.array(IssueSchema)
+export const ConfigSchema = z.array(IssueSchema)
 
 /**
  * Parse a configuration string or file path.

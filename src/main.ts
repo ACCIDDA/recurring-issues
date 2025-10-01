@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import { formatDateString } from './format.js'
 import { parseConfig } from './parse.js'
 import { calculateNextDate } from './rules.js'
+import { createIssue } from './github.js'
 
 /**
  * The main function for the action.
@@ -27,7 +27,8 @@ export async function run(): Promise<void> {
     const octokit = github.getOctokit(token)
 
     // Loop through each issue configuration and log details
-    parsed.forEach((issue, index) => {
+    for (let index = 0; index < parsed.length; index++) {
+      const issue = parsed[index]
       // Log the issue being processed
       core.info(`Processing Issue ${index + 1}: ${issue.title}`)
 
@@ -44,7 +45,7 @@ export async function run(): Promise<void> {
             `which is in the future or there are no future occurrences. ` +
             `Skipping issue creation.`
         )
-        return
+        continue
       }
       core.info(
         `The next occurrence for "${issue.title}" is ${nextDate.toISOString()}.`
@@ -57,64 +58,19 @@ export async function run(): Promise<void> {
           `The due date for "${issue.title}" could not ` +
             `be calculated. Skipping issue creation.`
         )
-        return
+        continue
       }
       core.info(
         `The due date for "${issue.title}" is ${dueDate.toISOString()}.`
       )
 
       // Create the issue on GitHub
-      let issueData = {
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        title: formatDateString(issue.title, dueDate, timezone)
+      const issueNumber = await createIssue(issue, dueDate, timezone, octokit)
+      if (issueNumber === null) {
+        core.info(`Issue creation failed for "${issue.title}".`)
+        continue
       }
-      if (issue.body) {
-        issueData = {
-          ...issueData,
-          body: formatDateString(issue.body, dueDate, timezone)
-        }
-      }
-      if (issue.assignees) {
-        issueData = {
-          ...issueData,
-          assignees: issue.assignees
-        }
-      }
-      const issueNumber = octokit.rest.issues
-        .create(issueData)
-        .then(({ data: issueResp }) => {
-          core.info(`Created issue #${issueResp.number}: ${issueResp.html_url}`)
-          if (issue.labels) {
-            octokit.rest.issues
-              .addLabels({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                issue_number: issueResp.number,
-                labels: issue.labels
-              })
-              .then(() => {
-                core.info(
-                  `Added labels to issue #${issueResp.number}: ${issue.labels?.join(
-                    ', '
-                  )}`
-                )
-              })
-              .catch((error) => {
-                core.error(
-                  `Failed to add labels to issue #${issueResp.number}: ${error.message}`
-                )
-              })
-          }
-          return issueResp.number
-        })
-        .catch((error) => {
-          core.error(
-            `Failed to create issue "${issue.title}": ${error.message}`
-          )
-        })
-      return issueNumber
-    })
+    }
 
     // Set outputs for other workflow steps to use
     core.setOutput('time', new Date().toTimeString())
