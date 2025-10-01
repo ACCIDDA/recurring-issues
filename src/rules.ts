@@ -1,5 +1,9 @@
-import rrule from 'rrule'
+import * as rruleModule from 'rrule'
 
+// Handle both ESM and CommonJS module formats
+const rrule =
+  (rruleModule as typeof rruleModule & { default?: typeof rruleModule })
+    .default || rruleModule
 const { RRule } = rrule
 
 interface RuleOptions {
