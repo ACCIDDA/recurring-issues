@@ -25,7 +25,6 @@ jobs:
               labels:
                 - "integration-test"
               schedule: "every day"
-              due: "every day"
             - title: "Another test issue, [YYYY-MM-DD]"
               body: "This is another integration test issue."
               labels:

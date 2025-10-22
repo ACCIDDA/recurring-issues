@@ -1,8 +1,14 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 import { parseConfig } from './parse.js'
 import { calculateNextDate } from './rules.js'
 import { createIssue } from './github.js'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 /**
  * The main function for the action.
@@ -11,14 +17,18 @@ import { createIssue } from './github.js'
  */
 export async function run(): Promise<void> {
   try {
-    // Set a consistent "now" timestamp for the action run
-    const now = new Date()
-    core.info(`Action started at: ${now.toISOString()}`)
-
     // Get inputs defined in action metadata file
     const token: string = core.getInput('token')
     const config: string = core.getInput('config')
     const timezone: string = core.getInput('timezone')
+
+    // Set a consistent "now" timestamp for the action run in the user's timezone
+    const now = dayjs().tz(timezone).toDate()
+    core.info(`Action started at: ${now.toISOString()}`)
+
+    // Create a rounded "now" timestamp floored to midnight (00:00:00)
+    const roundedNow = dayjs(now).tz(timezone).startOf('day').toDate()
+    core.info(`Rounded now (midnight): ${roundedNow.toISOString()}`)
 
     // Parse the configuration
     const parsed = parseConfig(config)
@@ -37,36 +47,56 @@ export async function run(): Promise<void> {
       const nextDate = calculateNextDate(
         issue.schedule,
         timezone,
-        issue.start || new Date(),
-        now
+        issue.start || roundedNow,
+        roundedNow
       )
-      if (nextDate === null || nextDate > now) {
+      const roundedNextDate = nextDate
+        ? dayjs(nextDate).tz(timezone).startOf('day').toDate()
+        : null
+      if (roundedNextDate === null || roundedNextDate > roundedNow) {
         core.info(
-          `The next occurrence for "${issue.title}" is ${nextDate?.toISOString()}, ` +
-            `which is in the future or there are no future occurrences. ` +
-            `Skipping issue creation.`
+          `The next occurrence for "${issue.title}" is ` +
+            `${roundedNextDate?.toISOString()}, which is in the future or there are ` +
+            `no future occurrences. Skipping issue creation.`
         )
         continue
       }
       core.info(
-        `The next occurrence for "${issue.title}" is ${nextDate.toISOString()}.`
+        `The next occurrence for "${issue.title}" is ${roundedNextDate.toISOString()}.`
       )
 
       // Calculate the due date based on the due rule
-      const dueDate = calculateNextDate(issue.due, timezone, nextDate, now)
-      if (dueDate === null) {
-        core.info(
-          `The due date for "${issue.title}" could not ` +
-            `be calculated. Skipping issue creation.`
+      let dueDate: Date | null = null
+      if (issue.due) {
+        dueDate = calculateNextDate(
+          issue.due,
+          timezone,
+          roundedNextDate,
+          roundedNow
         )
-        continue
+        if (dueDate === null) {
+          core.info(
+            `The due date for "${issue.title}" could not ` +
+              `be calculated. Skipping issue creation.`
+          )
+          continue
+        }
+        core.info(
+          `The due date for "${issue.title}" is ${dueDate.toISOString()}.`
+        )
+      } else {
+        core.info(
+          `No due date rule specified for "${issue.title}", using next occurrence.`
+        )
       }
-      core.info(
-        `The due date for "${issue.title}" is ${dueDate.toISOString()}.`
-      )
 
       // Create the issue on GitHub
-      const issueNumber = await createIssue(issue, dueDate, timezone, octokit)
+      const issueNumber = await createIssue(
+        issue,
+        dueDate || roundedNextDate,
+        timezone,
+        octokit
+      )
       if (issueNumber === null) {
         core.info(`Issue creation failed for "${issue.title}".`)
         continue

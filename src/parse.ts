@@ -20,7 +20,8 @@ export const IssueSchema = z.object({
       `Recurrence rule for the issue due date. Can be an ` +
         `RFC5545 RRULE string (e.g., "FREQ=DAILY;BYHOUR=17") ` +
         `or human-readable text (e.g., "Every day at 5pm")`
-    ),
+    )
+    .optional(),
   start: z
     .date()
     .optional()
