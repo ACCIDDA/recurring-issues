@@ -1,0 +1,36 @@
+name: 'Integration Test'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration-test:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v5
+      - name: Test Local Action
+        id: test-action
+        uses: ./
+        with:
+          config: |
+            - title: "Test issue created by integration test, [YYYY-MM-DD]"
+              body: "Today is [dddd]."
+              labels:
+                - "integration-test"
+              schedule: "every day"
+              due: "every day"
+            - title: "Another test issue, [YYYY-MM-DD]"
+              body: "This is another test issue created by the integration test."
+              labels:
+                - "integration-test"
+              schedule: "every week on Wednesday"
+              due: "every week on Friday"
+      - name: Print Output
+        id: output
+        run: echo "${{ steps.test-action.outputs.issues }}"

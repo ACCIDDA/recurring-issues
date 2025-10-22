@@ -40879,6 +40879,7 @@ async function run() {
         // Get an octokit client for GitHub API requests
         const octokit = githubExports.getOctokit(token);
         // Loop through each issue configuration and log details
+        const issueNumbers = [];
         for (let index = 0; index < parsed.length; index++) {
             const issue = parsed[index];
             // Log the issue being processed
@@ -40906,9 +40907,13 @@ async function run() {
                 coreExports.info(`Issue creation failed for "${issue.title}".`);
                 continue;
             }
+            else {
+                issueNumbers.push(issueNumber);
+                coreExports.info(`Issue created successfully for "${issue.title}" as #${issueNumber}.`);
+            }
         }
         // Set outputs for other workflow steps to use
-        coreExports.setOutput('time', new Date().toTimeString());
+        coreExports.setOutput('issues', issueNumbers.join(','));
     }
     catch (error) {
         // Fail the workflow run if an error occurs

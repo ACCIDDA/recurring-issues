@@ -27,6 +27,7 @@ export async function run(): Promise<void> {
     const octokit = github.getOctokit(token)
 
     // Loop through each issue configuration and log details
+    const issueNumbers: number[] = []
     for (let index = 0; index < parsed.length; index++) {
       const issue = parsed[index]
       // Log the issue being processed
@@ -69,11 +70,16 @@ export async function run(): Promise<void> {
       if (issueNumber === null) {
         core.info(`Issue creation failed for "${issue.title}".`)
         continue
+      } else {
+        issueNumbers.push(issueNumber)
+        core.info(
+          `Issue created successfully for "${issue.title}" as #${issueNumber}.`
+        )
       }
     }
 
     // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('issues', issueNumbers.join(','))
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
