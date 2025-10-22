@@ -1,0 +1,3 @@
+- title: 'File Issue'
+  schedule: 'FREQ=DAILY;BYHOUR=0;BYMINUTE=0'
+  due: 'FREQ=DAILY;BYHOUR=1;BYMINUTE=0'
