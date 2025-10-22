@@ -1,12 +1,12 @@
 import require$$0 from 'os';
 import require$$0$1 from 'crypto';
-import require$$1 from 'fs';
+import require$$1, { readFileSync } from 'fs';
 import require$$1$5 from 'path';
-import require$$2 from 'http';
-import require$$3 from 'https';
+import require$$2$1 from 'http';
+import require$$3$1 from 'https';
 import require$$0$4 from 'net';
 import require$$1$1 from 'tls';
-import require$$4 from 'events';
+import require$$4$1 from 'events';
 import require$$0$3 from 'assert';
 import require$$0$2 from 'util';
 import require$$0$5 from 'stream';
@@ -17,34 +17,67 @@ import require$$0$7 from 'node:stream';
 import require$$1$2 from 'node:util';
 import require$$0$6 from 'node:events';
 import require$$0$8 from 'worker_threads';
-import require$$2$1 from 'perf_hooks';
+import require$$2$2 from 'perf_hooks';
 import require$$5 from 'util/types';
-import require$$4$1 from 'async_hooks';
+import require$$4$2 from 'async_hooks';
 import require$$1$3 from 'console';
 import require$$1$4 from 'url';
-import require$$3$1 from 'zlib';
+import require$$3$2 from 'zlib';
 import require$$6 from 'string_decoder';
 import require$$0$9 from 'diagnostics_channel';
-import require$$2$2 from 'child_process';
+import require$$2$3 from 'child_process';
 import require$$6$1 from 'timers';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-var core = {};
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+function getAugmentedNamespace(n) {
+  if (Object.prototype.hasOwnProperty.call(n, '__esModule')) return n;
+  var f = n.default;
+	if (typeof f == "function") {
+		var a = function a () {
+			var isInstance = false;
+      try {
+        isInstance = this instanceof a;
+      } catch {}
+			if (isInstance) {
+        return Reflect.construct(f, arguments, this.constructor);
+			}
+			return f.apply(this, arguments);
+		};
+		a.prototype = f.prototype;
+  } else a = {};
+  Object.defineProperty(a, '__esModule', {value: true});
+	Object.keys(n).forEach(function (k) {
+		var d = Object.getOwnPropertyDescriptor(n, k);
+		Object.defineProperty(a, k, d.get ? d : {
+			enumerable: true,
+			get: function () {
+				return n[k];
+			}
+		});
+	});
+	return a;
+}
+
+var core$1 = {};
 
 var command = {};
 
-var utils$1 = {};
+var utils$3 = {};
 
-var hasRequiredUtils$1;
+var hasRequiredUtils$3;
 
-function requireUtils$1 () {
-	if (hasRequiredUtils$1) return utils$1;
-	hasRequiredUtils$1 = 1;
+function requireUtils$3 () {
+	if (hasRequiredUtils$3) return utils$3;
+	hasRequiredUtils$3 = 1;
 	// We use any as a valid input type
 	/* eslint-disable @typescript-eslint/no-explicit-any */
-	Object.defineProperty(utils$1, "__esModule", { value: true });
-	utils$1.toCommandProperties = utils$1.toCommandValue = void 0;
+	Object.defineProperty(utils$3, "__esModule", { value: true });
+	utils$3.toCommandProperties = utils$3.toCommandValue = void 0;
 	/**
 	 * Sanitizes an input into a string so it can be passed into issueCommand safely
 	 * @param input input to sanitize into a string
@@ -58,7 +91,7 @@ function requireUtils$1 () {
 	    }
 	    return JSON.stringify(input);
 	}
-	utils$1.toCommandValue = toCommandValue;
+	utils$3.toCommandValue = toCommandValue;
 	/**
 	 *
 	 * @param annotationProperties
@@ -78,9 +111,9 @@ function requireUtils$1 () {
 	        endColumn: annotationProperties.endColumn
 	    };
 	}
-	utils$1.toCommandProperties = toCommandProperties;
+	utils$3.toCommandProperties = toCommandProperties;
 	
-	return utils$1;
+	return utils$3;
 }
 
 var hasRequiredCommand;
@@ -114,7 +147,7 @@ function requireCommand () {
 	Object.defineProperty(command, "__esModule", { value: true });
 	command.issue = command.issueCommand = void 0;
 	const os = __importStar(require$$0);
-	const utils_1 = requireUtils$1();
+	const utils_1 = requireUtils$3();
 	/**
 	 * Commands
 	 *
@@ -224,7 +257,7 @@ function requireFileCommand () {
 	const crypto = __importStar(require$$0$1);
 	const fs = __importStar(require$$1);
 	const os = __importStar(require$$0);
-	const utils_1 = requireUtils$1();
+	const utils_1 = requireUtils$3();
 	function issueFileCommand(command, message) {
 	    const filePath = process.env[`GITHUB_${command}`];
 	    if (!filePath) {
@@ -373,9 +406,9 @@ function requireTunnel$1 () {
 	if (hasRequiredTunnel$1) return tunnel$1;
 	hasRequiredTunnel$1 = 1;
 	var tls = require$$1$1;
-	var http = require$$2;
-	var https = require$$3;
-	var events = require$$4;
+	var http = require$$2$1;
+	var https = require$$3$1;
+	var events = require$$4$1;
 	var util = require$$0$2;
 
 
@@ -1092,7 +1125,7 @@ function requireUtil$6 () {
 
 	const assert = require$$0$3;
 	const { kDestroyed, kBodyUsed } = requireSymbols$4();
-	const { IncomingMessage } = require$$2;
+	const { IncomingMessage } = require$$2$1;
 	const stream = require$$0$5;
 	const net = require$$0$4;
 	const { InvalidArgumentError } = requireErrors();
@@ -3561,7 +3594,7 @@ function requireUtil$5 () {
 
 	const { redirectStatusSet, referrerPolicySet: referrerPolicyTokens, badPortsSet } = requireConstants$3();
 	const { getGlobalOrigin } = requireGlobal$1();
-	const { performance } = require$$2$1;
+	const { performance } = require$$2$2;
 	const { isBlobLike, toUSVString, ReadableStreamFrom } = requireUtil$6();
 	const assert = require$$0$3;
 	const { isUint8Array } = require$$5;
@@ -7257,11 +7290,11 @@ function requireBody () {
 	return body;
 }
 
-var request$1;
+var request$2;
 var hasRequiredRequest$1;
 
 function requireRequest$1 () {
-	if (hasRequiredRequest$1) return request$1;
+	if (hasRequiredRequest$1) return request$2;
 	hasRequiredRequest$1 = 1;
 
 	const {
@@ -7760,8 +7793,8 @@ function requireRequest$1 () {
 	  }
 	}
 
-	request$1 = Request;
-	return request$1;
+	request$2 = Request;
+	return request$2;
 }
 
 var dispatcher;
@@ -7771,7 +7804,7 @@ function requireDispatcher () {
 	if (hasRequiredDispatcher) return dispatcher;
 	hasRequiredDispatcher = 1;
 
-	const EventEmitter = require$$4;
+	const EventEmitter = require$$4$1;
 
 	class Dispatcher extends EventEmitter {
 	  dispatch () {
@@ -8190,15 +8223,15 @@ function requireConnect () {
 
 var constants$2 = {};
 
-var utils = {};
+var utils$2 = {};
 
-var hasRequiredUtils;
+var hasRequiredUtils$2;
 
-function requireUtils () {
-	if (hasRequiredUtils) return utils;
-	hasRequiredUtils = 1;
-	Object.defineProperty(utils, "__esModule", { value: true });
-	utils.enumToMap = void 0;
+function requireUtils$2 () {
+	if (hasRequiredUtils$2) return utils$2;
+	hasRequiredUtils$2 = 1;
+	Object.defineProperty(utils$2, "__esModule", { value: true });
+	utils$2.enumToMap = void 0;
 	function enumToMap(obj) {
 	    const res = {};
 	    Object.keys(obj).forEach((key) => {
@@ -8209,9 +8242,9 @@ function requireUtils () {
 	    });
 	    return res;
 	}
-	utils.enumToMap = enumToMap;
+	utils$2.enumToMap = enumToMap;
 	
-	return utils;
+	return utils$2;
 }
 
 var hasRequiredConstants$2;
@@ -8222,7 +8255,7 @@ function requireConstants$2 () {
 	(function (exports) {
 		Object.defineProperty(exports, "__esModule", { value: true });
 		exports.SPECIAL_HEADERS = exports.HEADER_STATE = exports.MINOR = exports.MAJOR = exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS = exports.TOKEN = exports.STRICT_TOKEN = exports.HEX = exports.URL_CHAR = exports.STRICT_URL_CHAR = exports.USERINFO_CHARS = exports.MARK = exports.ALPHANUM = exports.NUM = exports.HEX_MAP = exports.NUM_MAP = exports.ALPHA = exports.FINISH = exports.H_METHOD_MAP = exports.METHOD_MAP = exports.METHODS_RTSP = exports.METHODS_ICE = exports.METHODS_HTTP = exports.METHODS = exports.LENIENT_FLAGS = exports.FLAGS = exports.TYPE = exports.ERROR = void 0;
-		const utils_1 = requireUtils();
+		const utils_1 = requireUtils$2();
 		(function (ERROR) {
 		    ERROR[ERROR["OK"] = 0] = "OK";
 		    ERROR[ERROR["INTERNAL"] = 1] = "INTERNAL";
@@ -8506,7 +8539,7 @@ function requireRedirectHandler () {
 	const { kBodyUsed } = requireSymbols$4();
 	const assert = require$$0$3;
 	const { InvalidArgumentError } = requireErrors();
-	const EE = require$$4;
+	const EE = require$$4$1;
 
 	const redirectableStatusCodes = [300, 301, 302, 303, 307, 308];
 
@@ -8766,7 +8799,7 @@ function requireClient () {
 
 	const assert = require$$0$3;
 	const net = require$$0$4;
-	const http = require$$2;
+	const http = require$$2$1;
 	const { pipeline } = require$$0$5;
 	const util = requireUtil$6();
 	const timers = requireTimers();
@@ -12401,7 +12434,7 @@ function requireApiRequest () {
 	} = requireErrors();
 	const util = requireUtil$6();
 	const { getResolveErrorBodyCallback } = requireUtil$4();
-	const { AsyncResource } = require$$4$1;
+	const { AsyncResource } = require$$4$2;
 	const { addSignal, removeSignal } = requireAbortSignal();
 
 	class RequestHandler extends AsyncResource {
@@ -12590,7 +12623,7 @@ function requireApiStream () {
 	} = requireErrors();
 	const util = requireUtil$6();
 	const { getResolveErrorBodyCallback } = requireUtil$4();
-	const { AsyncResource } = require$$4$1;
+	const { AsyncResource } = require$$4$2;
 	const { addSignal, removeSignal } = requireAbortSignal();
 
 	class StreamHandler extends AsyncResource {
@@ -12821,7 +12854,7 @@ function requireApiPipeline () {
 	  RequestAbortedError
 	} = requireErrors();
 	const util = requireUtil$6();
-	const { AsyncResource } = require$$4$1;
+	const { AsyncResource } = require$$4$2;
 	const { addSignal, removeSignal } = requireAbortSignal();
 	const assert = require$$0$3;
 
@@ -13068,7 +13101,7 @@ function requireApiUpgrade () {
 	hasRequiredApiUpgrade = 1;
 
 	const { InvalidArgumentError, RequestAbortedError, SocketError } = requireErrors();
-	const { AsyncResource } = require$$4$1;
+	const { AsyncResource } = require$$4$2;
 	const util = requireUtil$6();
 	const { addSignal, removeSignal } = requireAbortSignal();
 	const assert = require$$0$3;
@@ -13180,7 +13213,7 @@ function requireApiConnect () {
 	if (hasRequiredApiConnect) return apiConnect;
 	hasRequiredApiConnect = 1;
 
-	const { AsyncResource } = require$$4$1;
+	const { AsyncResource } = require$$4$2;
 	const { InvalidArgumentError, RequestAbortedError, SocketError } = requireErrors();
 	const util = requireUtil$6();
 	const { addSignal, removeSignal } = requireAbortSignal();
@@ -13371,7 +13404,7 @@ function requireMockUtils () {
 	  kGetNetConnect
 	} = requireMockSymbols();
 	const { buildURL, nop } = requireUtil$6();
-	const { STATUS_CODES } = require$$2;
+	const { STATUS_CODES } = require$$2$1;
 	const {
 	  types: {
 	    isPromise
@@ -16125,11 +16158,11 @@ function requireResponse () {
 
 /* globals AbortController */
 
-var request;
+var request$1;
 var hasRequiredRequest;
 
 function requireRequest () {
-	if (hasRequiredRequest) return request;
+	if (hasRequiredRequest) return request$1;
 	hasRequiredRequest = 1;
 
 	const { extractBody, mixinBody, cloneBody } = requireBody();
@@ -16160,7 +16193,7 @@ function requireRequest () {
 	const { URLSerializer } = requireDataURL();
 	const { kHeadersList, kConstruct } = requireSymbols$4();
 	const assert = require$$0$3;
-	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = require$$4;
+	const { getMaxListeners, setMaxListeners, getEventListeners, defaultMaxListeners } = require$$4$1;
 
 	let TransformStream = globalThis.TransformStream;
 
@@ -17073,8 +17106,8 @@ function requireRequest () {
 	  }
 	]);
 
-	request = { Request, makeRequest };
-	return request;
+	request$1 = { Request, makeRequest };
+	return request$1;
 }
 
 var fetch_1;
@@ -17093,7 +17126,7 @@ function requireFetch () {
 	} = requireResponse();
 	const { Headers } = requireHeaders();
 	const { Request, makeRequest } = requireRequest();
-	const zlib = require$$3$1;
+	const zlib = require$$3$2;
 	const {
 	  bytesMatch,
 	  makePolicyContainer,
@@ -17136,14 +17169,14 @@ function requireFetch () {
 	  DOMException
 	} = requireConstants$3();
 	const { kHeadersList } = requireSymbols$4();
-	const EE = require$$4;
+	const EE = require$$4$1;
 	const { Readable, pipeline } = require$$0$5;
 	const { addAbortListener, isErrored, isReadable, nodeMajor, nodeMinor } = requireUtil$6();
 	const { dataURLProcessor, serializeAMimeType } = requireDataURL();
 	const { TransformStream } = require$$14;
 	const { getGlobalDispatcher } = requireGlobal();
 	const { webidl } = requireWebidl();
-	const { STATUS_CODES } = require$$2;
+	const { STATUS_CODES } = require$$2$1;
 	const GET_OR_HEAD = ['GET', 'HEAD'];
 
 	/** @type {import('buffer').resolveObjectURL} */
@@ -21681,11 +21714,11 @@ function requireUtil$1 () {
 	return util$1;
 }
 
-var parse;
+var parse$2;
 var hasRequiredParse;
 
 function requireParse () {
-	if (hasRequiredParse) return parse;
+	if (hasRequiredParse) return parse$2;
 	hasRequiredParse = 1;
 
 	const { maxNameValuePairSize, maxAttributeValueSize } = requireConstants$1();
@@ -21999,11 +22032,11 @@ function requireParse () {
 	  return parseUnparsedAttributes(unparsedAttributes, cookieAttributeList)
 	}
 
-	parse = {
+	parse$2 = {
 	  parseSetCookie,
 	  parseUnparsedAttributes
 	};
-	return parse;
+	return parse$2;
 }
 
 var cookies;
@@ -24387,8 +24420,8 @@ function requireLib () {
 	};
 	Object.defineProperty(lib, "__esModule", { value: true });
 	lib.HttpClient = lib.isHttps = lib.HttpClientResponse = lib.HttpClientError = lib.getProxyUrl = lib.MediaTypes = lib.Headers = lib.HttpCodes = void 0;
-	const http = __importStar(require$$2);
-	const https = __importStar(require$$3);
+	const http = __importStar(require$$2$1);
+	const https = __importStar(require$$3$1);
 	const pm = __importStar(requireProxy());
 	const tunnel = __importStar(requireTunnel());
 	const undici_1 = requireUndici();
@@ -25006,14 +25039,14 @@ function requireLib () {
 	return lib;
 }
 
-var auth = {};
+var auth$1 = {};
 
 var hasRequiredAuth;
 
 function requireAuth () {
-	if (hasRequiredAuth) return auth;
+	if (hasRequiredAuth) return auth$1;
 	hasRequiredAuth = 1;
-	var __awaiter = (auth && auth.__awaiter) || function (thisArg, _arguments, P, generator) {
+	var __awaiter = (auth$1 && auth$1.__awaiter) || function (thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -25022,8 +25055,8 @@ function requireAuth () {
 	        step((generator = generator.apply(thisArg, _arguments || [])).next());
 	    });
 	};
-	Object.defineProperty(auth, "__esModule", { value: true });
-	auth.PersonalAccessTokenCredentialHandler = auth.BearerCredentialHandler = auth.BasicCredentialHandler = void 0;
+	Object.defineProperty(auth$1, "__esModule", { value: true });
+	auth$1.PersonalAccessTokenCredentialHandler = auth$1.BearerCredentialHandler = auth$1.BasicCredentialHandler = void 0;
 	class BasicCredentialHandler {
 	    constructor(username, password) {
 	        this.username = username;
@@ -25045,7 +25078,7 @@ function requireAuth () {
 	        });
 	    }
 	}
-	auth.BasicCredentialHandler = BasicCredentialHandler;
+	auth$1.BasicCredentialHandler = BasicCredentialHandler;
 	class BearerCredentialHandler {
 	    constructor(token) {
 	        this.token = token;
@@ -25068,7 +25101,7 @@ function requireAuth () {
 	        });
 	    }
 	}
-	auth.BearerCredentialHandler = BearerCredentialHandler;
+	auth$1.BearerCredentialHandler = BearerCredentialHandler;
 	class PersonalAccessTokenCredentialHandler {
 	    constructor(token) {
 	        this.token = token;
@@ -25091,9 +25124,9 @@ function requireAuth () {
 	        });
 	    }
 	}
-	auth.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHandler;
+	auth$1.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHandler;
 	
-	return auth;
+	return auth$1;
 }
 
 var hasRequiredOidcUtils;
@@ -26089,8 +26122,8 @@ function requireToolrunner () {
 	Object.defineProperty(toolrunner, "__esModule", { value: true });
 	toolrunner.argStringToArray = toolrunner.ToolRunner = void 0;
 	const os = __importStar(require$$0);
-	const events = __importStar(require$$4);
-	const child = __importStar(require$$2$2);
+	const events = __importStar(require$$4$1);
+	const child = __importStar(require$$2$3);
 	const path = __importStar(require$$1$5);
 	const io = __importStar(requireIo());
 	const ioUtil = __importStar(requireIoUtil());
@@ -26894,10 +26927,10 @@ function requirePlatform () {
 var hasRequiredCore;
 
 function requireCore () {
-	if (hasRequiredCore) return core;
+	if (hasRequiredCore) return core$1;
 	hasRequiredCore = 1;
 	(function (exports) {
-		var __createBinding = (core && core.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		var __createBinding = (core$1 && core$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 		    if (k2 === undefined) k2 = k;
 		    var desc = Object.getOwnPropertyDescriptor(m, k);
 		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -26908,19 +26941,19 @@ function requireCore () {
 		    if (k2 === undefined) k2 = k;
 		    o[k2] = m[k];
 		}));
-		var __setModuleDefault = (core && core.__setModuleDefault) || (Object.create ? (function(o, v) {
+		var __setModuleDefault = (core$1 && core$1.__setModuleDefault) || (Object.create ? (function(o, v) {
 		    Object.defineProperty(o, "default", { enumerable: true, value: v });
 		}) : function(o, v) {
 		    o["default"] = v;
 		});
-		var __importStar = (core && core.__importStar) || function (mod) {
+		var __importStar = (core$1 && core$1.__importStar) || function (mod) {
 		    if (mod && mod.__esModule) return mod;
 		    var result = {};
 		    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 		    __setModuleDefault(result, mod);
 		    return result;
 		};
-		var __awaiter = (core && core.__awaiter) || function (thisArg, _arguments, P, generator) {
+		var __awaiter = (core$1 && core$1.__awaiter) || function (thisArg, _arguments, P, generator) {
 		    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
 		    return new (P || (P = Promise))(function (resolve, reject) {
 		        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -26933,7 +26966,7 @@ function requireCore () {
 		exports.platform = exports.toPlatformPath = exports.toWin32Path = exports.toPosixPath = exports.markdownSummary = exports.summary = exports.getIDToken = exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
 		const command_1 = requireCommand();
 		const file_command_1 = requireFileCommand();
-		const utils_1 = requireUtils$1();
+		const utils_1 = requireUtils$3();
 		const os = __importStar(require$$0);
 		const path = __importStar(require$$1$5);
 		const oidc_utils_1 = requireOidcUtils();
@@ -27240,11 +27273,13567 @@ function requireCore () {
 		 */
 		exports.platform = __importStar(requirePlatform());
 		
-	} (core));
-	return core;
+	} (core$1));
+	return core$1;
 }
 
 var coreExports = requireCore();
+
+var github = {};
+
+var context = {};
+
+var hasRequiredContext;
+
+function requireContext () {
+	if (hasRequiredContext) return context;
+	hasRequiredContext = 1;
+	Object.defineProperty(context, "__esModule", { value: true });
+	context.Context = void 0;
+	const fs_1 = require$$1;
+	const os_1 = require$$0;
+	class Context {
+	    /**
+	     * Hydrate the context from the environment
+	     */
+	    constructor() {
+	        var _a, _b, _c;
+	        this.payload = {};
+	        if (process.env.GITHUB_EVENT_PATH) {
+	            if ((0, fs_1.existsSync)(process.env.GITHUB_EVENT_PATH)) {
+	                this.payload = JSON.parse((0, fs_1.readFileSync)(process.env.GITHUB_EVENT_PATH, { encoding: 'utf8' }));
+	            }
+	            else {
+	                const path = process.env.GITHUB_EVENT_PATH;
+	                process.stdout.write(`GITHUB_EVENT_PATH ${path} does not exist${os_1.EOL}`);
+	            }
+	        }
+	        this.eventName = process.env.GITHUB_EVENT_NAME;
+	        this.sha = process.env.GITHUB_SHA;
+	        this.ref = process.env.GITHUB_REF;
+	        this.workflow = process.env.GITHUB_WORKFLOW;
+	        this.action = process.env.GITHUB_ACTION;
+	        this.actor = process.env.GITHUB_ACTOR;
+	        this.job = process.env.GITHUB_JOB;
+	        this.runAttempt = parseInt(process.env.GITHUB_RUN_ATTEMPT, 10);
+	        this.runNumber = parseInt(process.env.GITHUB_RUN_NUMBER, 10);
+	        this.runId = parseInt(process.env.GITHUB_RUN_ID, 10);
+	        this.apiUrl = (_a = process.env.GITHUB_API_URL) !== null && _a !== void 0 ? _a : `https://api.github.com`;
+	        this.serverUrl = (_b = process.env.GITHUB_SERVER_URL) !== null && _b !== void 0 ? _b : `https://github.com`;
+	        this.graphqlUrl =
+	            (_c = process.env.GITHUB_GRAPHQL_URL) !== null && _c !== void 0 ? _c : `https://api.github.com/graphql`;
+	    }
+	    get issue() {
+	        const payload = this.payload;
+	        return Object.assign(Object.assign({}, this.repo), { number: (payload.issue || payload.pull_request || payload).number });
+	    }
+	    get repo() {
+	        if (process.env.GITHUB_REPOSITORY) {
+	            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+	            return { owner, repo };
+	        }
+	        if (this.payload.repository) {
+	            return {
+	                owner: this.payload.repository.owner.login,
+	                repo: this.payload.repository.name
+	            };
+	        }
+	        throw new Error("context.repo requires a GITHUB_REPOSITORY environment variable like 'owner/repo'");
+	    }
+	}
+	context.Context = Context;
+	
+	return context;
+}
+
+var utils$1 = {};
+
+var utils = {};
+
+var hasRequiredUtils$1;
+
+function requireUtils$1 () {
+	if (hasRequiredUtils$1) return utils;
+	hasRequiredUtils$1 = 1;
+	var __createBinding = (utils && utils.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (utils && utils.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (utils && utils.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	var __awaiter = (utils && utils.__awaiter) || function (thisArg, _arguments, P, generator) {
+	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+	    return new (P || (P = Promise))(function (resolve, reject) {
+	        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+	        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+	        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
+	    });
+	};
+	Object.defineProperty(utils, "__esModule", { value: true });
+	utils.getApiBaseUrl = utils.getProxyFetch = utils.getProxyAgentDispatcher = utils.getProxyAgent = utils.getAuthString = void 0;
+	const httpClient = __importStar(requireLib());
+	const undici_1 = requireUndici();
+	function getAuthString(token, options) {
+	    if (!token && !options.auth) {
+	        throw new Error('Parameter token or opts.auth is required');
+	    }
+	    else if (token && options.auth) {
+	        throw new Error('Parameters token and opts.auth may not both be specified');
+	    }
+	    return typeof options.auth === 'string' ? options.auth : `token ${token}`;
+	}
+	utils.getAuthString = getAuthString;
+	function getProxyAgent(destinationUrl) {
+	    const hc = new httpClient.HttpClient();
+	    return hc.getAgent(destinationUrl);
+	}
+	utils.getProxyAgent = getProxyAgent;
+	function getProxyAgentDispatcher(destinationUrl) {
+	    const hc = new httpClient.HttpClient();
+	    return hc.getAgentDispatcher(destinationUrl);
+	}
+	utils.getProxyAgentDispatcher = getProxyAgentDispatcher;
+	function getProxyFetch(destinationUrl) {
+	    const httpDispatcher = getProxyAgentDispatcher(destinationUrl);
+	    const proxyFetch = (url, opts) => __awaiter(this, void 0, void 0, function* () {
+	        return (0, undici_1.fetch)(url, Object.assign(Object.assign({}, opts), { dispatcher: httpDispatcher }));
+	    });
+	    return proxyFetch;
+	}
+	utils.getProxyFetch = getProxyFetch;
+	function getApiBaseUrl() {
+	    return process.env['GITHUB_API_URL'] || 'https://api.github.com';
+	}
+	utils.getApiBaseUrl = getApiBaseUrl;
+	
+	return utils;
+}
+
+function getUserAgent() {
+    if (typeof navigator === "object" && "userAgent" in navigator) {
+        return navigator.userAgent;
+    }
+    if (typeof process === "object" && process.version !== undefined) {
+        return `Node.js/${process.version.substr(1)} (${process.platform}; ${process.arch})`;
+    }
+    return "<environment undetectable>";
+}
+
+var beforeAfterHook = {exports: {}};
+
+var register_1;
+var hasRequiredRegister;
+
+function requireRegister () {
+	if (hasRequiredRegister) return register_1;
+	hasRequiredRegister = 1;
+	register_1 = register;
+
+	function register(state, name, method, options) {
+	  if (typeof method !== "function") {
+	    throw new Error("method for before hook must be a function");
+	  }
+
+	  if (!options) {
+	    options = {};
+	  }
+
+	  if (Array.isArray(name)) {
+	    return name.reverse().reduce(function (callback, name) {
+	      return register.bind(null, state, name, callback, options);
+	    }, method)();
+	  }
+
+	  return Promise.resolve().then(function () {
+	    if (!state.registry[name]) {
+	      return method(options);
+	    }
+
+	    return state.registry[name].reduce(function (method, registered) {
+	      return registered.hook.bind(null, method, options);
+	    }, method)();
+	  });
+	}
+	return register_1;
+}
+
+var add;
+var hasRequiredAdd;
+
+function requireAdd () {
+	if (hasRequiredAdd) return add;
+	hasRequiredAdd = 1;
+	add = addHook;
+
+	function addHook(state, kind, name, hook) {
+	  var orig = hook;
+	  if (!state.registry[name]) {
+	    state.registry[name] = [];
+	  }
+
+	  if (kind === "before") {
+	    hook = function (method, options) {
+	      return Promise.resolve()
+	        .then(orig.bind(null, options))
+	        .then(method.bind(null, options));
+	    };
+	  }
+
+	  if (kind === "after") {
+	    hook = function (method, options) {
+	      var result;
+	      return Promise.resolve()
+	        .then(method.bind(null, options))
+	        .then(function (result_) {
+	          result = result_;
+	          return orig(result, options);
+	        })
+	        .then(function () {
+	          return result;
+	        });
+	    };
+	  }
+
+	  if (kind === "error") {
+	    hook = function (method, options) {
+	      return Promise.resolve()
+	        .then(method.bind(null, options))
+	        .catch(function (error) {
+	          return orig(error, options);
+	        });
+	    };
+	  }
+
+	  state.registry[name].push({
+	    hook: hook,
+	    orig: orig,
+	  });
+	}
+	return add;
+}
+
+var remove;
+var hasRequiredRemove;
+
+function requireRemove () {
+	if (hasRequiredRemove) return remove;
+	hasRequiredRemove = 1;
+	remove = removeHook;
+
+	function removeHook(state, name, method) {
+	  if (!state.registry[name]) {
+	    return;
+	  }
+
+	  var index = state.registry[name]
+	    .map(function (registered) {
+	      return registered.orig;
+	    })
+	    .indexOf(method);
+
+	  if (index === -1) {
+	    return;
+	  }
+
+	  state.registry[name].splice(index, 1);
+	}
+	return remove;
+}
+
+var hasRequiredBeforeAfterHook;
+
+function requireBeforeAfterHook () {
+	if (hasRequiredBeforeAfterHook) return beforeAfterHook.exports;
+	hasRequiredBeforeAfterHook = 1;
+	var register = requireRegister();
+	var addHook = requireAdd();
+	var removeHook = requireRemove();
+
+	// bind with array of arguments: https://stackoverflow.com/a/21792913
+	var bind = Function.bind;
+	var bindable = bind.bind(bind);
+
+	function bindApi(hook, state, name) {
+	  var removeHookRef = bindable(removeHook, null).apply(
+	    null,
+	    name ? [state, name] : [state]
+	  );
+	  hook.api = { remove: removeHookRef };
+	  hook.remove = removeHookRef;
+	  ["before", "error", "after", "wrap"].forEach(function (kind) {
+	    var args = name ? [state, kind, name] : [state, kind];
+	    hook[kind] = hook.api[kind] = bindable(addHook, null).apply(null, args);
+	  });
+	}
+
+	function HookSingular() {
+	  var singularHookName = "h";
+	  var singularHookState = {
+	    registry: {},
+	  };
+	  var singularHook = register.bind(null, singularHookState, singularHookName);
+	  bindApi(singularHook, singularHookState, singularHookName);
+	  return singularHook;
+	}
+
+	function HookCollection() {
+	  var state = {
+	    registry: {},
+	  };
+
+	  var hook = register.bind(null, state);
+	  bindApi(hook, state);
+
+	  return hook;
+	}
+
+	var collectionHookDeprecationMessageDisplayed = false;
+	function Hook() {
+	  if (!collectionHookDeprecationMessageDisplayed) {
+	    console.warn(
+	      '[before-after-hook]: "Hook()" repurposing warning, use "Hook.Collection()". Read more: https://git.io/upgrade-before-after-hook-to-1.4'
+	    );
+	    collectionHookDeprecationMessageDisplayed = true;
+	  }
+	  return HookCollection();
+	}
+
+	Hook.Singular = HookSingular.bind();
+	Hook.Collection = HookCollection.bind();
+
+	beforeAfterHook.exports = Hook;
+	// expose constructors as a named property for TypeScript
+	beforeAfterHook.exports.Hook = Hook;
+	beforeAfterHook.exports.Singular = Hook.Singular;
+	beforeAfterHook.exports.Collection = Hook.Collection;
+	return beforeAfterHook.exports;
+}
+
+var beforeAfterHookExports = requireBeforeAfterHook();
+
+const VERSION$5 = "9.0.6";
+
+const userAgent = `octokit-endpoint.js/${VERSION$5} ${getUserAgent()}`;
+const DEFAULTS = {
+  method: "GET",
+  baseUrl: "https://api.github.com",
+  headers: {
+    accept: "application/vnd.github.v3+json",
+    "user-agent": userAgent
+  },
+  mediaType: {
+    format: ""
+  }
+};
+
+function lowercaseKeys(object) {
+  if (!object) {
+    return {};
+  }
+  return Object.keys(object).reduce((newObj, key) => {
+    newObj[key.toLowerCase()] = object[key];
+    return newObj;
+  }, {});
+}
+
+function isPlainObject$2(value) {
+  if (typeof value !== "object" || value === null)
+    return false;
+  if (Object.prototype.toString.call(value) !== "[object Object]")
+    return false;
+  const proto = Object.getPrototypeOf(value);
+  if (proto === null)
+    return true;
+  const Ctor = Object.prototype.hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  return typeof Ctor === "function" && Ctor instanceof Ctor && Function.prototype.call(Ctor) === Function.prototype.call(value);
+}
+
+function mergeDeep(defaults, options) {
+  const result = Object.assign({}, defaults);
+  Object.keys(options).forEach((key) => {
+    if (isPlainObject$2(options[key])) {
+      if (!(key in defaults))
+        Object.assign(result, { [key]: options[key] });
+      else
+        result[key] = mergeDeep(defaults[key], options[key]);
+    } else {
+      Object.assign(result, { [key]: options[key] });
+    }
+  });
+  return result;
+}
+
+function removeUndefinedProperties(obj) {
+  for (const key in obj) {
+    if (obj[key] === void 0) {
+      delete obj[key];
+    }
+  }
+  return obj;
+}
+
+function merge$2(defaults, route, options) {
+  if (typeof route === "string") {
+    let [method, url] = route.split(" ");
+    options = Object.assign(url ? { method, url } : { url: method }, options);
+  } else {
+    options = Object.assign({}, route);
+  }
+  options.headers = lowercaseKeys(options.headers);
+  removeUndefinedProperties(options);
+  removeUndefinedProperties(options.headers);
+  const mergedOptions = mergeDeep(defaults || {}, options);
+  if (options.url === "/graphql") {
+    if (defaults && defaults.mediaType.previews?.length) {
+      mergedOptions.mediaType.previews = defaults.mediaType.previews.filter(
+        (preview) => !mergedOptions.mediaType.previews.includes(preview)
+      ).concat(mergedOptions.mediaType.previews);
+    }
+    mergedOptions.mediaType.previews = (mergedOptions.mediaType.previews || []).map((preview) => preview.replace(/-preview/, ""));
+  }
+  return mergedOptions;
+}
+
+function addQueryParameters(url, parameters) {
+  const separator = /\?/.test(url) ? "&" : "?";
+  const names = Object.keys(parameters);
+  if (names.length === 0) {
+    return url;
+  }
+  return url + separator + names.map((name) => {
+    if (name === "q") {
+      return "q=" + parameters.q.split("+").map(encodeURIComponent).join("+");
+    }
+    return `${name}=${encodeURIComponent(parameters[name])}`;
+  }).join("&");
+}
+
+const urlVariableRegex = /\{[^{}}]+\}/g;
+function removeNonChars(variableName) {
+  return variableName.replace(/(?:^\W+)|(?:(?<!\W)\W+$)/g, "").split(/,/);
+}
+function extractUrlVariableNames(url) {
+  const matches = url.match(urlVariableRegex);
+  if (!matches) {
+    return [];
+  }
+  return matches.map(removeNonChars).reduce((a, b) => a.concat(b), []);
+}
+
+function omit$1(object, keysToOmit) {
+  const result = { __proto__: null };
+  for (const key of Object.keys(object)) {
+    if (keysToOmit.indexOf(key) === -1) {
+      result[key] = object[key];
+    }
+  }
+  return result;
+}
+
+function encodeReserved(str) {
+  return str.split(/(%[0-9A-Fa-f]{2})/g).map(function(part) {
+    if (!/%[0-9A-Fa-f]/.test(part)) {
+      part = encodeURI(part).replace(/%5B/g, "[").replace(/%5D/g, "]");
+    }
+    return part;
+  }).join("");
+}
+function encodeUnreserved(str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+    return "%" + c.charCodeAt(0).toString(16).toUpperCase();
+  });
+}
+function encodeValue(operator, value, key) {
+  value = operator === "+" || operator === "#" ? encodeReserved(value) : encodeUnreserved(value);
+  if (key) {
+    return encodeUnreserved(key) + "=" + value;
+  } else {
+    return value;
+  }
+}
+function isDefined(value) {
+  return value !== void 0 && value !== null;
+}
+function isKeyOperator(operator) {
+  return operator === ";" || operator === "&" || operator === "?";
+}
+function getValues(context, operator, key, modifier) {
+  var value = context[key], result = [];
+  if (isDefined(value) && value !== "") {
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+      value = value.toString();
+      if (modifier && modifier !== "*") {
+        value = value.substring(0, parseInt(modifier, 10));
+      }
+      result.push(
+        encodeValue(operator, value, isKeyOperator(operator) ? key : "")
+      );
+    } else {
+      if (modifier === "*") {
+        if (Array.isArray(value)) {
+          value.filter(isDefined).forEach(function(value2) {
+            result.push(
+              encodeValue(operator, value2, isKeyOperator(operator) ? key : "")
+            );
+          });
+        } else {
+          Object.keys(value).forEach(function(k) {
+            if (isDefined(value[k])) {
+              result.push(encodeValue(operator, value[k], k));
+            }
+          });
+        }
+      } else {
+        const tmp = [];
+        if (Array.isArray(value)) {
+          value.filter(isDefined).forEach(function(value2) {
+            tmp.push(encodeValue(operator, value2));
+          });
+        } else {
+          Object.keys(value).forEach(function(k) {
+            if (isDefined(value[k])) {
+              tmp.push(encodeUnreserved(k));
+              tmp.push(encodeValue(operator, value[k].toString()));
+            }
+          });
+        }
+        if (isKeyOperator(operator)) {
+          result.push(encodeUnreserved(key) + "=" + tmp.join(","));
+        } else if (tmp.length !== 0) {
+          result.push(tmp.join(","));
+        }
+      }
+    }
+  } else {
+    if (operator === ";") {
+      if (isDefined(value)) {
+        result.push(encodeUnreserved(key));
+      }
+    } else if (value === "" && (operator === "&" || operator === "?")) {
+      result.push(encodeUnreserved(key) + "=");
+    } else if (value === "") {
+      result.push("");
+    }
+  }
+  return result;
+}
+function parseUrl(template) {
+  return {
+    expand: expand.bind(null, template)
+  };
+}
+function expand(template, context) {
+  var operators = ["+", "#", ".", "/", ";", "?", "&"];
+  template = template.replace(
+    /\{([^\{\}]+)\}|([^\{\}]+)/g,
+    function(_, expression, literal) {
+      if (expression) {
+        let operator = "";
+        const values = [];
+        if (operators.indexOf(expression.charAt(0)) !== -1) {
+          operator = expression.charAt(0);
+          expression = expression.substr(1);
+        }
+        expression.split(/,/g).forEach(function(variable) {
+          var tmp = /([^:\*]*)(?::(\d+)|(\*))?/.exec(variable);
+          values.push(getValues(context, operator, tmp[1], tmp[2] || tmp[3]));
+        });
+        if (operator && operator !== "+") {
+          var separator = ",";
+          if (operator === "?") {
+            separator = "&";
+          } else if (operator !== "#") {
+            separator = operator;
+          }
+          return (values.length !== 0 ? operator : "") + values.join(separator);
+        } else {
+          return values.join(",");
+        }
+      } else {
+        return encodeReserved(literal);
+      }
+    }
+  );
+  if (template === "/") {
+    return template;
+  } else {
+    return template.replace(/\/$/, "");
+  }
+}
+
+function parse$1(options) {
+  let method = options.method.toUpperCase();
+  let url = (options.url || "/").replace(/:([a-z]\w+)/g, "{$1}");
+  let headers = Object.assign({}, options.headers);
+  let body;
+  let parameters = omit$1(options, [
+    "method",
+    "baseUrl",
+    "url",
+    "headers",
+    "request",
+    "mediaType"
+  ]);
+  const urlVariableNames = extractUrlVariableNames(url);
+  url = parseUrl(url).expand(parameters);
+  if (!/^http/.test(url)) {
+    url = options.baseUrl + url;
+  }
+  const omittedParameters = Object.keys(options).filter((option) => urlVariableNames.includes(option)).concat("baseUrl");
+  const remainingParameters = omit$1(parameters, omittedParameters);
+  const isBinaryRequest = /application\/octet-stream/i.test(headers.accept);
+  if (!isBinaryRequest) {
+    if (options.mediaType.format) {
+      headers.accept = headers.accept.split(/,/).map(
+        (format) => format.replace(
+          /application\/vnd(\.\w+)(\.v3)?(\.\w+)?(\+json)?$/,
+          `application/vnd$1$2.${options.mediaType.format}`
+        )
+      ).join(",");
+    }
+    if (url.endsWith("/graphql")) {
+      if (options.mediaType.previews?.length) {
+        const previewsFromAcceptHeader = headers.accept.match(/(?<![\w-])[\w-]+(?=-preview)/g) || [];
+        headers.accept = previewsFromAcceptHeader.concat(options.mediaType.previews).map((preview) => {
+          const format = options.mediaType.format ? `.${options.mediaType.format}` : "+json";
+          return `application/vnd.github.${preview}-preview${format}`;
+        }).join(",");
+      }
+    }
+  }
+  if (["GET", "HEAD"].includes(method)) {
+    url = addQueryParameters(url, remainingParameters);
+  } else {
+    if ("data" in remainingParameters) {
+      body = remainingParameters.data;
+    } else {
+      if (Object.keys(remainingParameters).length) {
+        body = remainingParameters;
+      }
+    }
+  }
+  if (!headers["content-type"] && typeof body !== "undefined") {
+    headers["content-type"] = "application/json; charset=utf-8";
+  }
+  if (["PATCH", "PUT"].includes(method) && typeof body === "undefined") {
+    body = "";
+  }
+  return Object.assign(
+    { method, url, headers },
+    typeof body !== "undefined" ? { body } : null,
+    options.request ? { request: options.request } : null
+  );
+}
+
+function endpointWithDefaults(defaults, route, options) {
+  return parse$1(merge$2(defaults, route, options));
+}
+
+function withDefaults$2(oldDefaults, newDefaults) {
+  const DEFAULTS = merge$2(oldDefaults, newDefaults);
+  const endpoint = endpointWithDefaults.bind(null, DEFAULTS);
+  return Object.assign(endpoint, {
+    DEFAULTS,
+    defaults: withDefaults$2.bind(null, DEFAULTS),
+    merge: merge$2.bind(null, DEFAULTS),
+    parse: parse$1
+  });
+}
+
+const endpoint = withDefaults$2(null, DEFAULTS);
+
+const VERSION$4 = "8.4.1";
+
+function isPlainObject$1(value) {
+  if (typeof value !== "object" || value === null)
+    return false;
+  if (Object.prototype.toString.call(value) !== "[object Object]")
+    return false;
+  const proto = Object.getPrototypeOf(value);
+  if (proto === null)
+    return true;
+  const Ctor = Object.prototype.hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  return typeof Ctor === "function" && Ctor instanceof Ctor && Function.prototype.call(Ctor) === Function.prototype.call(value);
+}
+
+class Deprecation extends Error {
+  constructor(message) {
+    super(message); // Maintains proper stack trace (only available on V8)
+
+    /* istanbul ignore next */
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+
+    this.name = 'Deprecation';
+  }
+
+}
+
+var once$1 = {exports: {}};
+
+var wrappy_1;
+var hasRequiredWrappy;
+
+function requireWrappy () {
+	if (hasRequiredWrappy) return wrappy_1;
+	hasRequiredWrappy = 1;
+	// Returns a wrapper function that returns a wrapped callback
+	// The wrapper function should do some stuff, and return a
+	// presumably different callback function.
+	// This makes sure that own properties are retained, so that
+	// decorations and such are not lost along the way.
+	wrappy_1 = wrappy;
+	function wrappy (fn, cb) {
+	  if (fn && cb) return wrappy(fn)(cb)
+
+	  if (typeof fn !== 'function')
+	    throw new TypeError('need wrapper function')
+
+	  Object.keys(fn).forEach(function (k) {
+	    wrapper[k] = fn[k];
+	  });
+
+	  return wrapper
+
+	  function wrapper() {
+	    var args = new Array(arguments.length);
+	    for (var i = 0; i < args.length; i++) {
+	      args[i] = arguments[i];
+	    }
+	    var ret = fn.apply(this, args);
+	    var cb = args[args.length-1];
+	    if (typeof ret === 'function' && ret !== cb) {
+	      Object.keys(cb).forEach(function (k) {
+	        ret[k] = cb[k];
+	      });
+	    }
+	    return ret
+	  }
+	}
+	return wrappy_1;
+}
+
+var hasRequiredOnce;
+
+function requireOnce () {
+	if (hasRequiredOnce) return once$1.exports;
+	hasRequiredOnce = 1;
+	var wrappy = requireWrappy();
+	once$1.exports = wrappy(once);
+	once$1.exports.strict = wrappy(onceStrict);
+
+	once.proto = once(function () {
+	  Object.defineProperty(Function.prototype, 'once', {
+	    value: function () {
+	      return once(this)
+	    },
+	    configurable: true
+	  });
+
+	  Object.defineProperty(Function.prototype, 'onceStrict', {
+	    value: function () {
+	      return onceStrict(this)
+	    },
+	    configurable: true
+	  });
+	});
+
+	function once (fn) {
+	  var f = function () {
+	    if (f.called) return f.value
+	    f.called = true;
+	    return f.value = fn.apply(this, arguments)
+	  };
+	  f.called = false;
+	  return f
+	}
+
+	function onceStrict (fn) {
+	  var f = function () {
+	    if (f.called)
+	      throw new Error(f.onceError)
+	    f.called = true;
+	    return f.value = fn.apply(this, arguments)
+	  };
+	  var name = fn.name || 'Function wrapped with `once`';
+	  f.onceError = name + " shouldn't be called more than once";
+	  f.called = false;
+	  return f
+	}
+	return once$1.exports;
+}
+
+var onceExports = requireOnce();
+var once = /*@__PURE__*/getDefaultExportFromCjs(onceExports);
+
+const logOnceCode = once((deprecation) => console.warn(deprecation));
+const logOnceHeaders = once((deprecation) => console.warn(deprecation));
+class RequestError extends Error {
+  constructor(message, statusCode, options) {
+    super(message);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+    this.name = "HttpError";
+    this.status = statusCode;
+    let headers;
+    if ("headers" in options && typeof options.headers !== "undefined") {
+      headers = options.headers;
+    }
+    if ("response" in options) {
+      this.response = options.response;
+      headers = options.response.headers;
+    }
+    const requestCopy = Object.assign({}, options.request);
+    if (options.request.headers.authorization) {
+      requestCopy.headers = Object.assign({}, options.request.headers, {
+        authorization: options.request.headers.authorization.replace(
+          /(?<! ) .*$/,
+          " [REDACTED]"
+        )
+      });
+    }
+    requestCopy.url = requestCopy.url.replace(/\bclient_secret=\w+/g, "client_secret=[REDACTED]").replace(/\baccess_token=\w+/g, "access_token=[REDACTED]");
+    this.request = requestCopy;
+    Object.defineProperty(this, "code", {
+      get() {
+        logOnceCode(
+          new Deprecation(
+            "[@octokit/request-error] `error.code` is deprecated, use `error.status`."
+          )
+        );
+        return statusCode;
+      }
+    });
+    Object.defineProperty(this, "headers", {
+      get() {
+        logOnceHeaders(
+          new Deprecation(
+            "[@octokit/request-error] `error.headers` is deprecated, use `error.response.headers`."
+          )
+        );
+        return headers || {};
+      }
+    });
+  }
+}
+
+function getBufferResponse(response) {
+  return response.arrayBuffer();
+}
+
+function fetchWrapper(requestOptions) {
+  const log = requestOptions.request && requestOptions.request.log ? requestOptions.request.log : console;
+  const parseSuccessResponseBody = requestOptions.request?.parseSuccessResponseBody !== false;
+  if (isPlainObject$1(requestOptions.body) || Array.isArray(requestOptions.body)) {
+    requestOptions.body = JSON.stringify(requestOptions.body);
+  }
+  let headers = {};
+  let status;
+  let url;
+  let { fetch } = globalThis;
+  if (requestOptions.request?.fetch) {
+    fetch = requestOptions.request.fetch;
+  }
+  if (!fetch) {
+    throw new Error(
+      "fetch is not set. Please pass a fetch implementation as new Octokit({ request: { fetch }}). Learn more at https://github.com/octokit/octokit.js/#fetch-missing"
+    );
+  }
+  return fetch(requestOptions.url, {
+    method: requestOptions.method,
+    body: requestOptions.body,
+    redirect: requestOptions.request?.redirect,
+    headers: requestOptions.headers,
+    signal: requestOptions.request?.signal,
+    // duplex must be set if request.body is ReadableStream or Async Iterables.
+    // See https://fetch.spec.whatwg.org/#dom-requestinit-duplex.
+    ...requestOptions.body && { duplex: "half" }
+  }).then(async (response) => {
+    url = response.url;
+    status = response.status;
+    for (const keyAndValue of response.headers) {
+      headers[keyAndValue[0]] = keyAndValue[1];
+    }
+    if ("deprecation" in headers) {
+      const matches = headers.link && headers.link.match(/<([^<>]+)>; rel="deprecation"/);
+      const deprecationLink = matches && matches.pop();
+      log.warn(
+        `[@octokit/request] "${requestOptions.method} ${requestOptions.url}" is deprecated. It is scheduled to be removed on ${headers.sunset}${deprecationLink ? `. See ${deprecationLink}` : ""}`
+      );
+    }
+    if (status === 204 || status === 205) {
+      return;
+    }
+    if (requestOptions.method === "HEAD") {
+      if (status < 400) {
+        return;
+      }
+      throw new RequestError(response.statusText, status, {
+        response: {
+          url,
+          status,
+          headers,
+          data: void 0
+        },
+        request: requestOptions
+      });
+    }
+    if (status === 304) {
+      throw new RequestError("Not modified", status, {
+        response: {
+          url,
+          status,
+          headers,
+          data: await getResponseData(response)
+        },
+        request: requestOptions
+      });
+    }
+    if (status >= 400) {
+      const data = await getResponseData(response);
+      const error = new RequestError(toErrorMessage(data), status, {
+        response: {
+          url,
+          status,
+          headers,
+          data
+        },
+        request: requestOptions
+      });
+      throw error;
+    }
+    return parseSuccessResponseBody ? await getResponseData(response) : response.body;
+  }).then((data) => {
+    return {
+      status,
+      url,
+      headers,
+      data
+    };
+  }).catch((error) => {
+    if (error instanceof RequestError)
+      throw error;
+    else if (error.name === "AbortError")
+      throw error;
+    let message = error.message;
+    if (error.name === "TypeError" && "cause" in error) {
+      if (error.cause instanceof Error) {
+        message = error.cause.message;
+      } else if (typeof error.cause === "string") {
+        message = error.cause;
+      }
+    }
+    throw new RequestError(message, 500, {
+      request: requestOptions
+    });
+  });
+}
+async function getResponseData(response) {
+  const contentType = response.headers.get("content-type");
+  if (/application\/json/.test(contentType)) {
+    return response.json().catch(() => response.text()).catch(() => "");
+  }
+  if (!contentType || /^text\/|charset=utf-8$/.test(contentType)) {
+    return response.text();
+  }
+  return getBufferResponse(response);
+}
+function toErrorMessage(data) {
+  if (typeof data === "string")
+    return data;
+  let suffix;
+  if ("documentation_url" in data) {
+    suffix = ` - ${data.documentation_url}`;
+  } else {
+    suffix = "";
+  }
+  if ("message" in data) {
+    if (Array.isArray(data.errors)) {
+      return `${data.message}: ${data.errors.map(JSON.stringify).join(", ")}${suffix}`;
+    }
+    return `${data.message}${suffix}`;
+  }
+  return `Unknown error: ${JSON.stringify(data)}`;
+}
+
+function withDefaults$1(oldEndpoint, newDefaults) {
+  const endpoint = oldEndpoint.defaults(newDefaults);
+  const newApi = function(route, parameters) {
+    const endpointOptions = endpoint.merge(route, parameters);
+    if (!endpointOptions.request || !endpointOptions.request.hook) {
+      return fetchWrapper(endpoint.parse(endpointOptions));
+    }
+    const request = (route2, parameters2) => {
+      return fetchWrapper(
+        endpoint.parse(endpoint.merge(route2, parameters2))
+      );
+    };
+    Object.assign(request, {
+      endpoint,
+      defaults: withDefaults$1.bind(null, endpoint)
+    });
+    return endpointOptions.request.hook(request, endpointOptions);
+  };
+  return Object.assign(newApi, {
+    endpoint,
+    defaults: withDefaults$1.bind(null, endpoint)
+  });
+}
+
+const request = withDefaults$1(endpoint, {
+  headers: {
+    "user-agent": `octokit-request.js/${VERSION$4} ${getUserAgent()}`
+  }
+});
+
+// pkg/dist-src/index.js
+
+// pkg/dist-src/version.js
+var VERSION$3 = "7.1.1";
+
+// pkg/dist-src/error.js
+function _buildMessageForResponseErrors(data) {
+  return `Request failed due to following response errors:
+` + data.errors.map((e) => ` - ${e.message}`).join("\n");
+}
+var GraphqlResponseError = class extends Error {
+  constructor(request2, headers, response) {
+    super(_buildMessageForResponseErrors(response));
+    this.request = request2;
+    this.headers = headers;
+    this.response = response;
+    this.name = "GraphqlResponseError";
+    this.errors = response.errors;
+    this.data = response.data;
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+  }
+};
+
+// pkg/dist-src/graphql.js
+var NON_VARIABLE_OPTIONS = [
+  "method",
+  "baseUrl",
+  "url",
+  "headers",
+  "request",
+  "query",
+  "mediaType"
+];
+var FORBIDDEN_VARIABLE_OPTIONS = ["query", "method", "url"];
+var GHES_V3_SUFFIX_REGEX = /\/api\/v3\/?$/;
+function graphql(request2, query, options) {
+  if (options) {
+    if (typeof query === "string" && "query" in options) {
+      return Promise.reject(
+        new Error(`[@octokit/graphql] "query" cannot be used as variable name`)
+      );
+    }
+    for (const key in options) {
+      if (!FORBIDDEN_VARIABLE_OPTIONS.includes(key)) continue;
+      return Promise.reject(
+        new Error(
+          `[@octokit/graphql] "${key}" cannot be used as variable name`
+        )
+      );
+    }
+  }
+  const parsedOptions = typeof query === "string" ? Object.assign({ query }, options) : query;
+  const requestOptions = Object.keys(
+    parsedOptions
+  ).reduce((result, key) => {
+    if (NON_VARIABLE_OPTIONS.includes(key)) {
+      result[key] = parsedOptions[key];
+      return result;
+    }
+    if (!result.variables) {
+      result.variables = {};
+    }
+    result.variables[key] = parsedOptions[key];
+    return result;
+  }, {});
+  const baseUrl = parsedOptions.baseUrl || request2.endpoint.DEFAULTS.baseUrl;
+  if (GHES_V3_SUFFIX_REGEX.test(baseUrl)) {
+    requestOptions.url = baseUrl.replace(GHES_V3_SUFFIX_REGEX, "/api/graphql");
+  }
+  return request2(requestOptions).then((response) => {
+    if (response.data.errors) {
+      const headers = {};
+      for (const key of Object.keys(response.headers)) {
+        headers[key] = response.headers[key];
+      }
+      throw new GraphqlResponseError(
+        requestOptions,
+        headers,
+        response.data
+      );
+    }
+    return response.data.data;
+  });
+}
+
+// pkg/dist-src/with-defaults.js
+function withDefaults(request2, newDefaults) {
+  const newRequest = request2.defaults(newDefaults);
+  const newApi = (query, options) => {
+    return graphql(newRequest, query, options);
+  };
+  return Object.assign(newApi, {
+    defaults: withDefaults.bind(null, newRequest),
+    endpoint: newRequest.endpoint
+  });
+}
+
+// pkg/dist-src/index.js
+withDefaults(request, {
+  headers: {
+    "user-agent": `octokit-graphql.js/${VERSION$3} ${getUserAgent()}`
+  },
+  method: "POST",
+  url: "/graphql"
+});
+function withCustomRequest(customRequest) {
+  return withDefaults(customRequest, {
+    method: "POST",
+    url: "/graphql"
+  });
+}
+
+const REGEX_IS_INSTALLATION_LEGACY = /^v1\./;
+const REGEX_IS_INSTALLATION = /^ghs_/;
+const REGEX_IS_USER_TO_SERVER = /^ghu_/;
+async function auth(token) {
+  const isApp = token.split(/\./).length === 3;
+  const isInstallation = REGEX_IS_INSTALLATION_LEGACY.test(token) || REGEX_IS_INSTALLATION.test(token);
+  const isUserToServer = REGEX_IS_USER_TO_SERVER.test(token);
+  const tokenType = isApp ? "app" : isInstallation ? "installation" : isUserToServer ? "user-to-server" : "oauth";
+  return {
+    type: "token",
+    token,
+    tokenType
+  };
+}
+
+function withAuthorizationPrefix(token) {
+  if (token.split(/\./).length === 3) {
+    return `bearer ${token}`;
+  }
+  return `token ${token}`;
+}
+
+async function hook(token, request, route, parameters) {
+  const endpoint = request.endpoint.merge(
+    route,
+    parameters
+  );
+  endpoint.headers.authorization = withAuthorizationPrefix(token);
+  return request(endpoint);
+}
+
+const createTokenAuth = function createTokenAuth2(token) {
+  if (!token) {
+    throw new Error("[@octokit/auth-token] No token passed to createTokenAuth");
+  }
+  if (typeof token !== "string") {
+    throw new Error(
+      "[@octokit/auth-token] Token passed to createTokenAuth is not a string"
+    );
+  }
+  token = token.replace(/^(token|bearer) +/i, "");
+  return Object.assign(auth.bind(null, token), {
+    hook: hook.bind(null, token)
+  });
+};
+
+// pkg/dist-src/index.js
+
+// pkg/dist-src/version.js
+var VERSION$2 = "5.2.0";
+
+// pkg/dist-src/index.js
+var noop = () => {
+};
+var consoleWarn = console.warn.bind(console);
+var consoleError = console.error.bind(console);
+var userAgentTrail = `octokit-core.js/${VERSION$2} ${getUserAgent()}`;
+var Octokit = class {
+  static {
+    this.VERSION = VERSION$2;
+  }
+  static defaults(defaults) {
+    const OctokitWithDefaults = class extends this {
+      constructor(...args) {
+        const options = args[0] || {};
+        if (typeof defaults === "function") {
+          super(defaults(options));
+          return;
+        }
+        super(
+          Object.assign(
+            {},
+            defaults,
+            options,
+            options.userAgent && defaults.userAgent ? {
+              userAgent: `${options.userAgent} ${defaults.userAgent}`
+            } : null
+          )
+        );
+      }
+    };
+    return OctokitWithDefaults;
+  }
+  static {
+    this.plugins = [];
+  }
+  /**
+   * Attach a plugin (or many) to your Octokit instance.
+   *
+   * @example
+   * const API = Octokit.plugin(plugin1, plugin2, plugin3, ...)
+   */
+  static plugin(...newPlugins) {
+    const currentPlugins = this.plugins;
+    const NewOctokit = class extends this {
+      static {
+        this.plugins = currentPlugins.concat(
+          newPlugins.filter((plugin) => !currentPlugins.includes(plugin))
+        );
+      }
+    };
+    return NewOctokit;
+  }
+  constructor(options = {}) {
+    const hook = new beforeAfterHookExports.Collection();
+    const requestDefaults = {
+      baseUrl: request.endpoint.DEFAULTS.baseUrl,
+      headers: {},
+      request: Object.assign({}, options.request, {
+        // @ts-ignore internal usage only, no need to type
+        hook: hook.bind(null, "request")
+      }),
+      mediaType: {
+        previews: [],
+        format: ""
+      }
+    };
+    requestDefaults.headers["user-agent"] = options.userAgent ? `${options.userAgent} ${userAgentTrail}` : userAgentTrail;
+    if (options.baseUrl) {
+      requestDefaults.baseUrl = options.baseUrl;
+    }
+    if (options.previews) {
+      requestDefaults.mediaType.previews = options.previews;
+    }
+    if (options.timeZone) {
+      requestDefaults.headers["time-zone"] = options.timeZone;
+    }
+    this.request = request.defaults(requestDefaults);
+    this.graphql = withCustomRequest(this.request).defaults(requestDefaults);
+    this.log = Object.assign(
+      {
+        debug: noop,
+        info: noop,
+        warn: consoleWarn,
+        error: consoleError
+      },
+      options.log
+    );
+    this.hook = hook;
+    if (!options.authStrategy) {
+      if (!options.auth) {
+        this.auth = async () => ({
+          type: "unauthenticated"
+        });
+      } else {
+        const auth = createTokenAuth(options.auth);
+        hook.wrap("request", auth.hook);
+        this.auth = auth;
+      }
+    } else {
+      const { authStrategy, ...otherOptions } = options;
+      const auth = authStrategy(
+        Object.assign(
+          {
+            request: this.request,
+            log: this.log,
+            // we pass the current octokit instance as well as its constructor options
+            // to allow for authentication strategies that return a new octokit instance
+            // that shares the same internal state as the current one. The original
+            // requirement for this was the "event-octokit" authentication strategy
+            // of https://github.com/probot/octokit-auth-probot.
+            octokit: this,
+            octokitOptions: otherOptions
+          },
+          options.auth
+        )
+      );
+      hook.wrap("request", auth.hook);
+      this.auth = auth;
+    }
+    const classConstructor = this.constructor;
+    for (let i = 0; i < classConstructor.plugins.length; ++i) {
+      Object.assign(this, classConstructor.plugins[i](this, options));
+    }
+  }
+};
+
+var distWeb$1 = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	Octokit: Octokit
+});
+
+var require$$2 = /*@__PURE__*/getAugmentedNamespace(distWeb$1);
+
+const VERSION$1 = "10.4.1";
+
+const Endpoints = {
+  actions: {
+    addCustomLabelsToSelfHostedRunnerForOrg: [
+      "POST /orgs/{org}/actions/runners/{runner_id}/labels"
+    ],
+    addCustomLabelsToSelfHostedRunnerForRepo: [
+      "POST /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
+    ],
+    addSelectedRepoToOrgSecret: [
+      "PUT /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    addSelectedRepoToOrgVariable: [
+      "PUT /orgs/{org}/actions/variables/{name}/repositories/{repository_id}"
+    ],
+    approveWorkflowRun: [
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve"
+    ],
+    cancelWorkflowRun: [
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel"
+    ],
+    createEnvironmentVariable: [
+      "POST /repositories/{repository_id}/environments/{environment_name}/variables"
+    ],
+    createOrUpdateEnvironmentSecret: [
+      "PUT /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
+    ],
+    createOrUpdateOrgSecret: ["PUT /orgs/{org}/actions/secrets/{secret_name}"],
+    createOrUpdateRepoSecret: [
+      "PUT /repos/{owner}/{repo}/actions/secrets/{secret_name}"
+    ],
+    createOrgVariable: ["POST /orgs/{org}/actions/variables"],
+    createRegistrationTokenForOrg: [
+      "POST /orgs/{org}/actions/runners/registration-token"
+    ],
+    createRegistrationTokenForRepo: [
+      "POST /repos/{owner}/{repo}/actions/runners/registration-token"
+    ],
+    createRemoveTokenForOrg: ["POST /orgs/{org}/actions/runners/remove-token"],
+    createRemoveTokenForRepo: [
+      "POST /repos/{owner}/{repo}/actions/runners/remove-token"
+    ],
+    createRepoVariable: ["POST /repos/{owner}/{repo}/actions/variables"],
+    createWorkflowDispatch: [
+      "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches"
+    ],
+    deleteActionsCacheById: [
+      "DELETE /repos/{owner}/{repo}/actions/caches/{cache_id}"
+    ],
+    deleteActionsCacheByKey: [
+      "DELETE /repos/{owner}/{repo}/actions/caches{?key,ref}"
+    ],
+    deleteArtifact: [
+      "DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}"
+    ],
+    deleteEnvironmentSecret: [
+      "DELETE /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
+    ],
+    deleteEnvironmentVariable: [
+      "DELETE /repositories/{repository_id}/environments/{environment_name}/variables/{name}"
+    ],
+    deleteOrgSecret: ["DELETE /orgs/{org}/actions/secrets/{secret_name}"],
+    deleteOrgVariable: ["DELETE /orgs/{org}/actions/variables/{name}"],
+    deleteRepoSecret: [
+      "DELETE /repos/{owner}/{repo}/actions/secrets/{secret_name}"
+    ],
+    deleteRepoVariable: [
+      "DELETE /repos/{owner}/{repo}/actions/variables/{name}"
+    ],
+    deleteSelfHostedRunnerFromOrg: [
+      "DELETE /orgs/{org}/actions/runners/{runner_id}"
+    ],
+    deleteSelfHostedRunnerFromRepo: [
+      "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}"
+    ],
+    deleteWorkflowRun: ["DELETE /repos/{owner}/{repo}/actions/runs/{run_id}"],
+    deleteWorkflowRunLogs: [
+      "DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs"
+    ],
+    disableSelectedRepositoryGithubActionsOrganization: [
+      "DELETE /orgs/{org}/actions/permissions/repositories/{repository_id}"
+    ],
+    disableWorkflow: [
+      "PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable"
+    ],
+    downloadArtifact: [
+      "GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}"
+    ],
+    downloadJobLogsForWorkflowRun: [
+      "GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs"
+    ],
+    downloadWorkflowRunAttemptLogs: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs"
+    ],
+    downloadWorkflowRunLogs: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs"
+    ],
+    enableSelectedRepositoryGithubActionsOrganization: [
+      "PUT /orgs/{org}/actions/permissions/repositories/{repository_id}"
+    ],
+    enableWorkflow: [
+      "PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable"
+    ],
+    forceCancelWorkflowRun: [
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel"
+    ],
+    generateRunnerJitconfigForOrg: [
+      "POST /orgs/{org}/actions/runners/generate-jitconfig"
+    ],
+    generateRunnerJitconfigForRepo: [
+      "POST /repos/{owner}/{repo}/actions/runners/generate-jitconfig"
+    ],
+    getActionsCacheList: ["GET /repos/{owner}/{repo}/actions/caches"],
+    getActionsCacheUsage: ["GET /repos/{owner}/{repo}/actions/cache/usage"],
+    getActionsCacheUsageByRepoForOrg: [
+      "GET /orgs/{org}/actions/cache/usage-by-repository"
+    ],
+    getActionsCacheUsageForOrg: ["GET /orgs/{org}/actions/cache/usage"],
+    getAllowedActionsOrganization: [
+      "GET /orgs/{org}/actions/permissions/selected-actions"
+    ],
+    getAllowedActionsRepository: [
+      "GET /repos/{owner}/{repo}/actions/permissions/selected-actions"
+    ],
+    getArtifact: ["GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}"],
+    getCustomOidcSubClaimForRepo: [
+      "GET /repos/{owner}/{repo}/actions/oidc/customization/sub"
+    ],
+    getEnvironmentPublicKey: [
+      "GET /repositories/{repository_id}/environments/{environment_name}/secrets/public-key"
+    ],
+    getEnvironmentSecret: [
+      "GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
+    ],
+    getEnvironmentVariable: [
+      "GET /repositories/{repository_id}/environments/{environment_name}/variables/{name}"
+    ],
+    getGithubActionsDefaultWorkflowPermissionsOrganization: [
+      "GET /orgs/{org}/actions/permissions/workflow"
+    ],
+    getGithubActionsDefaultWorkflowPermissionsRepository: [
+      "GET /repos/{owner}/{repo}/actions/permissions/workflow"
+    ],
+    getGithubActionsPermissionsOrganization: [
+      "GET /orgs/{org}/actions/permissions"
+    ],
+    getGithubActionsPermissionsRepository: [
+      "GET /repos/{owner}/{repo}/actions/permissions"
+    ],
+    getJobForWorkflowRun: ["GET /repos/{owner}/{repo}/actions/jobs/{job_id}"],
+    getOrgPublicKey: ["GET /orgs/{org}/actions/secrets/public-key"],
+    getOrgSecret: ["GET /orgs/{org}/actions/secrets/{secret_name}"],
+    getOrgVariable: ["GET /orgs/{org}/actions/variables/{name}"],
+    getPendingDeploymentsForRun: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments"
+    ],
+    getRepoPermissions: [
+      "GET /repos/{owner}/{repo}/actions/permissions",
+      {},
+      { renamed: ["actions", "getGithubActionsPermissionsRepository"] }
+    ],
+    getRepoPublicKey: ["GET /repos/{owner}/{repo}/actions/secrets/public-key"],
+    getRepoSecret: ["GET /repos/{owner}/{repo}/actions/secrets/{secret_name}"],
+    getRepoVariable: ["GET /repos/{owner}/{repo}/actions/variables/{name}"],
+    getReviewsForRun: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals"
+    ],
+    getSelfHostedRunnerForOrg: ["GET /orgs/{org}/actions/runners/{runner_id}"],
+    getSelfHostedRunnerForRepo: [
+      "GET /repos/{owner}/{repo}/actions/runners/{runner_id}"
+    ],
+    getWorkflow: ["GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}"],
+    getWorkflowAccessToRepository: [
+      "GET /repos/{owner}/{repo}/actions/permissions/access"
+    ],
+    getWorkflowRun: ["GET /repos/{owner}/{repo}/actions/runs/{run_id}"],
+    getWorkflowRunAttempt: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}"
+    ],
+    getWorkflowRunUsage: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing"
+    ],
+    getWorkflowUsage: [
+      "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing"
+    ],
+    listArtifactsForRepo: ["GET /repos/{owner}/{repo}/actions/artifacts"],
+    listEnvironmentSecrets: [
+      "GET /repositories/{repository_id}/environments/{environment_name}/secrets"
+    ],
+    listEnvironmentVariables: [
+      "GET /repositories/{repository_id}/environments/{environment_name}/variables"
+    ],
+    listJobsForWorkflowRun: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs"
+    ],
+    listJobsForWorkflowRunAttempt: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs"
+    ],
+    listLabelsForSelfHostedRunnerForOrg: [
+      "GET /orgs/{org}/actions/runners/{runner_id}/labels"
+    ],
+    listLabelsForSelfHostedRunnerForRepo: [
+      "GET /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
+    ],
+    listOrgSecrets: ["GET /orgs/{org}/actions/secrets"],
+    listOrgVariables: ["GET /orgs/{org}/actions/variables"],
+    listRepoOrganizationSecrets: [
+      "GET /repos/{owner}/{repo}/actions/organization-secrets"
+    ],
+    listRepoOrganizationVariables: [
+      "GET /repos/{owner}/{repo}/actions/organization-variables"
+    ],
+    listRepoSecrets: ["GET /repos/{owner}/{repo}/actions/secrets"],
+    listRepoVariables: ["GET /repos/{owner}/{repo}/actions/variables"],
+    listRepoWorkflows: ["GET /repos/{owner}/{repo}/actions/workflows"],
+    listRunnerApplicationsForOrg: ["GET /orgs/{org}/actions/runners/downloads"],
+    listRunnerApplicationsForRepo: [
+      "GET /repos/{owner}/{repo}/actions/runners/downloads"
+    ],
+    listSelectedReposForOrgSecret: [
+      "GET /orgs/{org}/actions/secrets/{secret_name}/repositories"
+    ],
+    listSelectedReposForOrgVariable: [
+      "GET /orgs/{org}/actions/variables/{name}/repositories"
+    ],
+    listSelectedRepositoriesEnabledGithubActionsOrganization: [
+      "GET /orgs/{org}/actions/permissions/repositories"
+    ],
+    listSelfHostedRunnersForOrg: ["GET /orgs/{org}/actions/runners"],
+    listSelfHostedRunnersForRepo: ["GET /repos/{owner}/{repo}/actions/runners"],
+    listWorkflowRunArtifacts: [
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts"
+    ],
+    listWorkflowRuns: [
+      "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs"
+    ],
+    listWorkflowRunsForRepo: ["GET /repos/{owner}/{repo}/actions/runs"],
+    reRunJobForWorkflowRun: [
+      "POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun"
+    ],
+    reRunWorkflow: ["POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun"],
+    reRunWorkflowFailedJobs: [
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs"
+    ],
+    removeAllCustomLabelsFromSelfHostedRunnerForOrg: [
+      "DELETE /orgs/{org}/actions/runners/{runner_id}/labels"
+    ],
+    removeAllCustomLabelsFromSelfHostedRunnerForRepo: [
+      "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
+    ],
+    removeCustomLabelFromSelfHostedRunnerForOrg: [
+      "DELETE /orgs/{org}/actions/runners/{runner_id}/labels/{name}"
+    ],
+    removeCustomLabelFromSelfHostedRunnerForRepo: [
+      "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}"
+    ],
+    removeSelectedRepoFromOrgSecret: [
+      "DELETE /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    removeSelectedRepoFromOrgVariable: [
+      "DELETE /orgs/{org}/actions/variables/{name}/repositories/{repository_id}"
+    ],
+    reviewCustomGatesForRun: [
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule"
+    ],
+    reviewPendingDeploymentsForRun: [
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments"
+    ],
+    setAllowedActionsOrganization: [
+      "PUT /orgs/{org}/actions/permissions/selected-actions"
+    ],
+    setAllowedActionsRepository: [
+      "PUT /repos/{owner}/{repo}/actions/permissions/selected-actions"
+    ],
+    setCustomLabelsForSelfHostedRunnerForOrg: [
+      "PUT /orgs/{org}/actions/runners/{runner_id}/labels"
+    ],
+    setCustomLabelsForSelfHostedRunnerForRepo: [
+      "PUT /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
+    ],
+    setCustomOidcSubClaimForRepo: [
+      "PUT /repos/{owner}/{repo}/actions/oidc/customization/sub"
+    ],
+    setGithubActionsDefaultWorkflowPermissionsOrganization: [
+      "PUT /orgs/{org}/actions/permissions/workflow"
+    ],
+    setGithubActionsDefaultWorkflowPermissionsRepository: [
+      "PUT /repos/{owner}/{repo}/actions/permissions/workflow"
+    ],
+    setGithubActionsPermissionsOrganization: [
+      "PUT /orgs/{org}/actions/permissions"
+    ],
+    setGithubActionsPermissionsRepository: [
+      "PUT /repos/{owner}/{repo}/actions/permissions"
+    ],
+    setSelectedReposForOrgSecret: [
+      "PUT /orgs/{org}/actions/secrets/{secret_name}/repositories"
+    ],
+    setSelectedReposForOrgVariable: [
+      "PUT /orgs/{org}/actions/variables/{name}/repositories"
+    ],
+    setSelectedRepositoriesEnabledGithubActionsOrganization: [
+      "PUT /orgs/{org}/actions/permissions/repositories"
+    ],
+    setWorkflowAccessToRepository: [
+      "PUT /repos/{owner}/{repo}/actions/permissions/access"
+    ],
+    updateEnvironmentVariable: [
+      "PATCH /repositories/{repository_id}/environments/{environment_name}/variables/{name}"
+    ],
+    updateOrgVariable: ["PATCH /orgs/{org}/actions/variables/{name}"],
+    updateRepoVariable: [
+      "PATCH /repos/{owner}/{repo}/actions/variables/{name}"
+    ]
+  },
+  activity: {
+    checkRepoIsStarredByAuthenticatedUser: ["GET /user/starred/{owner}/{repo}"],
+    deleteRepoSubscription: ["DELETE /repos/{owner}/{repo}/subscription"],
+    deleteThreadSubscription: [
+      "DELETE /notifications/threads/{thread_id}/subscription"
+    ],
+    getFeeds: ["GET /feeds"],
+    getRepoSubscription: ["GET /repos/{owner}/{repo}/subscription"],
+    getThread: ["GET /notifications/threads/{thread_id}"],
+    getThreadSubscriptionForAuthenticatedUser: [
+      "GET /notifications/threads/{thread_id}/subscription"
+    ],
+    listEventsForAuthenticatedUser: ["GET /users/{username}/events"],
+    listNotificationsForAuthenticatedUser: ["GET /notifications"],
+    listOrgEventsForAuthenticatedUser: [
+      "GET /users/{username}/events/orgs/{org}"
+    ],
+    listPublicEvents: ["GET /events"],
+    listPublicEventsForRepoNetwork: ["GET /networks/{owner}/{repo}/events"],
+    listPublicEventsForUser: ["GET /users/{username}/events/public"],
+    listPublicOrgEvents: ["GET /orgs/{org}/events"],
+    listReceivedEventsForUser: ["GET /users/{username}/received_events"],
+    listReceivedPublicEventsForUser: [
+      "GET /users/{username}/received_events/public"
+    ],
+    listRepoEvents: ["GET /repos/{owner}/{repo}/events"],
+    listRepoNotificationsForAuthenticatedUser: [
+      "GET /repos/{owner}/{repo}/notifications"
+    ],
+    listReposStarredByAuthenticatedUser: ["GET /user/starred"],
+    listReposStarredByUser: ["GET /users/{username}/starred"],
+    listReposWatchedByUser: ["GET /users/{username}/subscriptions"],
+    listStargazersForRepo: ["GET /repos/{owner}/{repo}/stargazers"],
+    listWatchedReposForAuthenticatedUser: ["GET /user/subscriptions"],
+    listWatchersForRepo: ["GET /repos/{owner}/{repo}/subscribers"],
+    markNotificationsAsRead: ["PUT /notifications"],
+    markRepoNotificationsAsRead: ["PUT /repos/{owner}/{repo}/notifications"],
+    markThreadAsDone: ["DELETE /notifications/threads/{thread_id}"],
+    markThreadAsRead: ["PATCH /notifications/threads/{thread_id}"],
+    setRepoSubscription: ["PUT /repos/{owner}/{repo}/subscription"],
+    setThreadSubscription: [
+      "PUT /notifications/threads/{thread_id}/subscription"
+    ],
+    starRepoForAuthenticatedUser: ["PUT /user/starred/{owner}/{repo}"],
+    unstarRepoForAuthenticatedUser: ["DELETE /user/starred/{owner}/{repo}"]
+  },
+  apps: {
+    addRepoToInstallation: [
+      "PUT /user/installations/{installation_id}/repositories/{repository_id}",
+      {},
+      { renamed: ["apps", "addRepoToInstallationForAuthenticatedUser"] }
+    ],
+    addRepoToInstallationForAuthenticatedUser: [
+      "PUT /user/installations/{installation_id}/repositories/{repository_id}"
+    ],
+    checkToken: ["POST /applications/{client_id}/token"],
+    createFromManifest: ["POST /app-manifests/{code}/conversions"],
+    createInstallationAccessToken: [
+      "POST /app/installations/{installation_id}/access_tokens"
+    ],
+    deleteAuthorization: ["DELETE /applications/{client_id}/grant"],
+    deleteInstallation: ["DELETE /app/installations/{installation_id}"],
+    deleteToken: ["DELETE /applications/{client_id}/token"],
+    getAuthenticated: ["GET /app"],
+    getBySlug: ["GET /apps/{app_slug}"],
+    getInstallation: ["GET /app/installations/{installation_id}"],
+    getOrgInstallation: ["GET /orgs/{org}/installation"],
+    getRepoInstallation: ["GET /repos/{owner}/{repo}/installation"],
+    getSubscriptionPlanForAccount: [
+      "GET /marketplace_listing/accounts/{account_id}"
+    ],
+    getSubscriptionPlanForAccountStubbed: [
+      "GET /marketplace_listing/stubbed/accounts/{account_id}"
+    ],
+    getUserInstallation: ["GET /users/{username}/installation"],
+    getWebhookConfigForApp: ["GET /app/hook/config"],
+    getWebhookDelivery: ["GET /app/hook/deliveries/{delivery_id}"],
+    listAccountsForPlan: ["GET /marketplace_listing/plans/{plan_id}/accounts"],
+    listAccountsForPlanStubbed: [
+      "GET /marketplace_listing/stubbed/plans/{plan_id}/accounts"
+    ],
+    listInstallationReposForAuthenticatedUser: [
+      "GET /user/installations/{installation_id}/repositories"
+    ],
+    listInstallationRequestsForAuthenticatedApp: [
+      "GET /app/installation-requests"
+    ],
+    listInstallations: ["GET /app/installations"],
+    listInstallationsForAuthenticatedUser: ["GET /user/installations"],
+    listPlans: ["GET /marketplace_listing/plans"],
+    listPlansStubbed: ["GET /marketplace_listing/stubbed/plans"],
+    listReposAccessibleToInstallation: ["GET /installation/repositories"],
+    listSubscriptionsForAuthenticatedUser: ["GET /user/marketplace_purchases"],
+    listSubscriptionsForAuthenticatedUserStubbed: [
+      "GET /user/marketplace_purchases/stubbed"
+    ],
+    listWebhookDeliveries: ["GET /app/hook/deliveries"],
+    redeliverWebhookDelivery: [
+      "POST /app/hook/deliveries/{delivery_id}/attempts"
+    ],
+    removeRepoFromInstallation: [
+      "DELETE /user/installations/{installation_id}/repositories/{repository_id}",
+      {},
+      { renamed: ["apps", "removeRepoFromInstallationForAuthenticatedUser"] }
+    ],
+    removeRepoFromInstallationForAuthenticatedUser: [
+      "DELETE /user/installations/{installation_id}/repositories/{repository_id}"
+    ],
+    resetToken: ["PATCH /applications/{client_id}/token"],
+    revokeInstallationAccessToken: ["DELETE /installation/token"],
+    scopeToken: ["POST /applications/{client_id}/token/scoped"],
+    suspendInstallation: ["PUT /app/installations/{installation_id}/suspended"],
+    unsuspendInstallation: [
+      "DELETE /app/installations/{installation_id}/suspended"
+    ],
+    updateWebhookConfigForApp: ["PATCH /app/hook/config"]
+  },
+  billing: {
+    getGithubActionsBillingOrg: ["GET /orgs/{org}/settings/billing/actions"],
+    getGithubActionsBillingUser: [
+      "GET /users/{username}/settings/billing/actions"
+    ],
+    getGithubPackagesBillingOrg: ["GET /orgs/{org}/settings/billing/packages"],
+    getGithubPackagesBillingUser: [
+      "GET /users/{username}/settings/billing/packages"
+    ],
+    getSharedStorageBillingOrg: [
+      "GET /orgs/{org}/settings/billing/shared-storage"
+    ],
+    getSharedStorageBillingUser: [
+      "GET /users/{username}/settings/billing/shared-storage"
+    ]
+  },
+  checks: {
+    create: ["POST /repos/{owner}/{repo}/check-runs"],
+    createSuite: ["POST /repos/{owner}/{repo}/check-suites"],
+    get: ["GET /repos/{owner}/{repo}/check-runs/{check_run_id}"],
+    getSuite: ["GET /repos/{owner}/{repo}/check-suites/{check_suite_id}"],
+    listAnnotations: [
+      "GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations"
+    ],
+    listForRef: ["GET /repos/{owner}/{repo}/commits/{ref}/check-runs"],
+    listForSuite: [
+      "GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs"
+    ],
+    listSuitesForRef: ["GET /repos/{owner}/{repo}/commits/{ref}/check-suites"],
+    rerequestRun: [
+      "POST /repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest"
+    ],
+    rerequestSuite: [
+      "POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest"
+    ],
+    setSuitesPreferences: [
+      "PATCH /repos/{owner}/{repo}/check-suites/preferences"
+    ],
+    update: ["PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}"]
+  },
+  codeScanning: {
+    deleteAnalysis: [
+      "DELETE /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}{?confirm_delete}"
+    ],
+    getAlert: [
+      "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}",
+      {},
+      { renamedParameters: { alert_id: "alert_number" } }
+    ],
+    getAnalysis: [
+      "GET /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}"
+    ],
+    getCodeqlDatabase: [
+      "GET /repos/{owner}/{repo}/code-scanning/codeql/databases/{language}"
+    ],
+    getDefaultSetup: ["GET /repos/{owner}/{repo}/code-scanning/default-setup"],
+    getSarif: ["GET /repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}"],
+    listAlertInstances: [
+      "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances"
+    ],
+    listAlertsForOrg: ["GET /orgs/{org}/code-scanning/alerts"],
+    listAlertsForRepo: ["GET /repos/{owner}/{repo}/code-scanning/alerts"],
+    listAlertsInstances: [
+      "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances",
+      {},
+      { renamed: ["codeScanning", "listAlertInstances"] }
+    ],
+    listCodeqlDatabases: [
+      "GET /repos/{owner}/{repo}/code-scanning/codeql/databases"
+    ],
+    listRecentAnalyses: ["GET /repos/{owner}/{repo}/code-scanning/analyses"],
+    updateAlert: [
+      "PATCH /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}"
+    ],
+    updateDefaultSetup: [
+      "PATCH /repos/{owner}/{repo}/code-scanning/default-setup"
+    ],
+    uploadSarif: ["POST /repos/{owner}/{repo}/code-scanning/sarifs"]
+  },
+  codesOfConduct: {
+    getAllCodesOfConduct: ["GET /codes_of_conduct"],
+    getConductCode: ["GET /codes_of_conduct/{key}"]
+  },
+  codespaces: {
+    addRepositoryForSecretForAuthenticatedUser: [
+      "PUT /user/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    addSelectedRepoToOrgSecret: [
+      "PUT /orgs/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    checkPermissionsForDevcontainer: [
+      "GET /repos/{owner}/{repo}/codespaces/permissions_check"
+    ],
+    codespaceMachinesForAuthenticatedUser: [
+      "GET /user/codespaces/{codespace_name}/machines"
+    ],
+    createForAuthenticatedUser: ["POST /user/codespaces"],
+    createOrUpdateOrgSecret: [
+      "PUT /orgs/{org}/codespaces/secrets/{secret_name}"
+    ],
+    createOrUpdateRepoSecret: [
+      "PUT /repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+    ],
+    createOrUpdateSecretForAuthenticatedUser: [
+      "PUT /user/codespaces/secrets/{secret_name}"
+    ],
+    createWithPrForAuthenticatedUser: [
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/codespaces"
+    ],
+    createWithRepoForAuthenticatedUser: [
+      "POST /repos/{owner}/{repo}/codespaces"
+    ],
+    deleteForAuthenticatedUser: ["DELETE /user/codespaces/{codespace_name}"],
+    deleteFromOrganization: [
+      "DELETE /orgs/{org}/members/{username}/codespaces/{codespace_name}"
+    ],
+    deleteOrgSecret: ["DELETE /orgs/{org}/codespaces/secrets/{secret_name}"],
+    deleteRepoSecret: [
+      "DELETE /repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+    ],
+    deleteSecretForAuthenticatedUser: [
+      "DELETE /user/codespaces/secrets/{secret_name}"
+    ],
+    exportForAuthenticatedUser: [
+      "POST /user/codespaces/{codespace_name}/exports"
+    ],
+    getCodespacesForUserInOrg: [
+      "GET /orgs/{org}/members/{username}/codespaces"
+    ],
+    getExportDetailsForAuthenticatedUser: [
+      "GET /user/codespaces/{codespace_name}/exports/{export_id}"
+    ],
+    getForAuthenticatedUser: ["GET /user/codespaces/{codespace_name}"],
+    getOrgPublicKey: ["GET /orgs/{org}/codespaces/secrets/public-key"],
+    getOrgSecret: ["GET /orgs/{org}/codespaces/secrets/{secret_name}"],
+    getPublicKeyForAuthenticatedUser: [
+      "GET /user/codespaces/secrets/public-key"
+    ],
+    getRepoPublicKey: [
+      "GET /repos/{owner}/{repo}/codespaces/secrets/public-key"
+    ],
+    getRepoSecret: [
+      "GET /repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+    ],
+    getSecretForAuthenticatedUser: [
+      "GET /user/codespaces/secrets/{secret_name}"
+    ],
+    listDevcontainersInRepositoryForAuthenticatedUser: [
+      "GET /repos/{owner}/{repo}/codespaces/devcontainers"
+    ],
+    listForAuthenticatedUser: ["GET /user/codespaces"],
+    listInOrganization: [
+      "GET /orgs/{org}/codespaces",
+      {},
+      { renamedParameters: { org_id: "org" } }
+    ],
+    listInRepositoryForAuthenticatedUser: [
+      "GET /repos/{owner}/{repo}/codespaces"
+    ],
+    listOrgSecrets: ["GET /orgs/{org}/codespaces/secrets"],
+    listRepoSecrets: ["GET /repos/{owner}/{repo}/codespaces/secrets"],
+    listRepositoriesForSecretForAuthenticatedUser: [
+      "GET /user/codespaces/secrets/{secret_name}/repositories"
+    ],
+    listSecretsForAuthenticatedUser: ["GET /user/codespaces/secrets"],
+    listSelectedReposForOrgSecret: [
+      "GET /orgs/{org}/codespaces/secrets/{secret_name}/repositories"
+    ],
+    preFlightWithRepoForAuthenticatedUser: [
+      "GET /repos/{owner}/{repo}/codespaces/new"
+    ],
+    publishForAuthenticatedUser: [
+      "POST /user/codespaces/{codespace_name}/publish"
+    ],
+    removeRepositoryForSecretForAuthenticatedUser: [
+      "DELETE /user/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    removeSelectedRepoFromOrgSecret: [
+      "DELETE /orgs/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    repoMachinesForAuthenticatedUser: [
+      "GET /repos/{owner}/{repo}/codespaces/machines"
+    ],
+    setRepositoriesForSecretForAuthenticatedUser: [
+      "PUT /user/codespaces/secrets/{secret_name}/repositories"
+    ],
+    setSelectedReposForOrgSecret: [
+      "PUT /orgs/{org}/codespaces/secrets/{secret_name}/repositories"
+    ],
+    startForAuthenticatedUser: ["POST /user/codespaces/{codespace_name}/start"],
+    stopForAuthenticatedUser: ["POST /user/codespaces/{codespace_name}/stop"],
+    stopInOrganization: [
+      "POST /orgs/{org}/members/{username}/codespaces/{codespace_name}/stop"
+    ],
+    updateForAuthenticatedUser: ["PATCH /user/codespaces/{codespace_name}"]
+  },
+  copilot: {
+    addCopilotSeatsForTeams: [
+      "POST /orgs/{org}/copilot/billing/selected_teams"
+    ],
+    addCopilotSeatsForUsers: [
+      "POST /orgs/{org}/copilot/billing/selected_users"
+    ],
+    cancelCopilotSeatAssignmentForTeams: [
+      "DELETE /orgs/{org}/copilot/billing/selected_teams"
+    ],
+    cancelCopilotSeatAssignmentForUsers: [
+      "DELETE /orgs/{org}/copilot/billing/selected_users"
+    ],
+    getCopilotOrganizationDetails: ["GET /orgs/{org}/copilot/billing"],
+    getCopilotSeatDetailsForUser: [
+      "GET /orgs/{org}/members/{username}/copilot"
+    ],
+    listCopilotSeats: ["GET /orgs/{org}/copilot/billing/seats"]
+  },
+  dependabot: {
+    addSelectedRepoToOrgSecret: [
+      "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    createOrUpdateOrgSecret: [
+      "PUT /orgs/{org}/dependabot/secrets/{secret_name}"
+    ],
+    createOrUpdateRepoSecret: [
+      "PUT /repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
+    ],
+    deleteOrgSecret: ["DELETE /orgs/{org}/dependabot/secrets/{secret_name}"],
+    deleteRepoSecret: [
+      "DELETE /repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
+    ],
+    getAlert: ["GET /repos/{owner}/{repo}/dependabot/alerts/{alert_number}"],
+    getOrgPublicKey: ["GET /orgs/{org}/dependabot/secrets/public-key"],
+    getOrgSecret: ["GET /orgs/{org}/dependabot/secrets/{secret_name}"],
+    getRepoPublicKey: [
+      "GET /repos/{owner}/{repo}/dependabot/secrets/public-key"
+    ],
+    getRepoSecret: [
+      "GET /repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
+    ],
+    listAlertsForEnterprise: [
+      "GET /enterprises/{enterprise}/dependabot/alerts"
+    ],
+    listAlertsForOrg: ["GET /orgs/{org}/dependabot/alerts"],
+    listAlertsForRepo: ["GET /repos/{owner}/{repo}/dependabot/alerts"],
+    listOrgSecrets: ["GET /orgs/{org}/dependabot/secrets"],
+    listRepoSecrets: ["GET /repos/{owner}/{repo}/dependabot/secrets"],
+    listSelectedReposForOrgSecret: [
+      "GET /orgs/{org}/dependabot/secrets/{secret_name}/repositories"
+    ],
+    removeSelectedRepoFromOrgSecret: [
+      "DELETE /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
+    ],
+    setSelectedReposForOrgSecret: [
+      "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories"
+    ],
+    updateAlert: [
+      "PATCH /repos/{owner}/{repo}/dependabot/alerts/{alert_number}"
+    ]
+  },
+  dependencyGraph: {
+    createRepositorySnapshot: [
+      "POST /repos/{owner}/{repo}/dependency-graph/snapshots"
+    ],
+    diffRange: [
+      "GET /repos/{owner}/{repo}/dependency-graph/compare/{basehead}"
+    ],
+    exportSbom: ["GET /repos/{owner}/{repo}/dependency-graph/sbom"]
+  },
+  emojis: { get: ["GET /emojis"] },
+  gists: {
+    checkIsStarred: ["GET /gists/{gist_id}/star"],
+    create: ["POST /gists"],
+    createComment: ["POST /gists/{gist_id}/comments"],
+    delete: ["DELETE /gists/{gist_id}"],
+    deleteComment: ["DELETE /gists/{gist_id}/comments/{comment_id}"],
+    fork: ["POST /gists/{gist_id}/forks"],
+    get: ["GET /gists/{gist_id}"],
+    getComment: ["GET /gists/{gist_id}/comments/{comment_id}"],
+    getRevision: ["GET /gists/{gist_id}/{sha}"],
+    list: ["GET /gists"],
+    listComments: ["GET /gists/{gist_id}/comments"],
+    listCommits: ["GET /gists/{gist_id}/commits"],
+    listForUser: ["GET /users/{username}/gists"],
+    listForks: ["GET /gists/{gist_id}/forks"],
+    listPublic: ["GET /gists/public"],
+    listStarred: ["GET /gists/starred"],
+    star: ["PUT /gists/{gist_id}/star"],
+    unstar: ["DELETE /gists/{gist_id}/star"],
+    update: ["PATCH /gists/{gist_id}"],
+    updateComment: ["PATCH /gists/{gist_id}/comments/{comment_id}"]
+  },
+  git: {
+    createBlob: ["POST /repos/{owner}/{repo}/git/blobs"],
+    createCommit: ["POST /repos/{owner}/{repo}/git/commits"],
+    createRef: ["POST /repos/{owner}/{repo}/git/refs"],
+    createTag: ["POST /repos/{owner}/{repo}/git/tags"],
+    createTree: ["POST /repos/{owner}/{repo}/git/trees"],
+    deleteRef: ["DELETE /repos/{owner}/{repo}/git/refs/{ref}"],
+    getBlob: ["GET /repos/{owner}/{repo}/git/blobs/{file_sha}"],
+    getCommit: ["GET /repos/{owner}/{repo}/git/commits/{commit_sha}"],
+    getRef: ["GET /repos/{owner}/{repo}/git/ref/{ref}"],
+    getTag: ["GET /repos/{owner}/{repo}/git/tags/{tag_sha}"],
+    getTree: ["GET /repos/{owner}/{repo}/git/trees/{tree_sha}"],
+    listMatchingRefs: ["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"],
+    updateRef: ["PATCH /repos/{owner}/{repo}/git/refs/{ref}"]
+  },
+  gitignore: {
+    getAllTemplates: ["GET /gitignore/templates"],
+    getTemplate: ["GET /gitignore/templates/{name}"]
+  },
+  interactions: {
+    getRestrictionsForAuthenticatedUser: ["GET /user/interaction-limits"],
+    getRestrictionsForOrg: ["GET /orgs/{org}/interaction-limits"],
+    getRestrictionsForRepo: ["GET /repos/{owner}/{repo}/interaction-limits"],
+    getRestrictionsForYourPublicRepos: [
+      "GET /user/interaction-limits",
+      {},
+      { renamed: ["interactions", "getRestrictionsForAuthenticatedUser"] }
+    ],
+    removeRestrictionsForAuthenticatedUser: ["DELETE /user/interaction-limits"],
+    removeRestrictionsForOrg: ["DELETE /orgs/{org}/interaction-limits"],
+    removeRestrictionsForRepo: [
+      "DELETE /repos/{owner}/{repo}/interaction-limits"
+    ],
+    removeRestrictionsForYourPublicRepos: [
+      "DELETE /user/interaction-limits",
+      {},
+      { renamed: ["interactions", "removeRestrictionsForAuthenticatedUser"] }
+    ],
+    setRestrictionsForAuthenticatedUser: ["PUT /user/interaction-limits"],
+    setRestrictionsForOrg: ["PUT /orgs/{org}/interaction-limits"],
+    setRestrictionsForRepo: ["PUT /repos/{owner}/{repo}/interaction-limits"],
+    setRestrictionsForYourPublicRepos: [
+      "PUT /user/interaction-limits",
+      {},
+      { renamed: ["interactions", "setRestrictionsForAuthenticatedUser"] }
+    ]
+  },
+  issues: {
+    addAssignees: [
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/assignees"
+    ],
+    addLabels: ["POST /repos/{owner}/{repo}/issues/{issue_number}/labels"],
+    checkUserCanBeAssigned: ["GET /repos/{owner}/{repo}/assignees/{assignee}"],
+    checkUserCanBeAssignedToIssue: [
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/assignees/{assignee}"
+    ],
+    create: ["POST /repos/{owner}/{repo}/issues"],
+    createComment: [
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/comments"
+    ],
+    createLabel: ["POST /repos/{owner}/{repo}/labels"],
+    createMilestone: ["POST /repos/{owner}/{repo}/milestones"],
+    deleteComment: [
+      "DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}"
+    ],
+    deleteLabel: ["DELETE /repos/{owner}/{repo}/labels/{name}"],
+    deleteMilestone: [
+      "DELETE /repos/{owner}/{repo}/milestones/{milestone_number}"
+    ],
+    get: ["GET /repos/{owner}/{repo}/issues/{issue_number}"],
+    getComment: ["GET /repos/{owner}/{repo}/issues/comments/{comment_id}"],
+    getEvent: ["GET /repos/{owner}/{repo}/issues/events/{event_id}"],
+    getLabel: ["GET /repos/{owner}/{repo}/labels/{name}"],
+    getMilestone: ["GET /repos/{owner}/{repo}/milestones/{milestone_number}"],
+    list: ["GET /issues"],
+    listAssignees: ["GET /repos/{owner}/{repo}/assignees"],
+    listComments: ["GET /repos/{owner}/{repo}/issues/{issue_number}/comments"],
+    listCommentsForRepo: ["GET /repos/{owner}/{repo}/issues/comments"],
+    listEvents: ["GET /repos/{owner}/{repo}/issues/{issue_number}/events"],
+    listEventsForRepo: ["GET /repos/{owner}/{repo}/issues/events"],
+    listEventsForTimeline: [
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline"
+    ],
+    listForAuthenticatedUser: ["GET /user/issues"],
+    listForOrg: ["GET /orgs/{org}/issues"],
+    listForRepo: ["GET /repos/{owner}/{repo}/issues"],
+    listLabelsForMilestone: [
+      "GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels"
+    ],
+    listLabelsForRepo: ["GET /repos/{owner}/{repo}/labels"],
+    listLabelsOnIssue: [
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/labels"
+    ],
+    listMilestones: ["GET /repos/{owner}/{repo}/milestones"],
+    lock: ["PUT /repos/{owner}/{repo}/issues/{issue_number}/lock"],
+    removeAllLabels: [
+      "DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels"
+    ],
+    removeAssignees: [
+      "DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees"
+    ],
+    removeLabel: [
+      "DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}"
+    ],
+    setLabels: ["PUT /repos/{owner}/{repo}/issues/{issue_number}/labels"],
+    unlock: ["DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock"],
+    update: ["PATCH /repos/{owner}/{repo}/issues/{issue_number}"],
+    updateComment: ["PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}"],
+    updateLabel: ["PATCH /repos/{owner}/{repo}/labels/{name}"],
+    updateMilestone: [
+      "PATCH /repos/{owner}/{repo}/milestones/{milestone_number}"
+    ]
+  },
+  licenses: {
+    get: ["GET /licenses/{license}"],
+    getAllCommonlyUsed: ["GET /licenses"],
+    getForRepo: ["GET /repos/{owner}/{repo}/license"]
+  },
+  markdown: {
+    render: ["POST /markdown"],
+    renderRaw: [
+      "POST /markdown/raw",
+      { headers: { "content-type": "text/plain; charset=utf-8" } }
+    ]
+  },
+  meta: {
+    get: ["GET /meta"],
+    getAllVersions: ["GET /versions"],
+    getOctocat: ["GET /octocat"],
+    getZen: ["GET /zen"],
+    root: ["GET /"]
+  },
+  migrations: {
+    cancelImport: [
+      "DELETE /repos/{owner}/{repo}/import",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.cancelImport() is deprecated, see https://docs.github.com/rest/migrations/source-imports#cancel-an-import"
+      }
+    ],
+    deleteArchiveForAuthenticatedUser: [
+      "DELETE /user/migrations/{migration_id}/archive"
+    ],
+    deleteArchiveForOrg: [
+      "DELETE /orgs/{org}/migrations/{migration_id}/archive"
+    ],
+    downloadArchiveForOrg: [
+      "GET /orgs/{org}/migrations/{migration_id}/archive"
+    ],
+    getArchiveForAuthenticatedUser: [
+      "GET /user/migrations/{migration_id}/archive"
+    ],
+    getCommitAuthors: [
+      "GET /repos/{owner}/{repo}/import/authors",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.getCommitAuthors() is deprecated, see https://docs.github.com/rest/migrations/source-imports#get-commit-authors"
+      }
+    ],
+    getImportStatus: [
+      "GET /repos/{owner}/{repo}/import",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.getImportStatus() is deprecated, see https://docs.github.com/rest/migrations/source-imports#get-an-import-status"
+      }
+    ],
+    getLargeFiles: [
+      "GET /repos/{owner}/{repo}/import/large_files",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.getLargeFiles() is deprecated, see https://docs.github.com/rest/migrations/source-imports#get-large-files"
+      }
+    ],
+    getStatusForAuthenticatedUser: ["GET /user/migrations/{migration_id}"],
+    getStatusForOrg: ["GET /orgs/{org}/migrations/{migration_id}"],
+    listForAuthenticatedUser: ["GET /user/migrations"],
+    listForOrg: ["GET /orgs/{org}/migrations"],
+    listReposForAuthenticatedUser: [
+      "GET /user/migrations/{migration_id}/repositories"
+    ],
+    listReposForOrg: ["GET /orgs/{org}/migrations/{migration_id}/repositories"],
+    listReposForUser: [
+      "GET /user/migrations/{migration_id}/repositories",
+      {},
+      { renamed: ["migrations", "listReposForAuthenticatedUser"] }
+    ],
+    mapCommitAuthor: [
+      "PATCH /repos/{owner}/{repo}/import/authors/{author_id}",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.mapCommitAuthor() is deprecated, see https://docs.github.com/rest/migrations/source-imports#map-a-commit-author"
+      }
+    ],
+    setLfsPreference: [
+      "PATCH /repos/{owner}/{repo}/import/lfs",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.setLfsPreference() is deprecated, see https://docs.github.com/rest/migrations/source-imports#update-git-lfs-preference"
+      }
+    ],
+    startForAuthenticatedUser: ["POST /user/migrations"],
+    startForOrg: ["POST /orgs/{org}/migrations"],
+    startImport: [
+      "PUT /repos/{owner}/{repo}/import",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.startImport() is deprecated, see https://docs.github.com/rest/migrations/source-imports#start-an-import"
+      }
+    ],
+    unlockRepoForAuthenticatedUser: [
+      "DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock"
+    ],
+    unlockRepoForOrg: [
+      "DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock"
+    ],
+    updateImport: [
+      "PATCH /repos/{owner}/{repo}/import",
+      {},
+      {
+        deprecated: "octokit.rest.migrations.updateImport() is deprecated, see https://docs.github.com/rest/migrations/source-imports#update-an-import"
+      }
+    ]
+  },
+  oidc: {
+    getOidcCustomSubTemplateForOrg: [
+      "GET /orgs/{org}/actions/oidc/customization/sub"
+    ],
+    updateOidcCustomSubTemplateForOrg: [
+      "PUT /orgs/{org}/actions/oidc/customization/sub"
+    ]
+  },
+  orgs: {
+    addSecurityManagerTeam: [
+      "PUT /orgs/{org}/security-managers/teams/{team_slug}"
+    ],
+    assignTeamToOrgRole: [
+      "PUT /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}"
+    ],
+    assignUserToOrgRole: [
+      "PUT /orgs/{org}/organization-roles/users/{username}/{role_id}"
+    ],
+    blockUser: ["PUT /orgs/{org}/blocks/{username}"],
+    cancelInvitation: ["DELETE /orgs/{org}/invitations/{invitation_id}"],
+    checkBlockedUser: ["GET /orgs/{org}/blocks/{username}"],
+    checkMembershipForUser: ["GET /orgs/{org}/members/{username}"],
+    checkPublicMembershipForUser: ["GET /orgs/{org}/public_members/{username}"],
+    convertMemberToOutsideCollaborator: [
+      "PUT /orgs/{org}/outside_collaborators/{username}"
+    ],
+    createCustomOrganizationRole: ["POST /orgs/{org}/organization-roles"],
+    createInvitation: ["POST /orgs/{org}/invitations"],
+    createOrUpdateCustomProperties: ["PATCH /orgs/{org}/properties/schema"],
+    createOrUpdateCustomPropertiesValuesForRepos: [
+      "PATCH /orgs/{org}/properties/values"
+    ],
+    createOrUpdateCustomProperty: [
+      "PUT /orgs/{org}/properties/schema/{custom_property_name}"
+    ],
+    createWebhook: ["POST /orgs/{org}/hooks"],
+    delete: ["DELETE /orgs/{org}"],
+    deleteCustomOrganizationRole: [
+      "DELETE /orgs/{org}/organization-roles/{role_id}"
+    ],
+    deleteWebhook: ["DELETE /orgs/{org}/hooks/{hook_id}"],
+    enableOrDisableSecurityProductOnAllOrgRepos: [
+      "POST /orgs/{org}/{security_product}/{enablement}"
+    ],
+    get: ["GET /orgs/{org}"],
+    getAllCustomProperties: ["GET /orgs/{org}/properties/schema"],
+    getCustomProperty: [
+      "GET /orgs/{org}/properties/schema/{custom_property_name}"
+    ],
+    getMembershipForAuthenticatedUser: ["GET /user/memberships/orgs/{org}"],
+    getMembershipForUser: ["GET /orgs/{org}/memberships/{username}"],
+    getOrgRole: ["GET /orgs/{org}/organization-roles/{role_id}"],
+    getWebhook: ["GET /orgs/{org}/hooks/{hook_id}"],
+    getWebhookConfigForOrg: ["GET /orgs/{org}/hooks/{hook_id}/config"],
+    getWebhookDelivery: [
+      "GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}"
+    ],
+    list: ["GET /organizations"],
+    listAppInstallations: ["GET /orgs/{org}/installations"],
+    listBlockedUsers: ["GET /orgs/{org}/blocks"],
+    listCustomPropertiesValuesForRepos: ["GET /orgs/{org}/properties/values"],
+    listFailedInvitations: ["GET /orgs/{org}/failed_invitations"],
+    listForAuthenticatedUser: ["GET /user/orgs"],
+    listForUser: ["GET /users/{username}/orgs"],
+    listInvitationTeams: ["GET /orgs/{org}/invitations/{invitation_id}/teams"],
+    listMembers: ["GET /orgs/{org}/members"],
+    listMembershipsForAuthenticatedUser: ["GET /user/memberships/orgs"],
+    listOrgRoleTeams: ["GET /orgs/{org}/organization-roles/{role_id}/teams"],
+    listOrgRoleUsers: ["GET /orgs/{org}/organization-roles/{role_id}/users"],
+    listOrgRoles: ["GET /orgs/{org}/organization-roles"],
+    listOrganizationFineGrainedPermissions: [
+      "GET /orgs/{org}/organization-fine-grained-permissions"
+    ],
+    listOutsideCollaborators: ["GET /orgs/{org}/outside_collaborators"],
+    listPatGrantRepositories: [
+      "GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories"
+    ],
+    listPatGrantRequestRepositories: [
+      "GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories"
+    ],
+    listPatGrantRequests: ["GET /orgs/{org}/personal-access-token-requests"],
+    listPatGrants: ["GET /orgs/{org}/personal-access-tokens"],
+    listPendingInvitations: ["GET /orgs/{org}/invitations"],
+    listPublicMembers: ["GET /orgs/{org}/public_members"],
+    listSecurityManagerTeams: ["GET /orgs/{org}/security-managers"],
+    listWebhookDeliveries: ["GET /orgs/{org}/hooks/{hook_id}/deliveries"],
+    listWebhooks: ["GET /orgs/{org}/hooks"],
+    patchCustomOrganizationRole: [
+      "PATCH /orgs/{org}/organization-roles/{role_id}"
+    ],
+    pingWebhook: ["POST /orgs/{org}/hooks/{hook_id}/pings"],
+    redeliverWebhookDelivery: [
+      "POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts"
+    ],
+    removeCustomProperty: [
+      "DELETE /orgs/{org}/properties/schema/{custom_property_name}"
+    ],
+    removeMember: ["DELETE /orgs/{org}/members/{username}"],
+    removeMembershipForUser: ["DELETE /orgs/{org}/memberships/{username}"],
+    removeOutsideCollaborator: [
+      "DELETE /orgs/{org}/outside_collaborators/{username}"
+    ],
+    removePublicMembershipForAuthenticatedUser: [
+      "DELETE /orgs/{org}/public_members/{username}"
+    ],
+    removeSecurityManagerTeam: [
+      "DELETE /orgs/{org}/security-managers/teams/{team_slug}"
+    ],
+    reviewPatGrantRequest: [
+      "POST /orgs/{org}/personal-access-token-requests/{pat_request_id}"
+    ],
+    reviewPatGrantRequestsInBulk: [
+      "POST /orgs/{org}/personal-access-token-requests"
+    ],
+    revokeAllOrgRolesTeam: [
+      "DELETE /orgs/{org}/organization-roles/teams/{team_slug}"
+    ],
+    revokeAllOrgRolesUser: [
+      "DELETE /orgs/{org}/organization-roles/users/{username}"
+    ],
+    revokeOrgRoleTeam: [
+      "DELETE /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}"
+    ],
+    revokeOrgRoleUser: [
+      "DELETE /orgs/{org}/organization-roles/users/{username}/{role_id}"
+    ],
+    setMembershipForUser: ["PUT /orgs/{org}/memberships/{username}"],
+    setPublicMembershipForAuthenticatedUser: [
+      "PUT /orgs/{org}/public_members/{username}"
+    ],
+    unblockUser: ["DELETE /orgs/{org}/blocks/{username}"],
+    update: ["PATCH /orgs/{org}"],
+    updateMembershipForAuthenticatedUser: [
+      "PATCH /user/memberships/orgs/{org}"
+    ],
+    updatePatAccess: ["POST /orgs/{org}/personal-access-tokens/{pat_id}"],
+    updatePatAccesses: ["POST /orgs/{org}/personal-access-tokens"],
+    updateWebhook: ["PATCH /orgs/{org}/hooks/{hook_id}"],
+    updateWebhookConfigForOrg: ["PATCH /orgs/{org}/hooks/{hook_id}/config"]
+  },
+  packages: {
+    deletePackageForAuthenticatedUser: [
+      "DELETE /user/packages/{package_type}/{package_name}"
+    ],
+    deletePackageForOrg: [
+      "DELETE /orgs/{org}/packages/{package_type}/{package_name}"
+    ],
+    deletePackageForUser: [
+      "DELETE /users/{username}/packages/{package_type}/{package_name}"
+    ],
+    deletePackageVersionForAuthenticatedUser: [
+      "DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}"
+    ],
+    deletePackageVersionForOrg: [
+      "DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+    ],
+    deletePackageVersionForUser: [
+      "DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+    ],
+    getAllPackageVersionsForAPackageOwnedByAnOrg: [
+      "GET /orgs/{org}/packages/{package_type}/{package_name}/versions",
+      {},
+      { renamed: ["packages", "getAllPackageVersionsForPackageOwnedByOrg"] }
+    ],
+    getAllPackageVersionsForAPackageOwnedByTheAuthenticatedUser: [
+      "GET /user/packages/{package_type}/{package_name}/versions",
+      {},
+      {
+        renamed: [
+          "packages",
+          "getAllPackageVersionsForPackageOwnedByAuthenticatedUser"
+        ]
+      }
+    ],
+    getAllPackageVersionsForPackageOwnedByAuthenticatedUser: [
+      "GET /user/packages/{package_type}/{package_name}/versions"
+    ],
+    getAllPackageVersionsForPackageOwnedByOrg: [
+      "GET /orgs/{org}/packages/{package_type}/{package_name}/versions"
+    ],
+    getAllPackageVersionsForPackageOwnedByUser: [
+      "GET /users/{username}/packages/{package_type}/{package_name}/versions"
+    ],
+    getPackageForAuthenticatedUser: [
+      "GET /user/packages/{package_type}/{package_name}"
+    ],
+    getPackageForOrganization: [
+      "GET /orgs/{org}/packages/{package_type}/{package_name}"
+    ],
+    getPackageForUser: [
+      "GET /users/{username}/packages/{package_type}/{package_name}"
+    ],
+    getPackageVersionForAuthenticatedUser: [
+      "GET /user/packages/{package_type}/{package_name}/versions/{package_version_id}"
+    ],
+    getPackageVersionForOrganization: [
+      "GET /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+    ],
+    getPackageVersionForUser: [
+      "GET /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+    ],
+    listDockerMigrationConflictingPackagesForAuthenticatedUser: [
+      "GET /user/docker/conflicts"
+    ],
+    listDockerMigrationConflictingPackagesForOrganization: [
+      "GET /orgs/{org}/docker/conflicts"
+    ],
+    listDockerMigrationConflictingPackagesForUser: [
+      "GET /users/{username}/docker/conflicts"
+    ],
+    listPackagesForAuthenticatedUser: ["GET /user/packages"],
+    listPackagesForOrganization: ["GET /orgs/{org}/packages"],
+    listPackagesForUser: ["GET /users/{username}/packages"],
+    restorePackageForAuthenticatedUser: [
+      "POST /user/packages/{package_type}/{package_name}/restore{?token}"
+    ],
+    restorePackageForOrg: [
+      "POST /orgs/{org}/packages/{package_type}/{package_name}/restore{?token}"
+    ],
+    restorePackageForUser: [
+      "POST /users/{username}/packages/{package_type}/{package_name}/restore{?token}"
+    ],
+    restorePackageVersionForAuthenticatedUser: [
+      "POST /user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+    ],
+    restorePackageVersionForOrg: [
+      "POST /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+    ],
+    restorePackageVersionForUser: [
+      "POST /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+    ]
+  },
+  projects: {
+    addCollaborator: ["PUT /projects/{project_id}/collaborators/{username}"],
+    createCard: ["POST /projects/columns/{column_id}/cards"],
+    createColumn: ["POST /projects/{project_id}/columns"],
+    createForAuthenticatedUser: ["POST /user/projects"],
+    createForOrg: ["POST /orgs/{org}/projects"],
+    createForRepo: ["POST /repos/{owner}/{repo}/projects"],
+    delete: ["DELETE /projects/{project_id}"],
+    deleteCard: ["DELETE /projects/columns/cards/{card_id}"],
+    deleteColumn: ["DELETE /projects/columns/{column_id}"],
+    get: ["GET /projects/{project_id}"],
+    getCard: ["GET /projects/columns/cards/{card_id}"],
+    getColumn: ["GET /projects/columns/{column_id}"],
+    getPermissionForUser: [
+      "GET /projects/{project_id}/collaborators/{username}/permission"
+    ],
+    listCards: ["GET /projects/columns/{column_id}/cards"],
+    listCollaborators: ["GET /projects/{project_id}/collaborators"],
+    listColumns: ["GET /projects/{project_id}/columns"],
+    listForOrg: ["GET /orgs/{org}/projects"],
+    listForRepo: ["GET /repos/{owner}/{repo}/projects"],
+    listForUser: ["GET /users/{username}/projects"],
+    moveCard: ["POST /projects/columns/cards/{card_id}/moves"],
+    moveColumn: ["POST /projects/columns/{column_id}/moves"],
+    removeCollaborator: [
+      "DELETE /projects/{project_id}/collaborators/{username}"
+    ],
+    update: ["PATCH /projects/{project_id}"],
+    updateCard: ["PATCH /projects/columns/cards/{card_id}"],
+    updateColumn: ["PATCH /projects/columns/{column_id}"]
+  },
+  pulls: {
+    checkIfMerged: ["GET /repos/{owner}/{repo}/pulls/{pull_number}/merge"],
+    create: ["POST /repos/{owner}/{repo}/pulls"],
+    createReplyForReviewComment: [
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies"
+    ],
+    createReview: ["POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews"],
+    createReviewComment: [
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/comments"
+    ],
+    deletePendingReview: [
+      "DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}"
+    ],
+    deleteReviewComment: [
+      "DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}"
+    ],
+    dismissReview: [
+      "PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals"
+    ],
+    get: ["GET /repos/{owner}/{repo}/pulls/{pull_number}"],
+    getReview: [
+      "GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}"
+    ],
+    getReviewComment: ["GET /repos/{owner}/{repo}/pulls/comments/{comment_id}"],
+    list: ["GET /repos/{owner}/{repo}/pulls"],
+    listCommentsForReview: [
+      "GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments"
+    ],
+    listCommits: ["GET /repos/{owner}/{repo}/pulls/{pull_number}/commits"],
+    listFiles: ["GET /repos/{owner}/{repo}/pulls/{pull_number}/files"],
+    listRequestedReviewers: [
+      "GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers"
+    ],
+    listReviewComments: [
+      "GET /repos/{owner}/{repo}/pulls/{pull_number}/comments"
+    ],
+    listReviewCommentsForRepo: ["GET /repos/{owner}/{repo}/pulls/comments"],
+    listReviews: ["GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews"],
+    merge: ["PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge"],
+    removeRequestedReviewers: [
+      "DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers"
+    ],
+    requestReviewers: [
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers"
+    ],
+    submitReview: [
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events"
+    ],
+    update: ["PATCH /repos/{owner}/{repo}/pulls/{pull_number}"],
+    updateBranch: [
+      "PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch"
+    ],
+    updateReview: [
+      "PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}"
+    ],
+    updateReviewComment: [
+      "PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}"
+    ]
+  },
+  rateLimit: { get: ["GET /rate_limit"] },
+  reactions: {
+    createForCommitComment: [
+      "POST /repos/{owner}/{repo}/comments/{comment_id}/reactions"
+    ],
+    createForIssue: [
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/reactions"
+    ],
+    createForIssueComment: [
+      "POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions"
+    ],
+    createForPullRequestReviewComment: [
+      "POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions"
+    ],
+    createForRelease: [
+      "POST /repos/{owner}/{repo}/releases/{release_id}/reactions"
+    ],
+    createForTeamDiscussionCommentInOrg: [
+      "POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions"
+    ],
+    createForTeamDiscussionInOrg: [
+      "POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions"
+    ],
+    deleteForCommitComment: [
+      "DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}"
+    ],
+    deleteForIssue: [
+      "DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}"
+    ],
+    deleteForIssueComment: [
+      "DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}"
+    ],
+    deleteForPullRequestComment: [
+      "DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}"
+    ],
+    deleteForRelease: [
+      "DELETE /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}"
+    ],
+    deleteForTeamDiscussion: [
+      "DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}"
+    ],
+    deleteForTeamDiscussionComment: [
+      "DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}"
+    ],
+    listForCommitComment: [
+      "GET /repos/{owner}/{repo}/comments/{comment_id}/reactions"
+    ],
+    listForIssue: ["GET /repos/{owner}/{repo}/issues/{issue_number}/reactions"],
+    listForIssueComment: [
+      "GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions"
+    ],
+    listForPullRequestReviewComment: [
+      "GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions"
+    ],
+    listForRelease: [
+      "GET /repos/{owner}/{repo}/releases/{release_id}/reactions"
+    ],
+    listForTeamDiscussionCommentInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions"
+    ],
+    listForTeamDiscussionInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions"
+    ]
+  },
+  repos: {
+    acceptInvitation: [
+      "PATCH /user/repository_invitations/{invitation_id}",
+      {},
+      { renamed: ["repos", "acceptInvitationForAuthenticatedUser"] }
+    ],
+    acceptInvitationForAuthenticatedUser: [
+      "PATCH /user/repository_invitations/{invitation_id}"
+    ],
+    addAppAccessRestrictions: [
+      "POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
+      {},
+      { mapToData: "apps" }
+    ],
+    addCollaborator: ["PUT /repos/{owner}/{repo}/collaborators/{username}"],
+    addStatusCheckContexts: [
+      "POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
+      {},
+      { mapToData: "contexts" }
+    ],
+    addTeamAccessRestrictions: [
+      "POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
+      {},
+      { mapToData: "teams" }
+    ],
+    addUserAccessRestrictions: [
+      "POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
+      {},
+      { mapToData: "users" }
+    ],
+    cancelPagesDeployment: [
+      "POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel"
+    ],
+    checkAutomatedSecurityFixes: [
+      "GET /repos/{owner}/{repo}/automated-security-fixes"
+    ],
+    checkCollaborator: ["GET /repos/{owner}/{repo}/collaborators/{username}"],
+    checkVulnerabilityAlerts: [
+      "GET /repos/{owner}/{repo}/vulnerability-alerts"
+    ],
+    codeownersErrors: ["GET /repos/{owner}/{repo}/codeowners/errors"],
+    compareCommits: ["GET /repos/{owner}/{repo}/compare/{base}...{head}"],
+    compareCommitsWithBasehead: [
+      "GET /repos/{owner}/{repo}/compare/{basehead}"
+    ],
+    createAutolink: ["POST /repos/{owner}/{repo}/autolinks"],
+    createCommitComment: [
+      "POST /repos/{owner}/{repo}/commits/{commit_sha}/comments"
+    ],
+    createCommitSignatureProtection: [
+      "POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures"
+    ],
+    createCommitStatus: ["POST /repos/{owner}/{repo}/statuses/{sha}"],
+    createDeployKey: ["POST /repos/{owner}/{repo}/keys"],
+    createDeployment: ["POST /repos/{owner}/{repo}/deployments"],
+    createDeploymentBranchPolicy: [
+      "POST /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies"
+    ],
+    createDeploymentProtectionRule: [
+      "POST /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules"
+    ],
+    createDeploymentStatus: [
+      "POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses"
+    ],
+    createDispatchEvent: ["POST /repos/{owner}/{repo}/dispatches"],
+    createForAuthenticatedUser: ["POST /user/repos"],
+    createFork: ["POST /repos/{owner}/{repo}/forks"],
+    createInOrg: ["POST /orgs/{org}/repos"],
+    createOrUpdateCustomPropertiesValues: [
+      "PATCH /repos/{owner}/{repo}/properties/values"
+    ],
+    createOrUpdateEnvironment: [
+      "PUT /repos/{owner}/{repo}/environments/{environment_name}"
+    ],
+    createOrUpdateFileContents: ["PUT /repos/{owner}/{repo}/contents/{path}"],
+    createOrgRuleset: ["POST /orgs/{org}/rulesets"],
+    createPagesDeployment: ["POST /repos/{owner}/{repo}/pages/deployments"],
+    createPagesSite: ["POST /repos/{owner}/{repo}/pages"],
+    createRelease: ["POST /repos/{owner}/{repo}/releases"],
+    createRepoRuleset: ["POST /repos/{owner}/{repo}/rulesets"],
+    createTagProtection: ["POST /repos/{owner}/{repo}/tags/protection"],
+    createUsingTemplate: [
+      "POST /repos/{template_owner}/{template_repo}/generate"
+    ],
+    createWebhook: ["POST /repos/{owner}/{repo}/hooks"],
+    declineInvitation: [
+      "DELETE /user/repository_invitations/{invitation_id}",
+      {},
+      { renamed: ["repos", "declineInvitationForAuthenticatedUser"] }
+    ],
+    declineInvitationForAuthenticatedUser: [
+      "DELETE /user/repository_invitations/{invitation_id}"
+    ],
+    delete: ["DELETE /repos/{owner}/{repo}"],
+    deleteAccessRestrictions: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions"
+    ],
+    deleteAdminBranchProtection: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins"
+    ],
+    deleteAnEnvironment: [
+      "DELETE /repos/{owner}/{repo}/environments/{environment_name}"
+    ],
+    deleteAutolink: ["DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}"],
+    deleteBranchProtection: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection"
+    ],
+    deleteCommitComment: ["DELETE /repos/{owner}/{repo}/comments/{comment_id}"],
+    deleteCommitSignatureProtection: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures"
+    ],
+    deleteDeployKey: ["DELETE /repos/{owner}/{repo}/keys/{key_id}"],
+    deleteDeployment: [
+      "DELETE /repos/{owner}/{repo}/deployments/{deployment_id}"
+    ],
+    deleteDeploymentBranchPolicy: [
+      "DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}"
+    ],
+    deleteFile: ["DELETE /repos/{owner}/{repo}/contents/{path}"],
+    deleteInvitation: [
+      "DELETE /repos/{owner}/{repo}/invitations/{invitation_id}"
+    ],
+    deleteOrgRuleset: ["DELETE /orgs/{org}/rulesets/{ruleset_id}"],
+    deletePagesSite: ["DELETE /repos/{owner}/{repo}/pages"],
+    deletePullRequestReviewProtection: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
+    ],
+    deleteRelease: ["DELETE /repos/{owner}/{repo}/releases/{release_id}"],
+    deleteReleaseAsset: [
+      "DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}"
+    ],
+    deleteRepoRuleset: ["DELETE /repos/{owner}/{repo}/rulesets/{ruleset_id}"],
+    deleteTagProtection: [
+      "DELETE /repos/{owner}/{repo}/tags/protection/{tag_protection_id}"
+    ],
+    deleteWebhook: ["DELETE /repos/{owner}/{repo}/hooks/{hook_id}"],
+    disableAutomatedSecurityFixes: [
+      "DELETE /repos/{owner}/{repo}/automated-security-fixes"
+    ],
+    disableDeploymentProtectionRule: [
+      "DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}"
+    ],
+    disablePrivateVulnerabilityReporting: [
+      "DELETE /repos/{owner}/{repo}/private-vulnerability-reporting"
+    ],
+    disableVulnerabilityAlerts: [
+      "DELETE /repos/{owner}/{repo}/vulnerability-alerts"
+    ],
+    downloadArchive: [
+      "GET /repos/{owner}/{repo}/zipball/{ref}",
+      {},
+      { renamed: ["repos", "downloadZipballArchive"] }
+    ],
+    downloadTarballArchive: ["GET /repos/{owner}/{repo}/tarball/{ref}"],
+    downloadZipballArchive: ["GET /repos/{owner}/{repo}/zipball/{ref}"],
+    enableAutomatedSecurityFixes: [
+      "PUT /repos/{owner}/{repo}/automated-security-fixes"
+    ],
+    enablePrivateVulnerabilityReporting: [
+      "PUT /repos/{owner}/{repo}/private-vulnerability-reporting"
+    ],
+    enableVulnerabilityAlerts: [
+      "PUT /repos/{owner}/{repo}/vulnerability-alerts"
+    ],
+    generateReleaseNotes: [
+      "POST /repos/{owner}/{repo}/releases/generate-notes"
+    ],
+    get: ["GET /repos/{owner}/{repo}"],
+    getAccessRestrictions: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions"
+    ],
+    getAdminBranchProtection: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins"
+    ],
+    getAllDeploymentProtectionRules: [
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules"
+    ],
+    getAllEnvironments: ["GET /repos/{owner}/{repo}/environments"],
+    getAllStatusCheckContexts: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts"
+    ],
+    getAllTopics: ["GET /repos/{owner}/{repo}/topics"],
+    getAppsWithAccessToProtectedBranch: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps"
+    ],
+    getAutolink: ["GET /repos/{owner}/{repo}/autolinks/{autolink_id}"],
+    getBranch: ["GET /repos/{owner}/{repo}/branches/{branch}"],
+    getBranchProtection: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection"
+    ],
+    getBranchRules: ["GET /repos/{owner}/{repo}/rules/branches/{branch}"],
+    getClones: ["GET /repos/{owner}/{repo}/traffic/clones"],
+    getCodeFrequencyStats: ["GET /repos/{owner}/{repo}/stats/code_frequency"],
+    getCollaboratorPermissionLevel: [
+      "GET /repos/{owner}/{repo}/collaborators/{username}/permission"
+    ],
+    getCombinedStatusForRef: ["GET /repos/{owner}/{repo}/commits/{ref}/status"],
+    getCommit: ["GET /repos/{owner}/{repo}/commits/{ref}"],
+    getCommitActivityStats: ["GET /repos/{owner}/{repo}/stats/commit_activity"],
+    getCommitComment: ["GET /repos/{owner}/{repo}/comments/{comment_id}"],
+    getCommitSignatureProtection: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures"
+    ],
+    getCommunityProfileMetrics: ["GET /repos/{owner}/{repo}/community/profile"],
+    getContent: ["GET /repos/{owner}/{repo}/contents/{path}"],
+    getContributorsStats: ["GET /repos/{owner}/{repo}/stats/contributors"],
+    getCustomDeploymentProtectionRule: [
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}"
+    ],
+    getCustomPropertiesValues: ["GET /repos/{owner}/{repo}/properties/values"],
+    getDeployKey: ["GET /repos/{owner}/{repo}/keys/{key_id}"],
+    getDeployment: ["GET /repos/{owner}/{repo}/deployments/{deployment_id}"],
+    getDeploymentBranchPolicy: [
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}"
+    ],
+    getDeploymentStatus: [
+      "GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}"
+    ],
+    getEnvironment: [
+      "GET /repos/{owner}/{repo}/environments/{environment_name}"
+    ],
+    getLatestPagesBuild: ["GET /repos/{owner}/{repo}/pages/builds/latest"],
+    getLatestRelease: ["GET /repos/{owner}/{repo}/releases/latest"],
+    getOrgRuleSuite: ["GET /orgs/{org}/rulesets/rule-suites/{rule_suite_id}"],
+    getOrgRuleSuites: ["GET /orgs/{org}/rulesets/rule-suites"],
+    getOrgRuleset: ["GET /orgs/{org}/rulesets/{ruleset_id}"],
+    getOrgRulesets: ["GET /orgs/{org}/rulesets"],
+    getPages: ["GET /repos/{owner}/{repo}/pages"],
+    getPagesBuild: ["GET /repos/{owner}/{repo}/pages/builds/{build_id}"],
+    getPagesDeployment: [
+      "GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}"
+    ],
+    getPagesHealthCheck: ["GET /repos/{owner}/{repo}/pages/health"],
+    getParticipationStats: ["GET /repos/{owner}/{repo}/stats/participation"],
+    getPullRequestReviewProtection: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
+    ],
+    getPunchCardStats: ["GET /repos/{owner}/{repo}/stats/punch_card"],
+    getReadme: ["GET /repos/{owner}/{repo}/readme"],
+    getReadmeInDirectory: ["GET /repos/{owner}/{repo}/readme/{dir}"],
+    getRelease: ["GET /repos/{owner}/{repo}/releases/{release_id}"],
+    getReleaseAsset: ["GET /repos/{owner}/{repo}/releases/assets/{asset_id}"],
+    getReleaseByTag: ["GET /repos/{owner}/{repo}/releases/tags/{tag}"],
+    getRepoRuleSuite: [
+      "GET /repos/{owner}/{repo}/rulesets/rule-suites/{rule_suite_id}"
+    ],
+    getRepoRuleSuites: ["GET /repos/{owner}/{repo}/rulesets/rule-suites"],
+    getRepoRuleset: ["GET /repos/{owner}/{repo}/rulesets/{ruleset_id}"],
+    getRepoRulesets: ["GET /repos/{owner}/{repo}/rulesets"],
+    getStatusChecksProtection: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks"
+    ],
+    getTeamsWithAccessToProtectedBranch: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams"
+    ],
+    getTopPaths: ["GET /repos/{owner}/{repo}/traffic/popular/paths"],
+    getTopReferrers: ["GET /repos/{owner}/{repo}/traffic/popular/referrers"],
+    getUsersWithAccessToProtectedBranch: [
+      "GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users"
+    ],
+    getViews: ["GET /repos/{owner}/{repo}/traffic/views"],
+    getWebhook: ["GET /repos/{owner}/{repo}/hooks/{hook_id}"],
+    getWebhookConfigForRepo: [
+      "GET /repos/{owner}/{repo}/hooks/{hook_id}/config"
+    ],
+    getWebhookDelivery: [
+      "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}"
+    ],
+    listActivities: ["GET /repos/{owner}/{repo}/activity"],
+    listAutolinks: ["GET /repos/{owner}/{repo}/autolinks"],
+    listBranches: ["GET /repos/{owner}/{repo}/branches"],
+    listBranchesForHeadCommit: [
+      "GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head"
+    ],
+    listCollaborators: ["GET /repos/{owner}/{repo}/collaborators"],
+    listCommentsForCommit: [
+      "GET /repos/{owner}/{repo}/commits/{commit_sha}/comments"
+    ],
+    listCommitCommentsForRepo: ["GET /repos/{owner}/{repo}/comments"],
+    listCommitStatusesForRef: [
+      "GET /repos/{owner}/{repo}/commits/{ref}/statuses"
+    ],
+    listCommits: ["GET /repos/{owner}/{repo}/commits"],
+    listContributors: ["GET /repos/{owner}/{repo}/contributors"],
+    listCustomDeploymentRuleIntegrations: [
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps"
+    ],
+    listDeployKeys: ["GET /repos/{owner}/{repo}/keys"],
+    listDeploymentBranchPolicies: [
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies"
+    ],
+    listDeploymentStatuses: [
+      "GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses"
+    ],
+    listDeployments: ["GET /repos/{owner}/{repo}/deployments"],
+    listForAuthenticatedUser: ["GET /user/repos"],
+    listForOrg: ["GET /orgs/{org}/repos"],
+    listForUser: ["GET /users/{username}/repos"],
+    listForks: ["GET /repos/{owner}/{repo}/forks"],
+    listInvitations: ["GET /repos/{owner}/{repo}/invitations"],
+    listInvitationsForAuthenticatedUser: ["GET /user/repository_invitations"],
+    listLanguages: ["GET /repos/{owner}/{repo}/languages"],
+    listPagesBuilds: ["GET /repos/{owner}/{repo}/pages/builds"],
+    listPublic: ["GET /repositories"],
+    listPullRequestsAssociatedWithCommit: [
+      "GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls"
+    ],
+    listReleaseAssets: [
+      "GET /repos/{owner}/{repo}/releases/{release_id}/assets"
+    ],
+    listReleases: ["GET /repos/{owner}/{repo}/releases"],
+    listTagProtection: ["GET /repos/{owner}/{repo}/tags/protection"],
+    listTags: ["GET /repos/{owner}/{repo}/tags"],
+    listTeams: ["GET /repos/{owner}/{repo}/teams"],
+    listWebhookDeliveries: [
+      "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries"
+    ],
+    listWebhooks: ["GET /repos/{owner}/{repo}/hooks"],
+    merge: ["POST /repos/{owner}/{repo}/merges"],
+    mergeUpstream: ["POST /repos/{owner}/{repo}/merge-upstream"],
+    pingWebhook: ["POST /repos/{owner}/{repo}/hooks/{hook_id}/pings"],
+    redeliverWebhookDelivery: [
+      "POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts"
+    ],
+    removeAppAccessRestrictions: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
+      {},
+      { mapToData: "apps" }
+    ],
+    removeCollaborator: [
+      "DELETE /repos/{owner}/{repo}/collaborators/{username}"
+    ],
+    removeStatusCheckContexts: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
+      {},
+      { mapToData: "contexts" }
+    ],
+    removeStatusCheckProtection: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks"
+    ],
+    removeTeamAccessRestrictions: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
+      {},
+      { mapToData: "teams" }
+    ],
+    removeUserAccessRestrictions: [
+      "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
+      {},
+      { mapToData: "users" }
+    ],
+    renameBranch: ["POST /repos/{owner}/{repo}/branches/{branch}/rename"],
+    replaceAllTopics: ["PUT /repos/{owner}/{repo}/topics"],
+    requestPagesBuild: ["POST /repos/{owner}/{repo}/pages/builds"],
+    setAdminBranchProtection: [
+      "POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins"
+    ],
+    setAppAccessRestrictions: [
+      "PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps",
+      {},
+      { mapToData: "apps" }
+    ],
+    setStatusCheckContexts: [
+      "PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts",
+      {},
+      { mapToData: "contexts" }
+    ],
+    setTeamAccessRestrictions: [
+      "PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams",
+      {},
+      { mapToData: "teams" }
+    ],
+    setUserAccessRestrictions: [
+      "PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users",
+      {},
+      { mapToData: "users" }
+    ],
+    testPushWebhook: ["POST /repos/{owner}/{repo}/hooks/{hook_id}/tests"],
+    transfer: ["POST /repos/{owner}/{repo}/transfer"],
+    update: ["PATCH /repos/{owner}/{repo}"],
+    updateBranchProtection: [
+      "PUT /repos/{owner}/{repo}/branches/{branch}/protection"
+    ],
+    updateCommitComment: ["PATCH /repos/{owner}/{repo}/comments/{comment_id}"],
+    updateDeploymentBranchPolicy: [
+      "PUT /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}"
+    ],
+    updateInformationAboutPagesSite: ["PUT /repos/{owner}/{repo}/pages"],
+    updateInvitation: [
+      "PATCH /repos/{owner}/{repo}/invitations/{invitation_id}"
+    ],
+    updateOrgRuleset: ["PUT /orgs/{org}/rulesets/{ruleset_id}"],
+    updatePullRequestReviewProtection: [
+      "PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
+    ],
+    updateRelease: ["PATCH /repos/{owner}/{repo}/releases/{release_id}"],
+    updateReleaseAsset: [
+      "PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}"
+    ],
+    updateRepoRuleset: ["PUT /repos/{owner}/{repo}/rulesets/{ruleset_id}"],
+    updateStatusCheckPotection: [
+      "PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks",
+      {},
+      { renamed: ["repos", "updateStatusCheckProtection"] }
+    ],
+    updateStatusCheckProtection: [
+      "PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks"
+    ],
+    updateWebhook: ["PATCH /repos/{owner}/{repo}/hooks/{hook_id}"],
+    updateWebhookConfigForRepo: [
+      "PATCH /repos/{owner}/{repo}/hooks/{hook_id}/config"
+    ],
+    uploadReleaseAsset: [
+      "POST /repos/{owner}/{repo}/releases/{release_id}/assets{?name,label}",
+      { baseUrl: "https://uploads.github.com" }
+    ]
+  },
+  search: {
+    code: ["GET /search/code"],
+    commits: ["GET /search/commits"],
+    issuesAndPullRequests: ["GET /search/issues"],
+    labels: ["GET /search/labels"],
+    repos: ["GET /search/repositories"],
+    topics: ["GET /search/topics"],
+    users: ["GET /search/users"]
+  },
+  secretScanning: {
+    getAlert: [
+      "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
+    ],
+    listAlertsForEnterprise: [
+      "GET /enterprises/{enterprise}/secret-scanning/alerts"
+    ],
+    listAlertsForOrg: ["GET /orgs/{org}/secret-scanning/alerts"],
+    listAlertsForRepo: ["GET /repos/{owner}/{repo}/secret-scanning/alerts"],
+    listLocationsForAlert: [
+      "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations"
+    ],
+    updateAlert: [
+      "PATCH /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
+    ]
+  },
+  securityAdvisories: {
+    createFork: [
+      "POST /repos/{owner}/{repo}/security-advisories/{ghsa_id}/forks"
+    ],
+    createPrivateVulnerabilityReport: [
+      "POST /repos/{owner}/{repo}/security-advisories/reports"
+    ],
+    createRepositoryAdvisory: [
+      "POST /repos/{owner}/{repo}/security-advisories"
+    ],
+    createRepositoryAdvisoryCveRequest: [
+      "POST /repos/{owner}/{repo}/security-advisories/{ghsa_id}/cve"
+    ],
+    getGlobalAdvisory: ["GET /advisories/{ghsa_id}"],
+    getRepositoryAdvisory: [
+      "GET /repos/{owner}/{repo}/security-advisories/{ghsa_id}"
+    ],
+    listGlobalAdvisories: ["GET /advisories"],
+    listOrgRepositoryAdvisories: ["GET /orgs/{org}/security-advisories"],
+    listRepositoryAdvisories: ["GET /repos/{owner}/{repo}/security-advisories"],
+    updateRepositoryAdvisory: [
+      "PATCH /repos/{owner}/{repo}/security-advisories/{ghsa_id}"
+    ]
+  },
+  teams: {
+    addOrUpdateMembershipForUserInOrg: [
+      "PUT /orgs/{org}/teams/{team_slug}/memberships/{username}"
+    ],
+    addOrUpdateProjectPermissionsInOrg: [
+      "PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}"
+    ],
+    addOrUpdateRepoPermissionsInOrg: [
+      "PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}"
+    ],
+    checkPermissionsForProjectInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/projects/{project_id}"
+    ],
+    checkPermissionsForRepoInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}"
+    ],
+    create: ["POST /orgs/{org}/teams"],
+    createDiscussionCommentInOrg: [
+      "POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments"
+    ],
+    createDiscussionInOrg: ["POST /orgs/{org}/teams/{team_slug}/discussions"],
+    deleteDiscussionCommentInOrg: [
+      "DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}"
+    ],
+    deleteDiscussionInOrg: [
+      "DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}"
+    ],
+    deleteInOrg: ["DELETE /orgs/{org}/teams/{team_slug}"],
+    getByName: ["GET /orgs/{org}/teams/{team_slug}"],
+    getDiscussionCommentInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}"
+    ],
+    getDiscussionInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}"
+    ],
+    getMembershipForUserInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/memberships/{username}"
+    ],
+    list: ["GET /orgs/{org}/teams"],
+    listChildInOrg: ["GET /orgs/{org}/teams/{team_slug}/teams"],
+    listDiscussionCommentsInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments"
+    ],
+    listDiscussionsInOrg: ["GET /orgs/{org}/teams/{team_slug}/discussions"],
+    listForAuthenticatedUser: ["GET /user/teams"],
+    listMembersInOrg: ["GET /orgs/{org}/teams/{team_slug}/members"],
+    listPendingInvitationsInOrg: [
+      "GET /orgs/{org}/teams/{team_slug}/invitations"
+    ],
+    listProjectsInOrg: ["GET /orgs/{org}/teams/{team_slug}/projects"],
+    listReposInOrg: ["GET /orgs/{org}/teams/{team_slug}/repos"],
+    removeMembershipForUserInOrg: [
+      "DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}"
+    ],
+    removeProjectInOrg: [
+      "DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}"
+    ],
+    removeRepoInOrg: [
+      "DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}"
+    ],
+    updateDiscussionCommentInOrg: [
+      "PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}"
+    ],
+    updateDiscussionInOrg: [
+      "PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}"
+    ],
+    updateInOrg: ["PATCH /orgs/{org}/teams/{team_slug}"]
+  },
+  users: {
+    addEmailForAuthenticated: [
+      "POST /user/emails",
+      {},
+      { renamed: ["users", "addEmailForAuthenticatedUser"] }
+    ],
+    addEmailForAuthenticatedUser: ["POST /user/emails"],
+    addSocialAccountForAuthenticatedUser: ["POST /user/social_accounts"],
+    block: ["PUT /user/blocks/{username}"],
+    checkBlocked: ["GET /user/blocks/{username}"],
+    checkFollowingForUser: ["GET /users/{username}/following/{target_user}"],
+    checkPersonIsFollowedByAuthenticated: ["GET /user/following/{username}"],
+    createGpgKeyForAuthenticated: [
+      "POST /user/gpg_keys",
+      {},
+      { renamed: ["users", "createGpgKeyForAuthenticatedUser"] }
+    ],
+    createGpgKeyForAuthenticatedUser: ["POST /user/gpg_keys"],
+    createPublicSshKeyForAuthenticated: [
+      "POST /user/keys",
+      {},
+      { renamed: ["users", "createPublicSshKeyForAuthenticatedUser"] }
+    ],
+    createPublicSshKeyForAuthenticatedUser: ["POST /user/keys"],
+    createSshSigningKeyForAuthenticatedUser: ["POST /user/ssh_signing_keys"],
+    deleteEmailForAuthenticated: [
+      "DELETE /user/emails",
+      {},
+      { renamed: ["users", "deleteEmailForAuthenticatedUser"] }
+    ],
+    deleteEmailForAuthenticatedUser: ["DELETE /user/emails"],
+    deleteGpgKeyForAuthenticated: [
+      "DELETE /user/gpg_keys/{gpg_key_id}",
+      {},
+      { renamed: ["users", "deleteGpgKeyForAuthenticatedUser"] }
+    ],
+    deleteGpgKeyForAuthenticatedUser: ["DELETE /user/gpg_keys/{gpg_key_id}"],
+    deletePublicSshKeyForAuthenticated: [
+      "DELETE /user/keys/{key_id}",
+      {},
+      { renamed: ["users", "deletePublicSshKeyForAuthenticatedUser"] }
+    ],
+    deletePublicSshKeyForAuthenticatedUser: ["DELETE /user/keys/{key_id}"],
+    deleteSocialAccountForAuthenticatedUser: ["DELETE /user/social_accounts"],
+    deleteSshSigningKeyForAuthenticatedUser: [
+      "DELETE /user/ssh_signing_keys/{ssh_signing_key_id}"
+    ],
+    follow: ["PUT /user/following/{username}"],
+    getAuthenticated: ["GET /user"],
+    getByUsername: ["GET /users/{username}"],
+    getContextForUser: ["GET /users/{username}/hovercard"],
+    getGpgKeyForAuthenticated: [
+      "GET /user/gpg_keys/{gpg_key_id}",
+      {},
+      { renamed: ["users", "getGpgKeyForAuthenticatedUser"] }
+    ],
+    getGpgKeyForAuthenticatedUser: ["GET /user/gpg_keys/{gpg_key_id}"],
+    getPublicSshKeyForAuthenticated: [
+      "GET /user/keys/{key_id}",
+      {},
+      { renamed: ["users", "getPublicSshKeyForAuthenticatedUser"] }
+    ],
+    getPublicSshKeyForAuthenticatedUser: ["GET /user/keys/{key_id}"],
+    getSshSigningKeyForAuthenticatedUser: [
+      "GET /user/ssh_signing_keys/{ssh_signing_key_id}"
+    ],
+    list: ["GET /users"],
+    listBlockedByAuthenticated: [
+      "GET /user/blocks",
+      {},
+      { renamed: ["users", "listBlockedByAuthenticatedUser"] }
+    ],
+    listBlockedByAuthenticatedUser: ["GET /user/blocks"],
+    listEmailsForAuthenticated: [
+      "GET /user/emails",
+      {},
+      { renamed: ["users", "listEmailsForAuthenticatedUser"] }
+    ],
+    listEmailsForAuthenticatedUser: ["GET /user/emails"],
+    listFollowedByAuthenticated: [
+      "GET /user/following",
+      {},
+      { renamed: ["users", "listFollowedByAuthenticatedUser"] }
+    ],
+    listFollowedByAuthenticatedUser: ["GET /user/following"],
+    listFollowersForAuthenticatedUser: ["GET /user/followers"],
+    listFollowersForUser: ["GET /users/{username}/followers"],
+    listFollowingForUser: ["GET /users/{username}/following"],
+    listGpgKeysForAuthenticated: [
+      "GET /user/gpg_keys",
+      {},
+      { renamed: ["users", "listGpgKeysForAuthenticatedUser"] }
+    ],
+    listGpgKeysForAuthenticatedUser: ["GET /user/gpg_keys"],
+    listGpgKeysForUser: ["GET /users/{username}/gpg_keys"],
+    listPublicEmailsForAuthenticated: [
+      "GET /user/public_emails",
+      {},
+      { renamed: ["users", "listPublicEmailsForAuthenticatedUser"] }
+    ],
+    listPublicEmailsForAuthenticatedUser: ["GET /user/public_emails"],
+    listPublicKeysForUser: ["GET /users/{username}/keys"],
+    listPublicSshKeysForAuthenticated: [
+      "GET /user/keys",
+      {},
+      { renamed: ["users", "listPublicSshKeysForAuthenticatedUser"] }
+    ],
+    listPublicSshKeysForAuthenticatedUser: ["GET /user/keys"],
+    listSocialAccountsForAuthenticatedUser: ["GET /user/social_accounts"],
+    listSocialAccountsForUser: ["GET /users/{username}/social_accounts"],
+    listSshSigningKeysForAuthenticatedUser: ["GET /user/ssh_signing_keys"],
+    listSshSigningKeysForUser: ["GET /users/{username}/ssh_signing_keys"],
+    setPrimaryEmailVisibilityForAuthenticated: [
+      "PATCH /user/email/visibility",
+      {},
+      { renamed: ["users", "setPrimaryEmailVisibilityForAuthenticatedUser"] }
+    ],
+    setPrimaryEmailVisibilityForAuthenticatedUser: [
+      "PATCH /user/email/visibility"
+    ],
+    unblock: ["DELETE /user/blocks/{username}"],
+    unfollow: ["DELETE /user/following/{username}"],
+    updateAuthenticated: ["PATCH /user"]
+  }
+};
+var endpoints_default = Endpoints;
+
+const endpointMethodsMap = /* @__PURE__ */ new Map();
+for (const [scope, endpoints] of Object.entries(endpoints_default)) {
+  for (const [methodName, endpoint] of Object.entries(endpoints)) {
+    const [route, defaults, decorations] = endpoint;
+    const [method, url] = route.split(/ /);
+    const endpointDefaults = Object.assign(
+      {
+        method,
+        url
+      },
+      defaults
+    );
+    if (!endpointMethodsMap.has(scope)) {
+      endpointMethodsMap.set(scope, /* @__PURE__ */ new Map());
+    }
+    endpointMethodsMap.get(scope).set(methodName, {
+      scope,
+      methodName,
+      endpointDefaults,
+      decorations
+    });
+  }
+}
+const handler = {
+  has({ scope }, methodName) {
+    return endpointMethodsMap.get(scope).has(methodName);
+  },
+  getOwnPropertyDescriptor(target, methodName) {
+    return {
+      value: this.get(target, methodName),
+      // ensures method is in the cache
+      configurable: true,
+      writable: true,
+      enumerable: true
+    };
+  },
+  defineProperty(target, methodName, descriptor) {
+    Object.defineProperty(target.cache, methodName, descriptor);
+    return true;
+  },
+  deleteProperty(target, methodName) {
+    delete target.cache[methodName];
+    return true;
+  },
+  ownKeys({ scope }) {
+    return [...endpointMethodsMap.get(scope).keys()];
+  },
+  set(target, methodName, value) {
+    return target.cache[methodName] = value;
+  },
+  get({ octokit, scope, cache }, methodName) {
+    if (cache[methodName]) {
+      return cache[methodName];
+    }
+    const method = endpointMethodsMap.get(scope).get(methodName);
+    if (!method) {
+      return void 0;
+    }
+    const { endpointDefaults, decorations } = method;
+    if (decorations) {
+      cache[methodName] = decorate(
+        octokit,
+        scope,
+        methodName,
+        endpointDefaults,
+        decorations
+      );
+    } else {
+      cache[methodName] = octokit.request.defaults(endpointDefaults);
+    }
+    return cache[methodName];
+  }
+};
+function endpointsToMethods(octokit) {
+  const newMethods = {};
+  for (const scope of endpointMethodsMap.keys()) {
+    newMethods[scope] = new Proxy({ octokit, scope, cache: {} }, handler);
+  }
+  return newMethods;
+}
+function decorate(octokit, scope, methodName, defaults, decorations) {
+  const requestWithDefaults = octokit.request.defaults(defaults);
+  function withDecorations(...args) {
+    let options = requestWithDefaults.endpoint.merge(...args);
+    if (decorations.mapToData) {
+      options = Object.assign({}, options, {
+        data: options[decorations.mapToData],
+        [decorations.mapToData]: void 0
+      });
+      return requestWithDefaults(options);
+    }
+    if (decorations.renamed) {
+      const [newScope, newMethodName] = decorations.renamed;
+      octokit.log.warn(
+        `octokit.${scope}.${methodName}() has been renamed to octokit.${newScope}.${newMethodName}()`
+      );
+    }
+    if (decorations.deprecated) {
+      octokit.log.warn(decorations.deprecated);
+    }
+    if (decorations.renamedParameters) {
+      const options2 = requestWithDefaults.endpoint.merge(...args);
+      for (const [name, alias] of Object.entries(
+        decorations.renamedParameters
+      )) {
+        if (name in options2) {
+          octokit.log.warn(
+            `"${name}" parameter is deprecated for "octokit.${scope}.${methodName}()". Use "${alias}" instead`
+          );
+          if (!(alias in options2)) {
+            options2[alias] = options2[name];
+          }
+          delete options2[name];
+        }
+      }
+      return requestWithDefaults(options2);
+    }
+    return requestWithDefaults(...args);
+  }
+  return Object.assign(withDecorations, requestWithDefaults);
+}
+
+function restEndpointMethods(octokit) {
+  const api = endpointsToMethods(octokit);
+  return {
+    rest: api
+  };
+}
+restEndpointMethods.VERSION = VERSION$1;
+function legacyRestEndpointMethods(octokit) {
+  const api = endpointsToMethods(octokit);
+  return {
+    ...api,
+    rest: api
+  };
+}
+legacyRestEndpointMethods.VERSION = VERSION$1;
+
+var distSrc = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	legacyRestEndpointMethods: legacyRestEndpointMethods,
+	restEndpointMethods: restEndpointMethods
+});
+
+var require$$3 = /*@__PURE__*/getAugmentedNamespace(distSrc);
+
+// pkg/dist-src/version.js
+var VERSION = "9.2.2";
+
+// pkg/dist-src/normalize-paginated-list-response.js
+function normalizePaginatedListResponse(response) {
+  if (!response.data) {
+    return {
+      ...response,
+      data: []
+    };
+  }
+  const responseNeedsNormalization = "total_count" in response.data && !("url" in response.data);
+  if (!responseNeedsNormalization)
+    return response;
+  const incompleteResults = response.data.incomplete_results;
+  const repositorySelection = response.data.repository_selection;
+  const totalCount = response.data.total_count;
+  delete response.data.incomplete_results;
+  delete response.data.repository_selection;
+  delete response.data.total_count;
+  const namespaceKey = Object.keys(response.data)[0];
+  const data = response.data[namespaceKey];
+  response.data = data;
+  if (typeof incompleteResults !== "undefined") {
+    response.data.incomplete_results = incompleteResults;
+  }
+  if (typeof repositorySelection !== "undefined") {
+    response.data.repository_selection = repositorySelection;
+  }
+  response.data.total_count = totalCount;
+  return response;
+}
+
+// pkg/dist-src/iterator.js
+function iterator(octokit, route, parameters) {
+  const options = typeof route === "function" ? route.endpoint(parameters) : octokit.request.endpoint(route, parameters);
+  const requestMethod = typeof route === "function" ? route : octokit.request;
+  const method = options.method;
+  const headers = options.headers;
+  let url = options.url;
+  return {
+    [Symbol.asyncIterator]: () => ({
+      async next() {
+        if (!url)
+          return { done: true };
+        try {
+          const response = await requestMethod({ method, url, headers });
+          const normalizedResponse = normalizePaginatedListResponse(response);
+          url = ((normalizedResponse.headers.link || "").match(
+            /<([^<>]+)>;\s*rel="next"/
+          ) || [])[1];
+          return { value: normalizedResponse };
+        } catch (error) {
+          if (error.status !== 409)
+            throw error;
+          url = "";
+          return {
+            value: {
+              status: 200,
+              headers: {},
+              data: []
+            }
+          };
+        }
+      }
+    })
+  };
+}
+
+// pkg/dist-src/paginate.js
+function paginate(octokit, route, parameters, mapFn) {
+  if (typeof parameters === "function") {
+    mapFn = parameters;
+    parameters = void 0;
+  }
+  return gather(
+    octokit,
+    [],
+    iterator(octokit, route, parameters)[Symbol.asyncIterator](),
+    mapFn
+  );
+}
+function gather(octokit, results, iterator2, mapFn) {
+  return iterator2.next().then((result) => {
+    if (result.done) {
+      return results;
+    }
+    let earlyExit = false;
+    function done() {
+      earlyExit = true;
+    }
+    results = results.concat(
+      mapFn ? mapFn(result.value, done) : result.value.data
+    );
+    if (earlyExit) {
+      return results;
+    }
+    return gather(octokit, results, iterator2, mapFn);
+  });
+}
+
+// pkg/dist-src/compose-paginate.js
+var composePaginateRest = Object.assign(paginate, {
+  iterator
+});
+
+// pkg/dist-src/generated/paginating-endpoints.js
+var paginatingEndpoints = [
+  "GET /advisories",
+  "GET /app/hook/deliveries",
+  "GET /app/installation-requests",
+  "GET /app/installations",
+  "GET /assignments/{assignment_id}/accepted_assignments",
+  "GET /classrooms",
+  "GET /classrooms/{classroom_id}/assignments",
+  "GET /enterprises/{enterprise}/dependabot/alerts",
+  "GET /enterprises/{enterprise}/secret-scanning/alerts",
+  "GET /events",
+  "GET /gists",
+  "GET /gists/public",
+  "GET /gists/starred",
+  "GET /gists/{gist_id}/comments",
+  "GET /gists/{gist_id}/commits",
+  "GET /gists/{gist_id}/forks",
+  "GET /installation/repositories",
+  "GET /issues",
+  "GET /licenses",
+  "GET /marketplace_listing/plans",
+  "GET /marketplace_listing/plans/{plan_id}/accounts",
+  "GET /marketplace_listing/stubbed/plans",
+  "GET /marketplace_listing/stubbed/plans/{plan_id}/accounts",
+  "GET /networks/{owner}/{repo}/events",
+  "GET /notifications",
+  "GET /organizations",
+  "GET /orgs/{org}/actions/cache/usage-by-repository",
+  "GET /orgs/{org}/actions/permissions/repositories",
+  "GET /orgs/{org}/actions/runners",
+  "GET /orgs/{org}/actions/secrets",
+  "GET /orgs/{org}/actions/secrets/{secret_name}/repositories",
+  "GET /orgs/{org}/actions/variables",
+  "GET /orgs/{org}/actions/variables/{name}/repositories",
+  "GET /orgs/{org}/blocks",
+  "GET /orgs/{org}/code-scanning/alerts",
+  "GET /orgs/{org}/codespaces",
+  "GET /orgs/{org}/codespaces/secrets",
+  "GET /orgs/{org}/codespaces/secrets/{secret_name}/repositories",
+  "GET /orgs/{org}/copilot/billing/seats",
+  "GET /orgs/{org}/dependabot/alerts",
+  "GET /orgs/{org}/dependabot/secrets",
+  "GET /orgs/{org}/dependabot/secrets/{secret_name}/repositories",
+  "GET /orgs/{org}/events",
+  "GET /orgs/{org}/failed_invitations",
+  "GET /orgs/{org}/hooks",
+  "GET /orgs/{org}/hooks/{hook_id}/deliveries",
+  "GET /orgs/{org}/installations",
+  "GET /orgs/{org}/invitations",
+  "GET /orgs/{org}/invitations/{invitation_id}/teams",
+  "GET /orgs/{org}/issues",
+  "GET /orgs/{org}/members",
+  "GET /orgs/{org}/members/{username}/codespaces",
+  "GET /orgs/{org}/migrations",
+  "GET /orgs/{org}/migrations/{migration_id}/repositories",
+  "GET /orgs/{org}/organization-roles/{role_id}/teams",
+  "GET /orgs/{org}/organization-roles/{role_id}/users",
+  "GET /orgs/{org}/outside_collaborators",
+  "GET /orgs/{org}/packages",
+  "GET /orgs/{org}/packages/{package_type}/{package_name}/versions",
+  "GET /orgs/{org}/personal-access-token-requests",
+  "GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories",
+  "GET /orgs/{org}/personal-access-tokens",
+  "GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories",
+  "GET /orgs/{org}/projects",
+  "GET /orgs/{org}/properties/values",
+  "GET /orgs/{org}/public_members",
+  "GET /orgs/{org}/repos",
+  "GET /orgs/{org}/rulesets",
+  "GET /orgs/{org}/rulesets/rule-suites",
+  "GET /orgs/{org}/secret-scanning/alerts",
+  "GET /orgs/{org}/security-advisories",
+  "GET /orgs/{org}/teams",
+  "GET /orgs/{org}/teams/{team_slug}/discussions",
+  "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments",
+  "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions",
+  "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions",
+  "GET /orgs/{org}/teams/{team_slug}/invitations",
+  "GET /orgs/{org}/teams/{team_slug}/members",
+  "GET /orgs/{org}/teams/{team_slug}/projects",
+  "GET /orgs/{org}/teams/{team_slug}/repos",
+  "GET /orgs/{org}/teams/{team_slug}/teams",
+  "GET /projects/columns/{column_id}/cards",
+  "GET /projects/{project_id}/collaborators",
+  "GET /projects/{project_id}/columns",
+  "GET /repos/{owner}/{repo}/actions/artifacts",
+  "GET /repos/{owner}/{repo}/actions/caches",
+  "GET /repos/{owner}/{repo}/actions/organization-secrets",
+  "GET /repos/{owner}/{repo}/actions/organization-variables",
+  "GET /repos/{owner}/{repo}/actions/runners",
+  "GET /repos/{owner}/{repo}/actions/runs",
+  "GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts",
+  "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs",
+  "GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs",
+  "GET /repos/{owner}/{repo}/actions/secrets",
+  "GET /repos/{owner}/{repo}/actions/variables",
+  "GET /repos/{owner}/{repo}/actions/workflows",
+  "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
+  "GET /repos/{owner}/{repo}/activity",
+  "GET /repos/{owner}/{repo}/assignees",
+  "GET /repos/{owner}/{repo}/branches",
+  "GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations",
+  "GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs",
+  "GET /repos/{owner}/{repo}/code-scanning/alerts",
+  "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances",
+  "GET /repos/{owner}/{repo}/code-scanning/analyses",
+  "GET /repos/{owner}/{repo}/codespaces",
+  "GET /repos/{owner}/{repo}/codespaces/devcontainers",
+  "GET /repos/{owner}/{repo}/codespaces/secrets",
+  "GET /repos/{owner}/{repo}/collaborators",
+  "GET /repos/{owner}/{repo}/comments",
+  "GET /repos/{owner}/{repo}/comments/{comment_id}/reactions",
+  "GET /repos/{owner}/{repo}/commits",
+  "GET /repos/{owner}/{repo}/commits/{commit_sha}/comments",
+  "GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls",
+  "GET /repos/{owner}/{repo}/commits/{ref}/check-runs",
+  "GET /repos/{owner}/{repo}/commits/{ref}/check-suites",
+  "GET /repos/{owner}/{repo}/commits/{ref}/status",
+  "GET /repos/{owner}/{repo}/commits/{ref}/statuses",
+  "GET /repos/{owner}/{repo}/contributors",
+  "GET /repos/{owner}/{repo}/dependabot/alerts",
+  "GET /repos/{owner}/{repo}/dependabot/secrets",
+  "GET /repos/{owner}/{repo}/deployments",
+  "GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses",
+  "GET /repos/{owner}/{repo}/environments",
+  "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies",
+  "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps",
+  "GET /repos/{owner}/{repo}/events",
+  "GET /repos/{owner}/{repo}/forks",
+  "GET /repos/{owner}/{repo}/hooks",
+  "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries",
+  "GET /repos/{owner}/{repo}/invitations",
+  "GET /repos/{owner}/{repo}/issues",
+  "GET /repos/{owner}/{repo}/issues/comments",
+  "GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
+  "GET /repos/{owner}/{repo}/issues/events",
+  "GET /repos/{owner}/{repo}/issues/{issue_number}/comments",
+  "GET /repos/{owner}/{repo}/issues/{issue_number}/events",
+  "GET /repos/{owner}/{repo}/issues/{issue_number}/labels",
+  "GET /repos/{owner}/{repo}/issues/{issue_number}/reactions",
+  "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline",
+  "GET /repos/{owner}/{repo}/keys",
+  "GET /repos/{owner}/{repo}/labels",
+  "GET /repos/{owner}/{repo}/milestones",
+  "GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels",
+  "GET /repos/{owner}/{repo}/notifications",
+  "GET /repos/{owner}/{repo}/pages/builds",
+  "GET /repos/{owner}/{repo}/projects",
+  "GET /repos/{owner}/{repo}/pulls",
+  "GET /repos/{owner}/{repo}/pulls/comments",
+  "GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
+  "GET /repos/{owner}/{repo}/pulls/{pull_number}/comments",
+  "GET /repos/{owner}/{repo}/pulls/{pull_number}/commits",
+  "GET /repos/{owner}/{repo}/pulls/{pull_number}/files",
+  "GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+  "GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments",
+  "GET /repos/{owner}/{repo}/releases",
+  "GET /repos/{owner}/{repo}/releases/{release_id}/assets",
+  "GET /repos/{owner}/{repo}/releases/{release_id}/reactions",
+  "GET /repos/{owner}/{repo}/rules/branches/{branch}",
+  "GET /repos/{owner}/{repo}/rulesets",
+  "GET /repos/{owner}/{repo}/rulesets/rule-suites",
+  "GET /repos/{owner}/{repo}/secret-scanning/alerts",
+  "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations",
+  "GET /repos/{owner}/{repo}/security-advisories",
+  "GET /repos/{owner}/{repo}/stargazers",
+  "GET /repos/{owner}/{repo}/subscribers",
+  "GET /repos/{owner}/{repo}/tags",
+  "GET /repos/{owner}/{repo}/teams",
+  "GET /repos/{owner}/{repo}/topics",
+  "GET /repositories",
+  "GET /repositories/{repository_id}/environments/{environment_name}/secrets",
+  "GET /repositories/{repository_id}/environments/{environment_name}/variables",
+  "GET /search/code",
+  "GET /search/commits",
+  "GET /search/issues",
+  "GET /search/labels",
+  "GET /search/repositories",
+  "GET /search/topics",
+  "GET /search/users",
+  "GET /teams/{team_id}/discussions",
+  "GET /teams/{team_id}/discussions/{discussion_number}/comments",
+  "GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions",
+  "GET /teams/{team_id}/discussions/{discussion_number}/reactions",
+  "GET /teams/{team_id}/invitations",
+  "GET /teams/{team_id}/members",
+  "GET /teams/{team_id}/projects",
+  "GET /teams/{team_id}/repos",
+  "GET /teams/{team_id}/teams",
+  "GET /user/blocks",
+  "GET /user/codespaces",
+  "GET /user/codespaces/secrets",
+  "GET /user/emails",
+  "GET /user/followers",
+  "GET /user/following",
+  "GET /user/gpg_keys",
+  "GET /user/installations",
+  "GET /user/installations/{installation_id}/repositories",
+  "GET /user/issues",
+  "GET /user/keys",
+  "GET /user/marketplace_purchases",
+  "GET /user/marketplace_purchases/stubbed",
+  "GET /user/memberships/orgs",
+  "GET /user/migrations",
+  "GET /user/migrations/{migration_id}/repositories",
+  "GET /user/orgs",
+  "GET /user/packages",
+  "GET /user/packages/{package_type}/{package_name}/versions",
+  "GET /user/public_emails",
+  "GET /user/repos",
+  "GET /user/repository_invitations",
+  "GET /user/social_accounts",
+  "GET /user/ssh_signing_keys",
+  "GET /user/starred",
+  "GET /user/subscriptions",
+  "GET /user/teams",
+  "GET /users",
+  "GET /users/{username}/events",
+  "GET /users/{username}/events/orgs/{org}",
+  "GET /users/{username}/events/public",
+  "GET /users/{username}/followers",
+  "GET /users/{username}/following",
+  "GET /users/{username}/gists",
+  "GET /users/{username}/gpg_keys",
+  "GET /users/{username}/keys",
+  "GET /users/{username}/orgs",
+  "GET /users/{username}/packages",
+  "GET /users/{username}/projects",
+  "GET /users/{username}/received_events",
+  "GET /users/{username}/received_events/public",
+  "GET /users/{username}/repos",
+  "GET /users/{username}/social_accounts",
+  "GET /users/{username}/ssh_signing_keys",
+  "GET /users/{username}/starred",
+  "GET /users/{username}/subscriptions"
+];
+
+// pkg/dist-src/paginating-endpoints.js
+function isPaginatingEndpoint(arg) {
+  if (typeof arg === "string") {
+    return paginatingEndpoints.includes(arg);
+  } else {
+    return false;
+  }
+}
+
+// pkg/dist-src/index.js
+function paginateRest(octokit) {
+  return {
+    paginate: Object.assign(paginate.bind(null, octokit), {
+      iterator: iterator.bind(null, octokit)
+    })
+  };
+}
+paginateRest.VERSION = VERSION;
+
+var distWeb = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	composePaginateRest: composePaginateRest,
+	isPaginatingEndpoint: isPaginatingEndpoint,
+	paginateRest: paginateRest,
+	paginatingEndpoints: paginatingEndpoints
+});
+
+var require$$4 = /*@__PURE__*/getAugmentedNamespace(distWeb);
+
+var hasRequiredUtils;
+
+function requireUtils () {
+	if (hasRequiredUtils) return utils$1;
+	hasRequiredUtils = 1;
+	(function (exports) {
+		var __createBinding = (utils$1 && utils$1.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    var desc = Object.getOwnPropertyDescriptor(m, k);
+		    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+		      desc = { enumerable: true, get: function() { return m[k]; } };
+		    }
+		    Object.defineProperty(o, k2, desc);
+		}) : (function(o, m, k, k2) {
+		    if (k2 === undefined) k2 = k;
+		    o[k2] = m[k];
+		}));
+		var __setModuleDefault = (utils$1 && utils$1.__setModuleDefault) || (Object.create ? (function(o, v) {
+		    Object.defineProperty(o, "default", { enumerable: true, value: v });
+		}) : function(o, v) {
+		    o["default"] = v;
+		});
+		var __importStar = (utils$1 && utils$1.__importStar) || function (mod) {
+		    if (mod && mod.__esModule) return mod;
+		    var result = {};
+		    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+		    __setModuleDefault(result, mod);
+		    return result;
+		};
+		Object.defineProperty(exports, "__esModule", { value: true });
+		exports.getOctokitOptions = exports.GitHub = exports.defaults = exports.context = void 0;
+		const Context = __importStar(requireContext());
+		const Utils = __importStar(requireUtils$1());
+		// octokit + plugins
+		const core_1 = require$$2;
+		const plugin_rest_endpoint_methods_1 = require$$3;
+		const plugin_paginate_rest_1 = require$$4;
+		exports.context = new Context.Context();
+		const baseUrl = Utils.getApiBaseUrl();
+		exports.defaults = {
+		    baseUrl,
+		    request: {
+		        agent: Utils.getProxyAgent(baseUrl),
+		        fetch: Utils.getProxyFetch(baseUrl)
+		    }
+		};
+		exports.GitHub = core_1.Octokit.plugin(plugin_rest_endpoint_methods_1.restEndpointMethods, plugin_paginate_rest_1.paginateRest).defaults(exports.defaults);
+		/**
+		 * Convience function to correctly format Octokit Options to pass into the constructor.
+		 *
+		 * @param     token    the repo PAT or GITHUB_TOKEN
+		 * @param     options  other options to set
+		 */
+		function getOctokitOptions(token, options) {
+		    const opts = Object.assign({}, options || {}); // Shallow clone - don't mutate the object provided by the caller
+		    // Auth
+		    const auth = Utils.getAuthString(token, opts);
+		    if (auth) {
+		        opts.auth = auth;
+		    }
+		    return opts;
+		}
+		exports.getOctokitOptions = getOctokitOptions;
+		
+	} (utils$1));
+	return utils$1;
+}
+
+var hasRequiredGithub;
+
+function requireGithub () {
+	if (hasRequiredGithub) return github;
+	hasRequiredGithub = 1;
+	var __createBinding = (github && github.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    var desc = Object.getOwnPropertyDescriptor(m, k);
+	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+	      desc = { enumerable: true, get: function() { return m[k]; } };
+	    }
+	    Object.defineProperty(o, k2, desc);
+	}) : (function(o, m, k, k2) {
+	    if (k2 === undefined) k2 = k;
+	    o[k2] = m[k];
+	}));
+	var __setModuleDefault = (github && github.__setModuleDefault) || (Object.create ? (function(o, v) {
+	    Object.defineProperty(o, "default", { enumerable: true, value: v });
+	}) : function(o, v) {
+	    o["default"] = v;
+	});
+	var __importStar = (github && github.__importStar) || function (mod) {
+	    if (mod && mod.__esModule) return mod;
+	    var result = {};
+	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+	    __setModuleDefault(result, mod);
+	    return result;
+	};
+	Object.defineProperty(github, "__esModule", { value: true });
+	github.getOctokit = github.context = void 0;
+	const Context = __importStar(requireContext());
+	const utils_1 = requireUtils();
+	github.context = new Context.Context();
+	/**
+	 * Returns a hydrated octokit ready to use for GitHub Actions
+	 *
+	 * @param     token    the repo PAT or GITHUB_TOKEN
+	 * @param     options  other options to set
+	 */
+	function getOctokit(token, options, ...additionalPlugins) {
+	    const GitHubWithPlugins = utils_1.GitHub.plugin(...additionalPlugins);
+	    return new GitHubWithPlugins((0, utils_1.getOctokitOptions)(token, options));
+	}
+	github.getOctokit = getOctokit;
+	
+	return github;
+}
+
+var githubExports = requireGithub();
+
+var dayjs_min$1 = {exports: {}};
+
+var dayjs_min = dayjs_min$1.exports;
+
+var hasRequiredDayjs_min;
+
+function requireDayjs_min () {
+	if (hasRequiredDayjs_min) return dayjs_min$1.exports;
+	hasRequiredDayjs_min = 1;
+	(function (module, exports) {
+		!function(t,e){module.exports=e();}(dayjs_min,(function(){var t=1e3,e=6e4,n=36e5,r="millisecond",i="second",s="minute",u="hour",a="day",o="week",c="month",f="quarter",h="year",d="date",l="Invalid Date",$=/^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,y=/\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,M={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_"),ordinal:function(t){var e=["th","st","nd","rd"],n=t%100;return "["+t+(e[(n-20)%10]||e[n]||e[0])+"]"}},m=function(t,e,n){var r=String(t);return !r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},v={s:m,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return (e<=0?"+":"-")+m(r,2,"0")+":"+m(i,2,"0")},m:function t(e,n){if(e.date()<n.date())return -t(n,e);var r=12*(n.year()-e.year())+(n.month()-e.month()),i=e.clone().add(r,c),s=n-i<0,u=e.clone().add(r+(s?-1:1),c);return +(-(r+(n-i)/(s?i-u:u-i))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(t){return {M:c,y:h,w:o,d:a,D:d,h:u,m:s,s:i,ms:r,Q:f}[t]||String(t||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},g="en",D={};D[g]=M;var p="$isDayjsObject",S=function(t){return t instanceof _||!(!t||!t[p])},w=function t(e,n,r){var i;if(!e)return g;if("string"==typeof e){var s=e.toLowerCase();D[s]&&(i=s),n&&(D[s]=n,i=s);var u=e.split("-");if(!i&&u.length>1)return t(u[0])}else {var a=e.name;D[a]=e,i=a;}return !r&&i&&(g=i),i||!r&&g},O=function(t,e){if(S(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new _(n)},b=v;b.l=w,b.i=S,b.w=function(t,e){return O(t,{locale:e.$L,utc:e.$u,x:e.$x,$offset:e.$offset})};var _=function(){function M(t){this.$L=w(t.locale,null,true),this.parse(t),this.$x=this.$x||t.x||{},this[p]=true;}var m=M.prototype;return m.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(b.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match($);if(r){var i=r[2]-1||0,s=(r[7]||"0").substring(0,3);return n?new Date(Date.UTC(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)):new Date(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)}}return new Date(e)}(t),this.init();},m.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds();},m.$utils=function(){return b},m.isValid=function(){return !(this.$d.toString()===l)},m.isSame=function(t,e){var n=O(t);return this.startOf(e)<=n&&n<=this.endOf(e)},m.isAfter=function(t,e){return O(t)<this.startOf(e)},m.isBefore=function(t,e){return this.endOf(e)<O(t)},m.$g=function(t,e,n){return b.u(t)?this[e]:this.set(n,t)},m.unix=function(){return Math.floor(this.valueOf()/1e3)},m.valueOf=function(){return this.$d.getTime()},m.startOf=function(t,e){var n=this,r=!!b.u(e)||e,f=b.p(t),l=function(t,e){var i=b.w(n.$u?Date.UTC(n.$y,e,t):new Date(n.$y,e,t),n);return r?i:i.endOf(a)},$=function(t,e){return b.w(n.toDate()[t].apply(n.toDate("s"),(r?[0,0,0,0]:[23,59,59,999]).slice(e)),n)},y=this.$W,M=this.$M,m=this.$D,v="set"+(this.$u?"UTC":"");switch(f){case h:return r?l(1,0):l(31,11);case c:return r?l(1,M):l(0,M+1);case o:var g=this.$locale().weekStart||0,D=(y<g?y+7:y)-g;return l(r?m-D:m+(6-D),M);case a:case d:return $(v+"Hours",0);case u:return $(v+"Minutes",1);case s:return $(v+"Seconds",2);case i:return $(v+"Milliseconds",3);default:return this.clone()}},m.endOf=function(t){return this.startOf(t,false)},m.$set=function(t,e){var n,o=b.p(t),f="set"+(this.$u?"UTC":""),l=(n={},n[a]=f+"Date",n[d]=f+"Date",n[c]=f+"Month",n[h]=f+"FullYear",n[u]=f+"Hours",n[s]=f+"Minutes",n[i]=f+"Seconds",n[r]=f+"Milliseconds",n)[o],$=o===a?this.$D+(e-this.$W):e;if(o===c||o===h){var y=this.clone().set(d,1);y.$d[l]($),y.init(),this.$d=y.set(d,Math.min(this.$D,y.daysInMonth())).$d;}else l&&this.$d[l]($);return this.init(),this},m.set=function(t,e){return this.clone().$set(t,e)},m.get=function(t){return this[b.p(t)]()},m.add=function(r,f){var d,l=this;r=Number(r);var $=b.p(f),y=function(t){var e=O(l);return b.w(e.date(e.date()+Math.round(t*r)),l)};if($===c)return this.set(c,this.$M+r);if($===h)return this.set(h,this.$y+r);if($===a)return y(1);if($===o)return y(7);var M=(d={},d[s]=e,d[u]=n,d[i]=t,d)[$]||1,m=this.$d.getTime()+r*M;return b.w(m,this)},m.subtract=function(t,e){return this.add(-1*t,e)},m.format=function(t){var e=this,n=this.$locale();if(!this.isValid())return n.invalidDate||l;var r=t||"YYYY-MM-DDTHH:mm:ssZ",i=b.z(this),s=this.$H,u=this.$m,a=this.$M,o=n.weekdays,c=n.months,f=n.meridiem,h=function(t,n,i,s){return t&&(t[n]||t(e,r))||i[n].slice(0,s)},d=function(t){return b.s(s%12||12,t,"0")},$=f||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r};return r.replace(y,(function(t,r){return r||function(t){switch(t){case "YY":return String(e.$y).slice(-2);case "YYYY":return b.s(e.$y,4,"0");case "M":return a+1;case "MM":return b.s(a+1,2,"0");case "MMM":return h(n.monthsShort,a,c,3);case "MMMM":return h(c,a);case "D":return e.$D;case "DD":return b.s(e.$D,2,"0");case "d":return String(e.$W);case "dd":return h(n.weekdaysMin,e.$W,o,2);case "ddd":return h(n.weekdaysShort,e.$W,o,3);case "dddd":return o[e.$W];case "H":return String(s);case "HH":return b.s(s,2,"0");case "h":return d(1);case "hh":return d(2);case "a":return $(s,u,true);case "A":return $(s,u,false);case "m":return String(u);case "mm":return b.s(u,2,"0");case "s":return String(e.$s);case "ss":return b.s(e.$s,2,"0");case "SSS":return b.s(e.$ms,3,"0");case "Z":return i}return null}(t)||i.replace(":","")}))},m.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},m.diff=function(r,d,l){var $,y=this,M=b.p(d),m=O(r),v=(m.utcOffset()-this.utcOffset())*e,g=this-m,D=function(){return b.m(y,m)};switch(M){case h:$=D()/12;break;case c:$=D();break;case f:$=D()/3;break;case o:$=(g-v)/6048e5;break;case a:$=(g-v)/864e5;break;case u:$=g/n;break;case s:$=g/e;break;case i:$=g/t;break;default:$=g;}return l?$:b.a($)},m.daysInMonth=function(){return this.endOf(c).$D},m.$locale=function(){return D[this.$L]},m.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=w(t,e,true);return r&&(n.$L=r),n},m.clone=function(){return b.w(this.$d,this)},m.toDate=function(){return new Date(this.valueOf())},m.toJSON=function(){return this.isValid()?this.toISOString():null},m.toISOString=function(){return this.$d.toISOString()},m.toString=function(){return this.$d.toUTCString()},M}(),k=_.prototype;return O.prototype=k,[["$ms",r],["$s",i],["$m",s],["$H",u],["$W",a],["$M",c],["$y",h],["$D",d]].forEach((function(t){k[t[1]]=function(e){return this.$g(e,t[0],t[1])};})),O.extend=function(t,e){return t.$i||(t(e,_,O),t.$i=true),O},O.locale=w,O.isDayjs=S,O.unix=function(t){return O(1e3*t)},O.en=D[g],O.Ls=D,O.p={},O})); 
+	} (dayjs_min$1));
+	return dayjs_min$1.exports;
+}
+
+var dayjs_minExports = requireDayjs_min();
+var dayjs = /*@__PURE__*/getDefaultExportFromCjs(dayjs_minExports);
+
+var utc$2 = {exports: {}};
+
+var utc$1 = utc$2.exports;
+
+var hasRequiredUtc;
+
+function requireUtc () {
+	if (hasRequiredUtc) return utc$2.exports;
+	hasRequiredUtc = 1;
+	(function (module, exports) {
+		!function(t,i){module.exports=i();}(utc$1,(function(){var t="minute",i=/[+-]\d\d(?::?\d\d)?/g,e=/([+-]|\d\d)/g;return function(s,f,n){var u=f.prototype;n.utc=function(t){var i={date:t,utc:true,args:arguments};return new f(i)},u.utc=function(i){var e=n(this.toDate(),{locale:this.$L,utc:true});return i?e.add(this.utcOffset(),t):e},u.local=function(){return n(this.toDate(),{locale:this.$L,utc:false})};var r=u.parse;u.parse=function(t){t.utc&&(this.$u=true),this.$utils().u(t.$offset)||(this.$offset=t.$offset),r.call(this,t);};var o=u.init;u.init=function(){if(this.$u){var t=this.$d;this.$y=t.getUTCFullYear(),this.$M=t.getUTCMonth(),this.$D=t.getUTCDate(),this.$W=t.getUTCDay(),this.$H=t.getUTCHours(),this.$m=t.getUTCMinutes(),this.$s=t.getUTCSeconds(),this.$ms=t.getUTCMilliseconds();}else o.call(this);};var a=u.utcOffset;u.utcOffset=function(s,f){var n=this.$utils().u;if(n(s))return this.$u?0:n(this.$offset)?a.call(this):this.$offset;if("string"==typeof s&&(s=function(t){ void 0===t&&(t="");var s=t.match(i);if(!s)return null;var f=(""+s[0]).match(e)||["-",0,0],n=f[0],u=60*+f[1]+ +f[2];return 0===u?0:"+"===n?u:-u}(s),null===s))return this;var u=Math.abs(s)<=16?60*s:s;if(0===u)return this.utc(f);var r=this.clone();if(f)return r.$offset=u,r.$u=false,r;var o=this.$u?this.toDate().getTimezoneOffset():-1*this.utcOffset();return (r=this.local().add(u+o,t)).$offset=u,r.$x.$localOffset=o,r};var h=u.format;u.format=function(t){var i=t||(this.$u?"YYYY-MM-DDTHH:mm:ss[Z]":"");return h.call(this,i)},u.valueOf=function(){var t=this.$utils().u(this.$offset)?0:this.$offset+(this.$x.$localOffset||this.$d.getTimezoneOffset());return this.$d.valueOf()-6e4*t},u.isUTC=function(){return !!this.$u},u.toISOString=function(){return this.toDate().toISOString()},u.toString=function(){return this.toDate().toUTCString()};var l=u.toDate;u.toDate=function(t){return "s"===t&&this.$offset?n(this.format("YYYY-MM-DD HH:mm:ss:SSS")).toDate():l.call(this)};var c=u.diff;u.diff=function(t,i,e){if(t&&this.$u===t.$u)return c.call(this,t,i,e);var s=this.local(),f=n(t).local();return c.call(s,f,i,e)};}})); 
+	} (utc$2));
+	return utc$2.exports;
+}
+
+var utcExports = requireUtc();
+var utc = /*@__PURE__*/getDefaultExportFromCjs(utcExports);
+
+var timezone$2 = {exports: {}};
+
+var timezone$1 = timezone$2.exports;
+
+var hasRequiredTimezone;
+
+function requireTimezone () {
+	if (hasRequiredTimezone) return timezone$2.exports;
+	hasRequiredTimezone = 1;
+	(function (module, exports) {
+		!function(t,e){module.exports=e();}(timezone$1,(function(){var t={year:0,month:1,day:2,hour:3,minute:4,second:5},e={};return function(n,i,o){var r,a=function(t,n,i){ void 0===i&&(i={});var o=new Date(t),r=function(t,n){ void 0===n&&(n={});var i=n.timeZoneName||"short",o=t+"|"+i,r=e[o];return r||(r=new Intl.DateTimeFormat("en-US",{hour12:false,timeZone:t,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZoneName:i}),e[o]=r),r}(n,i);return r.formatToParts(o)},u=function(e,n){for(var i=a(e,n),r=[],u=0;u<i.length;u+=1){var f=i[u],s=f.type,m=f.value,c=t[s];c>=0&&(r[c]=parseInt(m,10));}var d=r[3],l=24===d?0:d,h=r[0]+"-"+r[1]+"-"+r[2]+" "+l+":"+r[4]+":"+r[5]+":000",v=+e;return (o.utc(h).valueOf()-(v-=v%1e3))/6e4},f=i.prototype;f.tz=function(t,e){ void 0===t&&(t=r);var n,i=this.utcOffset(),a=this.toDate(),u=a.toLocaleString("en-US",{timeZone:t}),f=Math.round((a-new Date(u))/1e3/60),s=15*-Math.round(a.getTimezoneOffset()/15)-f;if(!Number(s))n=this.utcOffset(0,e);else if(n=o(u,{locale:this.$L}).$set("millisecond",this.$ms).utcOffset(s,true),e){var m=n.utcOffset();n=n.add(i-m,"minute");}return n.$x.$timezone=t,n},f.offsetName=function(t){var e=this.$x.$timezone||o.tz.guess(),n=a(this.valueOf(),e,{timeZoneName:t}).find((function(t){return "timezonename"===t.type.toLowerCase()}));return n&&n.value};var s=f.startOf;f.startOf=function(t,e){if(!this.$x||!this.$x.$timezone)return s.call(this,t,e);var n=o(this.format("YYYY-MM-DD HH:mm:ss:SSS"),{locale:this.$L});return s.call(n,t,e).tz(this.$x.$timezone,true)},o.tz=function(t,e,n){var i=n&&e,a=n||e||r,f=u(+o(),a);if("string"!=typeof t)return o(t).tz(a);var s=function(t,e,n){var i=t-60*e*1e3,o=u(i,n);if(e===o)return [i,e];var r=u(i-=60*(o-e)*1e3,n);return o===r?[i,o]:[t-60*Math.min(o,r)*1e3,Math.max(o,r)]}(o.utc(t,i).valueOf(),f,a),m=s[0],c=s[1],d=o(m).utcOffset(c);return d.$x.$timezone=a,d},o.tz.guess=function(){return Intl.DateTimeFormat().resolvedOptions().timeZone},o.tz.setDefault=function(t){r=t;};}})); 
+	} (timezone$2));
+	return timezone$2.exports;
+}
+
+var timezoneExports = requireTimezone();
+var timezone = /*@__PURE__*/getDefaultExportFromCjs(timezoneExports);
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+/**
+ * Helper to format a string with date tokens.
+ *
+ * See [dayjs docs](https://day.js.org/docs/en/display/format) for available tokens.
+ * Unlike dayjs, tokens must be wrapped in square to be formatted, i.e. `[YYYY-MM-DD]`.
+ * Text outside of square brackets is not modified. This allows for easy formatting of
+ * strings that contain both date tokens and regular text inside of a YAML
+ * configuration.
+ *
+ * @param x String template to format.
+ * @param date The date to format with.
+ * @param timezone The timezone to format the date in.
+ * @returns The string template with date tokens replaced.
+ */
+function formatDateString(x, date, timezone) {
+    return x.replace(/\[(.+?)\]/g, (_, token) => dayjs(date).tz(timezone).format(token));
+}
+
+/*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
+function isNothing(subject) {
+  return (typeof subject === 'undefined') || (subject === null);
+}
+
+
+function isObject$1(subject) {
+  return (typeof subject === 'object') && (subject !== null);
+}
+
+
+function toArray$1(sequence) {
+  if (Array.isArray(sequence)) return sequence;
+  else if (isNothing(sequence)) return [];
+
+  return [ sequence ];
+}
+
+
+function extend$1(target, source) {
+  var index, length, key, sourceKeys;
+
+  if (source) {
+    sourceKeys = Object.keys(source);
+
+    for (index = 0, length = sourceKeys.length; index < length; index += 1) {
+      key = sourceKeys[index];
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+
+function repeat$1(string, count) {
+  var result = '', cycle;
+
+  for (cycle = 0; cycle < count; cycle += 1) {
+    result += string;
+  }
+
+  return result;
+}
+
+
+function isNegativeZero(number) {
+  return (number === 0) && (Number.NEGATIVE_INFINITY === 1 / number);
+}
+
+
+var isNothing_1      = isNothing;
+var isObject_1       = isObject$1;
+var toArray_1        = toArray$1;
+var repeat_1         = repeat$1;
+var isNegativeZero_1 = isNegativeZero;
+var extend_1         = extend$1;
+
+var common$1 = {
+	isNothing: isNothing_1,
+	isObject: isObject_1,
+	toArray: toArray_1,
+	repeat: repeat_1,
+	isNegativeZero: isNegativeZero_1,
+	extend: extend_1
+};
+
+// YAML error class. http://stackoverflow.com/questions/8458984
+
+
+function formatError$1(exception, compact) {
+  var where = '', message = exception.reason || '(unknown reason)';
+
+  if (!exception.mark) return message;
+
+  if (exception.mark.name) {
+    where += 'in "' + exception.mark.name + '" ';
+  }
+
+  where += '(' + (exception.mark.line + 1) + ':' + (exception.mark.column + 1) + ')';
+
+  if (!compact && exception.mark.snippet) {
+    where += '\n\n' + exception.mark.snippet;
+  }
+
+  return message + ' ' + where;
+}
+
+
+function YAMLException$1(reason, mark) {
+  // Super constructor
+  Error.call(this);
+
+  this.name = 'YAMLException';
+  this.reason = reason;
+  this.mark = mark;
+  this.message = formatError$1(this, false);
+
+  // Include stack trace in error object
+  if (Error.captureStackTrace) {
+    // Chrome and NodeJS
+    Error.captureStackTrace(this, this.constructor);
+  } else {
+    // FF, IE 10+ and Safari 6+. Fallback for others
+    this.stack = (new Error()).stack || '';
+  }
+}
+
+
+// Inherit from Error
+YAMLException$1.prototype = Object.create(Error.prototype);
+YAMLException$1.prototype.constructor = YAMLException$1;
+
+
+YAMLException$1.prototype.toString = function toString(compact) {
+  return this.name + ': ' + formatError$1(this, compact);
+};
+
+
+var exception = YAMLException$1;
+
+// get snippet for a single line, respecting maxLength
+function getLine(buffer, lineStart, lineEnd, position, maxLineLength) {
+  var head = '';
+  var tail = '';
+  var maxHalfLength = Math.floor(maxLineLength / 2) - 1;
+
+  if (position - lineStart > maxHalfLength) {
+    head = ' ... ';
+    lineStart = position - maxHalfLength + head.length;
+  }
+
+  if (lineEnd - position > maxHalfLength) {
+    tail = ' ...';
+    lineEnd = position + maxHalfLength - tail.length;
+  }
+
+  return {
+    str: head + buffer.slice(lineStart, lineEnd).replace(/\t/g, '→') + tail,
+    pos: position - lineStart + head.length // relative position
+  };
+}
+
+
+function padStart$1(string, max) {
+  return common$1.repeat(' ', max - string.length) + string;
+}
+
+
+function makeSnippet(mark, options) {
+  options = Object.create(options || null);
+
+  if (!mark.buffer) return null;
+
+  if (!options.maxLength) options.maxLength = 79;
+  if (typeof options.indent      !== 'number') options.indent      = 1;
+  if (typeof options.linesBefore !== 'number') options.linesBefore = 3;
+  if (typeof options.linesAfter  !== 'number') options.linesAfter  = 2;
+
+  var re = /\r?\n|\r|\0/g;
+  var lineStarts = [ 0 ];
+  var lineEnds = [];
+  var match;
+  var foundLineNo = -1;
+
+  while ((match = re.exec(mark.buffer))) {
+    lineEnds.push(match.index);
+    lineStarts.push(match.index + match[0].length);
+
+    if (mark.position <= match.index && foundLineNo < 0) {
+      foundLineNo = lineStarts.length - 2;
+    }
+  }
+
+  if (foundLineNo < 0) foundLineNo = lineStarts.length - 1;
+
+  var result = '', i, line;
+  var lineNoLength = Math.min(mark.line + options.linesAfter, lineEnds.length).toString().length;
+  var maxLineLength = options.maxLength - (options.indent + lineNoLength + 3);
+
+  for (i = 1; i <= options.linesBefore; i++) {
+    if (foundLineNo - i < 0) break;
+    line = getLine(
+      mark.buffer,
+      lineStarts[foundLineNo - i],
+      lineEnds[foundLineNo - i],
+      mark.position - (lineStarts[foundLineNo] - lineStarts[foundLineNo - i]),
+      maxLineLength
+    );
+    result = common$1.repeat(' ', options.indent) + padStart$1((mark.line - i + 1).toString(), lineNoLength) +
+      ' | ' + line.str + '\n' + result;
+  }
+
+  line = getLine(mark.buffer, lineStarts[foundLineNo], lineEnds[foundLineNo], mark.position, maxLineLength);
+  result += common$1.repeat(' ', options.indent) + padStart$1((mark.line + 1).toString(), lineNoLength) +
+    ' | ' + line.str + '\n';
+  result += common$1.repeat('-', options.indent + lineNoLength + 3 + line.pos) + '^' + '\n';
+
+  for (i = 1; i <= options.linesAfter; i++) {
+    if (foundLineNo + i >= lineEnds.length) break;
+    line = getLine(
+      mark.buffer,
+      lineStarts[foundLineNo + i],
+      lineEnds[foundLineNo + i],
+      mark.position - (lineStarts[foundLineNo] - lineStarts[foundLineNo + i]),
+      maxLineLength
+    );
+    result += common$1.repeat(' ', options.indent) + padStart$1((mark.line + i + 1).toString(), lineNoLength) +
+      ' | ' + line.str + '\n';
+  }
+
+  return result.replace(/\n$/, '');
+}
+
+
+var snippet = makeSnippet;
+
+var TYPE_CONSTRUCTOR_OPTIONS = [
+  'kind',
+  'multi',
+  'resolve',
+  'construct',
+  'instanceOf',
+  'predicate',
+  'represent',
+  'representName',
+  'defaultStyle',
+  'styleAliases'
+];
+
+var YAML_NODE_KINDS = [
+  'scalar',
+  'sequence',
+  'mapping'
+];
+
+function compileStyleAliases(map) {
+  var result = {};
+
+  if (map !== null) {
+    Object.keys(map).forEach(function (style) {
+      map[style].forEach(function (alias) {
+        result[String(alias)] = style;
+      });
+    });
+  }
+
+  return result;
+}
+
+function Type$1(tag, options) {
+  options = options || {};
+
+  Object.keys(options).forEach(function (name) {
+    if (TYPE_CONSTRUCTOR_OPTIONS.indexOf(name) === -1) {
+      throw new exception('Unknown option "' + name + '" is met in definition of "' + tag + '" YAML type.');
+    }
+  });
+
+  // TODO: Add tag format check.
+  this.options       = options; // keep original options in case user wants to extend this type later
+  this.tag           = tag;
+  this.kind          = options['kind']          || null;
+  this.resolve       = options['resolve']       || function () { return true; };
+  this.construct     = options['construct']     || function (data) { return data; };
+  this.instanceOf    = options['instanceOf']    || null;
+  this.predicate     = options['predicate']     || null;
+  this.represent     = options['represent']     || null;
+  this.representName = options['representName'] || null;
+  this.defaultStyle  = options['defaultStyle']  || null;
+  this.multi         = options['multi']         || false;
+  this.styleAliases  = compileStyleAliases(options['styleAliases'] || null);
+
+  if (YAML_NODE_KINDS.indexOf(this.kind) === -1) {
+    throw new exception('Unknown kind "' + this.kind + '" is specified for "' + tag + '" YAML type.');
+  }
+}
+
+var type = Type$1;
+
+/*eslint-disable max-len*/
+
+
+
+
+
+function compileList(schema, name) {
+  var result = [];
+
+  schema[name].forEach(function (currentType) {
+    var newIndex = result.length;
+
+    result.forEach(function (previousType, previousIndex) {
+      if (previousType.tag === currentType.tag &&
+          previousType.kind === currentType.kind &&
+          previousType.multi === currentType.multi) {
+
+        newIndex = previousIndex;
+      }
+    });
+
+    result[newIndex] = currentType;
+  });
+
+  return result;
+}
+
+
+function compileMap(/* lists... */) {
+  var result = {
+        scalar: {},
+        sequence: {},
+        mapping: {},
+        fallback: {},
+        multi: {
+          scalar: [],
+          sequence: [],
+          mapping: [],
+          fallback: []
+        }
+      }, index, length;
+
+  function collectType(type) {
+    if (type.multi) {
+      result.multi[type.kind].push(type);
+      result.multi['fallback'].push(type);
+    } else {
+      result[type.kind][type.tag] = result['fallback'][type.tag] = type;
+    }
+  }
+
+  for (index = 0, length = arguments.length; index < length; index += 1) {
+    arguments[index].forEach(collectType);
+  }
+  return result;
+}
+
+
+function Schema$1(definition) {
+  return this.extend(definition);
+}
+
+
+Schema$1.prototype.extend = function extend(definition) {
+  var implicit = [];
+  var explicit = [];
+
+  if (definition instanceof type) {
+    // Schema.extend(type)
+    explicit.push(definition);
+
+  } else if (Array.isArray(definition)) {
+    // Schema.extend([ type1, type2, ... ])
+    explicit = explicit.concat(definition);
+
+  } else if (definition && (Array.isArray(definition.implicit) || Array.isArray(definition.explicit))) {
+    // Schema.extend({ explicit: [ type1, type2, ... ], implicit: [ type1, type2, ... ] })
+    if (definition.implicit) implicit = implicit.concat(definition.implicit);
+    if (definition.explicit) explicit = explicit.concat(definition.explicit);
+
+  } else {
+    throw new exception('Schema.extend argument should be a Type, [ Type ], ' +
+      'or a schema definition ({ implicit: [...], explicit: [...] })');
+  }
+
+  implicit.forEach(function (type$1) {
+    if (!(type$1 instanceof type)) {
+      throw new exception('Specified list of YAML types (or a single Type object) contains a non-Type object.');
+    }
+
+    if (type$1.loadKind && type$1.loadKind !== 'scalar') {
+      throw new exception('There is a non-scalar type in the implicit list of a schema. Implicit resolving of such types is not supported.');
+    }
+
+    if (type$1.multi) {
+      throw new exception('There is a multi type in the implicit list of a schema. Multi tags can only be listed as explicit.');
+    }
+  });
+
+  explicit.forEach(function (type$1) {
+    if (!(type$1 instanceof type)) {
+      throw new exception('Specified list of YAML types (or a single Type object) contains a non-Type object.');
+    }
+  });
+
+  var result = Object.create(Schema$1.prototype);
+
+  result.implicit = (this.implicit || []).concat(implicit);
+  result.explicit = (this.explicit || []).concat(explicit);
+
+  result.compiledImplicit = compileList(result, 'implicit');
+  result.compiledExplicit = compileList(result, 'explicit');
+  result.compiledTypeMap  = compileMap(result.compiledImplicit, result.compiledExplicit);
+
+  return result;
+};
+
+
+var schema = Schema$1;
+
+var str = new type('tag:yaml.org,2002:str', {
+  kind: 'scalar',
+  construct: function (data) { return data !== null ? data : ''; }
+});
+
+var seq = new type('tag:yaml.org,2002:seq', {
+  kind: 'sequence',
+  construct: function (data) { return data !== null ? data : []; }
+});
+
+var map = new type('tag:yaml.org,2002:map', {
+  kind: 'mapping',
+  construct: function (data) { return data !== null ? data : {}; }
+});
+
+var failsafe = new schema({
+  explicit: [
+    str,
+    seq,
+    map
+  ]
+});
+
+function resolveYamlNull(data) {
+  if (data === null) return true;
+
+  var max = data.length;
+
+  return (max === 1 && data === '~') ||
+         (max === 4 && (data === 'null' || data === 'Null' || data === 'NULL'));
+}
+
+function constructYamlNull() {
+  return null;
+}
+
+function isNull(object) {
+  return object === null;
+}
+
+var _null = new type('tag:yaml.org,2002:null', {
+  kind: 'scalar',
+  resolve: resolveYamlNull,
+  construct: constructYamlNull,
+  predicate: isNull,
+  represent: {
+    canonical: function () { return '~';    },
+    lowercase: function () { return 'null'; },
+    uppercase: function () { return 'NULL'; },
+    camelcase: function () { return 'Null'; },
+    empty:     function () { return '';     }
+  },
+  defaultStyle: 'lowercase'
+});
+
+function resolveYamlBoolean(data) {
+  if (data === null) return false;
+
+  var max = data.length;
+
+  return (max === 4 && (data === 'true' || data === 'True' || data === 'TRUE')) ||
+         (max === 5 && (data === 'false' || data === 'False' || data === 'FALSE'));
+}
+
+function constructYamlBoolean(data) {
+  return data === 'true' ||
+         data === 'True' ||
+         data === 'TRUE';
+}
+
+function isBoolean(object) {
+  return Object.prototype.toString.call(object) === '[object Boolean]';
+}
+
+var bool = new type('tag:yaml.org,2002:bool', {
+  kind: 'scalar',
+  resolve: resolveYamlBoolean,
+  construct: constructYamlBoolean,
+  predicate: isBoolean,
+  represent: {
+    lowercase: function (object) { return object ? 'true' : 'false'; },
+    uppercase: function (object) { return object ? 'TRUE' : 'FALSE'; },
+    camelcase: function (object) { return object ? 'True' : 'False'; }
+  },
+  defaultStyle: 'lowercase'
+});
+
+function isHexCode(c) {
+  return ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) ||
+         ((0x41/* A */ <= c) && (c <= 0x46/* F */)) ||
+         ((0x61/* a */ <= c) && (c <= 0x66/* f */));
+}
+
+function isOctCode(c) {
+  return ((0x30/* 0 */ <= c) && (c <= 0x37/* 7 */));
+}
+
+function isDecCode(c) {
+  return ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */));
+}
+
+function resolveYamlInteger(data) {
+  if (data === null) return false;
+
+  var max = data.length,
+      index = 0,
+      hasDigits = false,
+      ch;
+
+  if (!max) return false;
+
+  ch = data[index];
+
+  // sign
+  if (ch === '-' || ch === '+') {
+    ch = data[++index];
+  }
+
+  if (ch === '0') {
+    // 0
+    if (index + 1 === max) return true;
+    ch = data[++index];
+
+    // base 2, base 8, base 16
+
+    if (ch === 'b') {
+      // base 2
+      index++;
+
+      for (; index < max; index++) {
+        ch = data[index];
+        if (ch === '_') continue;
+        if (ch !== '0' && ch !== '1') return false;
+        hasDigits = true;
+      }
+      return hasDigits && ch !== '_';
+    }
+
+
+    if (ch === 'x') {
+      // base 16
+      index++;
+
+      for (; index < max; index++) {
+        ch = data[index];
+        if (ch === '_') continue;
+        if (!isHexCode(data.charCodeAt(index))) return false;
+        hasDigits = true;
+      }
+      return hasDigits && ch !== '_';
+    }
+
+
+    if (ch === 'o') {
+      // base 8
+      index++;
+
+      for (; index < max; index++) {
+        ch = data[index];
+        if (ch === '_') continue;
+        if (!isOctCode(data.charCodeAt(index))) return false;
+        hasDigits = true;
+      }
+      return hasDigits && ch !== '_';
+    }
+  }
+
+  // base 10 (except 0)
+
+  // value should not start with `_`;
+  if (ch === '_') return false;
+
+  for (; index < max; index++) {
+    ch = data[index];
+    if (ch === '_') continue;
+    if (!isDecCode(data.charCodeAt(index))) {
+      return false;
+    }
+    hasDigits = true;
+  }
+
+  // Should have digits and should not end with `_`
+  if (!hasDigits || ch === '_') return false;
+
+  return true;
+}
+
+function constructYamlInteger(data) {
+  var value = data, sign = 1, ch;
+
+  if (value.indexOf('_') !== -1) {
+    value = value.replace(/_/g, '');
+  }
+
+  ch = value[0];
+
+  if (ch === '-' || ch === '+') {
+    if (ch === '-') sign = -1;
+    value = value.slice(1);
+    ch = value[0];
+  }
+
+  if (value === '0') return 0;
+
+  if (ch === '0') {
+    if (value[1] === 'b') return sign * parseInt(value.slice(2), 2);
+    if (value[1] === 'x') return sign * parseInt(value.slice(2), 16);
+    if (value[1] === 'o') return sign * parseInt(value.slice(2), 8);
+  }
+
+  return sign * parseInt(value, 10);
+}
+
+function isInteger(object) {
+  return (Object.prototype.toString.call(object)) === '[object Number]' &&
+         (object % 1 === 0 && !common$1.isNegativeZero(object));
+}
+
+var int = new type('tag:yaml.org,2002:int', {
+  kind: 'scalar',
+  resolve: resolveYamlInteger,
+  construct: constructYamlInteger,
+  predicate: isInteger,
+  represent: {
+    binary:      function (obj) { return obj >= 0 ? '0b' + obj.toString(2) : '-0b' + obj.toString(2).slice(1); },
+    octal:       function (obj) { return obj >= 0 ? '0o'  + obj.toString(8) : '-0o'  + obj.toString(8).slice(1); },
+    decimal:     function (obj) { return obj.toString(10); },
+    /* eslint-disable max-len */
+    hexadecimal: function (obj) { return obj >= 0 ? '0x' + obj.toString(16).toUpperCase() :  '-0x' + obj.toString(16).toUpperCase().slice(1); }
+  },
+  defaultStyle: 'decimal',
+  styleAliases: {
+    binary:      [ 2,  'bin' ],
+    octal:       [ 8,  'oct' ],
+    decimal:     [ 10, 'dec' ],
+    hexadecimal: [ 16, 'hex' ]
+  }
+});
+
+var YAML_FLOAT_PATTERN = new RegExp(
+  // 2.5e4, 2.5 and integers
+  '^(?:[-+]?(?:[0-9][0-9_]*)(?:\\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?' +
+  // .2e4, .2
+  // special case, seems not from spec
+  '|\\.[0-9_]+(?:[eE][-+]?[0-9]+)?' +
+  // .inf
+  '|[-+]?\\.(?:inf|Inf|INF)' +
+  // .nan
+  '|\\.(?:nan|NaN|NAN))$');
+
+function resolveYamlFloat(data) {
+  if (data === null) return false;
+
+  if (!YAML_FLOAT_PATTERN.test(data) ||
+      // Quick hack to not allow integers end with `_`
+      // Probably should update regexp & check speed
+      data[data.length - 1] === '_') {
+    return false;
+  }
+
+  return true;
+}
+
+function constructYamlFloat(data) {
+  var value, sign;
+
+  value  = data.replace(/_/g, '').toLowerCase();
+  sign   = value[0] === '-' ? -1 : 1;
+
+  if ('+-'.indexOf(value[0]) >= 0) {
+    value = value.slice(1);
+  }
+
+  if (value === '.inf') {
+    return (sign === 1) ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+
+  } else if (value === '.nan') {
+    return NaN;
+  }
+  return sign * parseFloat(value, 10);
+}
+
+
+var SCIENTIFIC_WITHOUT_DOT = /^[-+]?[0-9]+e/;
+
+function representYamlFloat(object, style) {
+  var res;
+
+  if (isNaN(object)) {
+    switch (style) {
+      case 'lowercase': return '.nan';
+      case 'uppercase': return '.NAN';
+      case 'camelcase': return '.NaN';
+    }
+  } else if (Number.POSITIVE_INFINITY === object) {
+    switch (style) {
+      case 'lowercase': return '.inf';
+      case 'uppercase': return '.INF';
+      case 'camelcase': return '.Inf';
+    }
+  } else if (Number.NEGATIVE_INFINITY === object) {
+    switch (style) {
+      case 'lowercase': return '-.inf';
+      case 'uppercase': return '-.INF';
+      case 'camelcase': return '-.Inf';
+    }
+  } else if (common$1.isNegativeZero(object)) {
+    return '-0.0';
+  }
+
+  res = object.toString(10);
+
+  // JS stringifier can build scientific format without dots: 5e-100,
+  // while YAML requres dot: 5.e-100. Fix it with simple hack
+
+  return SCIENTIFIC_WITHOUT_DOT.test(res) ? res.replace('e', '.e') : res;
+}
+
+function isFloat(object) {
+  return (Object.prototype.toString.call(object) === '[object Number]') &&
+         (object % 1 !== 0 || common$1.isNegativeZero(object));
+}
+
+var float = new type('tag:yaml.org,2002:float', {
+  kind: 'scalar',
+  resolve: resolveYamlFloat,
+  construct: constructYamlFloat,
+  predicate: isFloat,
+  represent: representYamlFloat,
+  defaultStyle: 'lowercase'
+});
+
+var json = failsafe.extend({
+  implicit: [
+    _null,
+    bool,
+    int,
+    float
+  ]
+});
+
+var core = json;
+
+var YAML_DATE_REGEXP = new RegExp(
+  '^([0-9][0-9][0-9][0-9])'          + // [1] year
+  '-([0-9][0-9])'                    + // [2] month
+  '-([0-9][0-9])$');                   // [3] day
+
+var YAML_TIMESTAMP_REGEXP = new RegExp(
+  '^([0-9][0-9][0-9][0-9])'          + // [1] year
+  '-([0-9][0-9]?)'                   + // [2] month
+  '-([0-9][0-9]?)'                   + // [3] day
+  '(?:[Tt]|[ \\t]+)'                 + // ...
+  '([0-9][0-9]?)'                    + // [4] hour
+  ':([0-9][0-9])'                    + // [5] minute
+  ':([0-9][0-9])'                    + // [6] second
+  '(?:\\.([0-9]*))?'                 + // [7] fraction
+  '(?:[ \\t]*(Z|([-+])([0-9][0-9]?)' + // [8] tz [9] tz_sign [10] tz_hour
+  '(?::([0-9][0-9]))?))?$');           // [11] tz_minute
+
+function resolveYamlTimestamp(data) {
+  if (data === null) return false;
+  if (YAML_DATE_REGEXP.exec(data) !== null) return true;
+  if (YAML_TIMESTAMP_REGEXP.exec(data) !== null) return true;
+  return false;
+}
+
+function constructYamlTimestamp(data) {
+  var match, year, month, day, hour, minute, second, fraction = 0,
+      delta = null, tz_hour, tz_minute, date;
+
+  match = YAML_DATE_REGEXP.exec(data);
+  if (match === null) match = YAML_TIMESTAMP_REGEXP.exec(data);
+
+  if (match === null) throw new Error('Date resolve error');
+
+  // match: [1] year [2] month [3] day
+
+  year = +(match[1]);
+  month = +(match[2]) - 1; // JS month starts with 0
+  day = +(match[3]);
+
+  if (!match[4]) { // no hour
+    return new Date(Date.UTC(year, month, day));
+  }
+
+  // match: [4] hour [5] minute [6] second [7] fraction
+
+  hour = +(match[4]);
+  minute = +(match[5]);
+  second = +(match[6]);
+
+  if (match[7]) {
+    fraction = match[7].slice(0, 3);
+    while (fraction.length < 3) { // milli-seconds
+      fraction += '0';
+    }
+    fraction = +fraction;
+  }
+
+  // match: [8] tz [9] tz_sign [10] tz_hour [11] tz_minute
+
+  if (match[9]) {
+    tz_hour = +(match[10]);
+    tz_minute = +(match[11] || 0);
+    delta = (tz_hour * 60 + tz_minute) * 60000; // delta in mili-seconds
+    if (match[9] === '-') delta = -delta;
+  }
+
+  date = new Date(Date.UTC(year, month, day, hour, minute, second, fraction));
+
+  if (delta) date.setTime(date.getTime() - delta);
+
+  return date;
+}
+
+function representYamlTimestamp(object /*, style*/) {
+  return object.toISOString();
+}
+
+var timestamp = new type('tag:yaml.org,2002:timestamp', {
+  kind: 'scalar',
+  resolve: resolveYamlTimestamp,
+  construct: constructYamlTimestamp,
+  instanceOf: Date,
+  represent: representYamlTimestamp
+});
+
+function resolveYamlMerge(data) {
+  return data === '<<' || data === null;
+}
+
+var merge$1 = new type('tag:yaml.org,2002:merge', {
+  kind: 'scalar',
+  resolve: resolveYamlMerge
+});
+
+/*eslint-disable no-bitwise*/
+
+
+
+
+
+// [ 64, 65, 66 ] -> [ padding, CR, LF ]
+var BASE64_MAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r';
+
+
+function resolveYamlBinary(data) {
+  if (data === null) return false;
+
+  var code, idx, bitlen = 0, max = data.length, map = BASE64_MAP;
+
+  // Convert one by one.
+  for (idx = 0; idx < max; idx++) {
+    code = map.indexOf(data.charAt(idx));
+
+    // Skip CR/LF
+    if (code > 64) continue;
+
+    // Fail on illegal characters
+    if (code < 0) return false;
+
+    bitlen += 6;
+  }
+
+  // If there are any bits left, source was corrupted
+  return (bitlen % 8) === 0;
+}
+
+function constructYamlBinary(data) {
+  var idx, tailbits,
+      input = data.replace(/[\r\n=]/g, ''), // remove CR/LF & padding to simplify scan
+      max = input.length,
+      map = BASE64_MAP,
+      bits = 0,
+      result = [];
+
+  // Collect by 6*4 bits (3 bytes)
+
+  for (idx = 0; idx < max; idx++) {
+    if ((idx % 4 === 0) && idx) {
+      result.push((bits >> 16) & 0xFF);
+      result.push((bits >> 8) & 0xFF);
+      result.push(bits & 0xFF);
+    }
+
+    bits = (bits << 6) | map.indexOf(input.charAt(idx));
+  }
+
+  // Dump tail
+
+  tailbits = (max % 4) * 6;
+
+  if (tailbits === 0) {
+    result.push((bits >> 16) & 0xFF);
+    result.push((bits >> 8) & 0xFF);
+    result.push(bits & 0xFF);
+  } else if (tailbits === 18) {
+    result.push((bits >> 10) & 0xFF);
+    result.push((bits >> 2) & 0xFF);
+  } else if (tailbits === 12) {
+    result.push((bits >> 4) & 0xFF);
+  }
+
+  return new Uint8Array(result);
+}
+
+function representYamlBinary(object /*, style*/) {
+  var result = '', bits = 0, idx, tail,
+      max = object.length,
+      map = BASE64_MAP;
+
+  // Convert every three bytes to 4 ASCII characters.
+
+  for (idx = 0; idx < max; idx++) {
+    if ((idx % 3 === 0) && idx) {
+      result += map[(bits >> 18) & 0x3F];
+      result += map[(bits >> 12) & 0x3F];
+      result += map[(bits >> 6) & 0x3F];
+      result += map[bits & 0x3F];
+    }
+
+    bits = (bits << 8) + object[idx];
+  }
+
+  // Dump tail
+
+  tail = max % 3;
+
+  if (tail === 0) {
+    result += map[(bits >> 18) & 0x3F];
+    result += map[(bits >> 12) & 0x3F];
+    result += map[(bits >> 6) & 0x3F];
+    result += map[bits & 0x3F];
+  } else if (tail === 2) {
+    result += map[(bits >> 10) & 0x3F];
+    result += map[(bits >> 4) & 0x3F];
+    result += map[(bits << 2) & 0x3F];
+    result += map[64];
+  } else if (tail === 1) {
+    result += map[(bits >> 2) & 0x3F];
+    result += map[(bits << 4) & 0x3F];
+    result += map[64];
+    result += map[64];
+  }
+
+  return result;
+}
+
+function isBinary(obj) {
+  return Object.prototype.toString.call(obj) ===  '[object Uint8Array]';
+}
+
+var binary = new type('tag:yaml.org,2002:binary', {
+  kind: 'scalar',
+  resolve: resolveYamlBinary,
+  construct: constructYamlBinary,
+  predicate: isBinary,
+  represent: representYamlBinary
+});
+
+var _hasOwnProperty$3 = Object.prototype.hasOwnProperty;
+var _toString$2       = Object.prototype.toString;
+
+function resolveYamlOmap(data) {
+  if (data === null) return true;
+
+  var objectKeys = [], index, length, pair, pairKey, pairHasKey,
+      object = data;
+
+  for (index = 0, length = object.length; index < length; index += 1) {
+    pair = object[index];
+    pairHasKey = false;
+
+    if (_toString$2.call(pair) !== '[object Object]') return false;
+
+    for (pairKey in pair) {
+      if (_hasOwnProperty$3.call(pair, pairKey)) {
+        if (!pairHasKey) pairHasKey = true;
+        else return false;
+      }
+    }
+
+    if (!pairHasKey) return false;
+
+    if (objectKeys.indexOf(pairKey) === -1) objectKeys.push(pairKey);
+    else return false;
+  }
+
+  return true;
+}
+
+function constructYamlOmap(data) {
+  return data !== null ? data : [];
+}
+
+var omap = new type('tag:yaml.org,2002:omap', {
+  kind: 'sequence',
+  resolve: resolveYamlOmap,
+  construct: constructYamlOmap
+});
+
+var _toString$1 = Object.prototype.toString;
+
+function resolveYamlPairs(data) {
+  if (data === null) return true;
+
+  var index, length, pair, keys, result,
+      object = data;
+
+  result = new Array(object.length);
+
+  for (index = 0, length = object.length; index < length; index += 1) {
+    pair = object[index];
+
+    if (_toString$1.call(pair) !== '[object Object]') return false;
+
+    keys = Object.keys(pair);
+
+    if (keys.length !== 1) return false;
+
+    result[index] = [ keys[0], pair[keys[0]] ];
+  }
+
+  return true;
+}
+
+function constructYamlPairs(data) {
+  if (data === null) return [];
+
+  var index, length, pair, keys, result,
+      object = data;
+
+  result = new Array(object.length);
+
+  for (index = 0, length = object.length; index < length; index += 1) {
+    pair = object[index];
+
+    keys = Object.keys(pair);
+
+    result[index] = [ keys[0], pair[keys[0]] ];
+  }
+
+  return result;
+}
+
+var pairs = new type('tag:yaml.org,2002:pairs', {
+  kind: 'sequence',
+  resolve: resolveYamlPairs,
+  construct: constructYamlPairs
+});
+
+var _hasOwnProperty$2 = Object.prototype.hasOwnProperty;
+
+function resolveYamlSet(data) {
+  if (data === null) return true;
+
+  var key, object = data;
+
+  for (key in object) {
+    if (_hasOwnProperty$2.call(object, key)) {
+      if (object[key] !== null) return false;
+    }
+  }
+
+  return true;
+}
+
+function constructYamlSet(data) {
+  return data !== null ? data : {};
+}
+
+var set = new type('tag:yaml.org,2002:set', {
+  kind: 'mapping',
+  resolve: resolveYamlSet,
+  construct: constructYamlSet
+});
+
+var _default$1 = core.extend({
+  implicit: [
+    timestamp,
+    merge$1
+  ],
+  explicit: [
+    binary,
+    omap,
+    pairs,
+    set
+  ]
+});
+
+/*eslint-disable max-len,no-use-before-define*/
+
+
+
+
+
+
+
+var _hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+
+
+var CONTEXT_FLOW_IN   = 1;
+var CONTEXT_FLOW_OUT  = 2;
+var CONTEXT_BLOCK_IN  = 3;
+var CONTEXT_BLOCK_OUT = 4;
+
+
+var CHOMPING_CLIP  = 1;
+var CHOMPING_STRIP = 2;
+var CHOMPING_KEEP  = 3;
+
+
+var PATTERN_NON_PRINTABLE         = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x84\x86-\x9F\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/;
+var PATTERN_NON_ASCII_LINE_BREAKS = /[\x85\u2028\u2029]/;
+var PATTERN_FLOW_INDICATORS       = /[,\[\]\{\}]/;
+var PATTERN_TAG_HANDLE            = /^(?:!|!!|![a-z\-]+!)$/i;
+var PATTERN_TAG_URI               = /^(?:!|[^,\[\]\{\}])(?:%[0-9a-f]{2}|[0-9a-z\-#;\/\?:@&=\+\$,_\.!~\*'\(\)\[\]])*$/i;
+
+
+function _class(obj) { return Object.prototype.toString.call(obj); }
+
+function is_EOL(c) {
+  return (c === 0x0A/* LF */) || (c === 0x0D/* CR */);
+}
+
+function is_WHITE_SPACE(c) {
+  return (c === 0x09/* Tab */) || (c === 0x20/* Space */);
+}
+
+function is_WS_OR_EOL(c) {
+  return (c === 0x09/* Tab */) ||
+         (c === 0x20/* Space */) ||
+         (c === 0x0A/* LF */) ||
+         (c === 0x0D/* CR */);
+}
+
+function is_FLOW_INDICATOR(c) {
+  return c === 0x2C/* , */ ||
+         c === 0x5B/* [ */ ||
+         c === 0x5D/* ] */ ||
+         c === 0x7B/* { */ ||
+         c === 0x7D/* } */;
+}
+
+function fromHexCode(c) {
+  var lc;
+
+  if ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) {
+    return c - 0x30;
+  }
+
+  /*eslint-disable no-bitwise*/
+  lc = c | 0x20;
+
+  if ((0x61/* a */ <= lc) && (lc <= 0x66/* f */)) {
+    return lc - 0x61 + 10;
+  }
+
+  return -1;
+}
+
+function escapedHexLen(c) {
+  if (c === 0x78/* x */) { return 2; }
+  if (c === 0x75/* u */) { return 4; }
+  if (c === 0x55/* U */) { return 8; }
+  return 0;
+}
+
+function fromDecimalCode(c) {
+  if ((0x30/* 0 */ <= c) && (c <= 0x39/* 9 */)) {
+    return c - 0x30;
+  }
+
+  return -1;
+}
+
+function simpleEscapeSequence(c) {
+  /* eslint-disable indent */
+  return (c === 0x30/* 0 */) ? '\x00' :
+        (c === 0x61/* a */) ? '\x07' :
+        (c === 0x62/* b */) ? '\x08' :
+        (c === 0x74/* t */) ? '\x09' :
+        (c === 0x09/* Tab */) ? '\x09' :
+        (c === 0x6E/* n */) ? '\x0A' :
+        (c === 0x76/* v */) ? '\x0B' :
+        (c === 0x66/* f */) ? '\x0C' :
+        (c === 0x72/* r */) ? '\x0D' :
+        (c === 0x65/* e */) ? '\x1B' :
+        (c === 0x20/* Space */) ? ' ' :
+        (c === 0x22/* " */) ? '\x22' :
+        (c === 0x2F/* / */) ? '/' :
+        (c === 0x5C/* \ */) ? '\x5C' :
+        (c === 0x4E/* N */) ? '\x85' :
+        (c === 0x5F/* _ */) ? '\xA0' :
+        (c === 0x4C/* L */) ? '\u2028' :
+        (c === 0x50/* P */) ? '\u2029' : '';
+}
+
+function charFromCodepoint(c) {
+  if (c <= 0xFFFF) {
+    return String.fromCharCode(c);
+  }
+  // Encode UTF-16 surrogate pair
+  // https://en.wikipedia.org/wiki/UTF-16#Code_points_U.2B010000_to_U.2B10FFFF
+  return String.fromCharCode(
+    ((c - 0x010000) >> 10) + 0xD800,
+    ((c - 0x010000) & 0x03FF) + 0xDC00
+  );
+}
+
+var simpleEscapeCheck = new Array(256); // integer, for fast access
+var simpleEscapeMap = new Array(256);
+for (var i = 0; i < 256; i++) {
+  simpleEscapeCheck[i] = simpleEscapeSequence(i) ? 1 : 0;
+  simpleEscapeMap[i] = simpleEscapeSequence(i);
+}
+
+
+function State$1(input, options) {
+  this.input = input;
+
+  this.filename  = options['filename']  || null;
+  this.schema    = options['schema']    || _default$1;
+  this.onWarning = options['onWarning'] || null;
+  // (Hidden) Remove? makes the loader to expect YAML 1.1 documents
+  // if such documents have no explicit %YAML directive
+  this.legacy    = options['legacy']    || false;
+
+  this.json      = options['json']      || false;
+  this.listener  = options['listener']  || null;
+
+  this.implicitTypes = this.schema.compiledImplicit;
+  this.typeMap       = this.schema.compiledTypeMap;
+
+  this.length     = input.length;
+  this.position   = 0;
+  this.line       = 0;
+  this.lineStart  = 0;
+  this.lineIndent = 0;
+
+  // position of first leading tab in the current line,
+  // used to make sure there are no tabs in the indentation
+  this.firstTabInLine = -1;
+
+  this.documents = [];
+
+  /*
+  this.version;
+  this.checkLineBreaks;
+  this.tagMap;
+  this.anchorMap;
+  this.tag;
+  this.anchor;
+  this.kind;
+  this.result;*/
+
+}
+
+
+function generateError(state, message) {
+  var mark = {
+    name:     state.filename,
+    buffer:   state.input.slice(0, -1), // omit trailing \0
+    position: state.position,
+    line:     state.line,
+    column:   state.position - state.lineStart
+  };
+
+  mark.snippet = snippet(mark);
+
+  return new exception(message, mark);
+}
+
+function throwError(state, message) {
+  throw generateError(state, message);
+}
+
+function throwWarning(state, message) {
+  if (state.onWarning) {
+    state.onWarning.call(null, generateError(state, message));
+  }
+}
+
+
+var directiveHandlers = {
+
+  YAML: function handleYamlDirective(state, name, args) {
+
+    var match, major, minor;
+
+    if (state.version !== null) {
+      throwError(state, 'duplication of %YAML directive');
+    }
+
+    if (args.length !== 1) {
+      throwError(state, 'YAML directive accepts exactly one argument');
+    }
+
+    match = /^([0-9]+)\.([0-9]+)$/.exec(args[0]);
+
+    if (match === null) {
+      throwError(state, 'ill-formed argument of the YAML directive');
+    }
+
+    major = parseInt(match[1], 10);
+    minor = parseInt(match[2], 10);
+
+    if (major !== 1) {
+      throwError(state, 'unacceptable YAML version of the document');
+    }
+
+    state.version = args[0];
+    state.checkLineBreaks = (minor < 2);
+
+    if (minor !== 1 && minor !== 2) {
+      throwWarning(state, 'unsupported YAML version of the document');
+    }
+  },
+
+  TAG: function handleTagDirective(state, name, args) {
+
+    var handle, prefix;
+
+    if (args.length !== 2) {
+      throwError(state, 'TAG directive accepts exactly two arguments');
+    }
+
+    handle = args[0];
+    prefix = args[1];
+
+    if (!PATTERN_TAG_HANDLE.test(handle)) {
+      throwError(state, 'ill-formed tag handle (first argument) of the TAG directive');
+    }
+
+    if (_hasOwnProperty$1.call(state.tagMap, handle)) {
+      throwError(state, 'there is a previously declared suffix for "' + handle + '" tag handle');
+    }
+
+    if (!PATTERN_TAG_URI.test(prefix)) {
+      throwError(state, 'ill-formed tag prefix (second argument) of the TAG directive');
+    }
+
+    try {
+      prefix = decodeURIComponent(prefix);
+    } catch (err) {
+      throwError(state, 'tag prefix is malformed: ' + prefix);
+    }
+
+    state.tagMap[handle] = prefix;
+  }
+};
+
+
+function captureSegment(state, start, end, checkJson) {
+  var _position, _length, _character, _result;
+
+  if (start < end) {
+    _result = state.input.slice(start, end);
+
+    if (checkJson) {
+      for (_position = 0, _length = _result.length; _position < _length; _position += 1) {
+        _character = _result.charCodeAt(_position);
+        if (!(_character === 0x09 ||
+              (0x20 <= _character && _character <= 0x10FFFF))) {
+          throwError(state, 'expected valid JSON character');
+        }
+      }
+    } else if (PATTERN_NON_PRINTABLE.test(_result)) {
+      throwError(state, 'the stream contains non-printable characters');
+    }
+
+    state.result += _result;
+  }
+}
+
+function mergeMappings(state, destination, source, overridableKeys) {
+  var sourceKeys, key, index, quantity;
+
+  if (!common$1.isObject(source)) {
+    throwError(state, 'cannot merge mappings; the provided source object is unacceptable');
+  }
+
+  sourceKeys = Object.keys(source);
+
+  for (index = 0, quantity = sourceKeys.length; index < quantity; index += 1) {
+    key = sourceKeys[index];
+
+    if (!_hasOwnProperty$1.call(destination, key)) {
+      destination[key] = source[key];
+      overridableKeys[key] = true;
+    }
+  }
+}
+
+function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode,
+  startLine, startLineStart, startPos) {
+
+  var index, quantity;
+
+  // The output is a plain object here, so keys can only be strings.
+  // We need to convert keyNode to a string, but doing so can hang the process
+  // (deeply nested arrays that explode exponentially using aliases).
+  if (Array.isArray(keyNode)) {
+    keyNode = Array.prototype.slice.call(keyNode);
+
+    for (index = 0, quantity = keyNode.length; index < quantity; index += 1) {
+      if (Array.isArray(keyNode[index])) {
+        throwError(state, 'nested arrays are not supported inside keys');
+      }
+
+      if (typeof keyNode === 'object' && _class(keyNode[index]) === '[object Object]') {
+        keyNode[index] = '[object Object]';
+      }
+    }
+  }
+
+  // Avoid code execution in load() via toString property
+  // (still use its own toString for arrays, timestamps,
+  // and whatever user schema extensions happen to have @@toStringTag)
+  if (typeof keyNode === 'object' && _class(keyNode) === '[object Object]') {
+    keyNode = '[object Object]';
+  }
+
+
+  keyNode = String(keyNode);
+
+  if (_result === null) {
+    _result = {};
+  }
+
+  if (keyTag === 'tag:yaml.org,2002:merge') {
+    if (Array.isArray(valueNode)) {
+      for (index = 0, quantity = valueNode.length; index < quantity; index += 1) {
+        mergeMappings(state, _result, valueNode[index], overridableKeys);
+      }
+    } else {
+      mergeMappings(state, _result, valueNode, overridableKeys);
+    }
+  } else {
+    if (!state.json &&
+        !_hasOwnProperty$1.call(overridableKeys, keyNode) &&
+        _hasOwnProperty$1.call(_result, keyNode)) {
+      state.line = startLine || state.line;
+      state.lineStart = startLineStart || state.lineStart;
+      state.position = startPos || state.position;
+      throwError(state, 'duplicated mapping key');
+    }
+
+    // used for this specific key only because Object.defineProperty is slow
+    if (keyNode === '__proto__') {
+      Object.defineProperty(_result, keyNode, {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: valueNode
+      });
+    } else {
+      _result[keyNode] = valueNode;
+    }
+    delete overridableKeys[keyNode];
+  }
+
+  return _result;
+}
+
+function readLineBreak(state) {
+  var ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch === 0x0A/* LF */) {
+    state.position++;
+  } else if (ch === 0x0D/* CR */) {
+    state.position++;
+    if (state.input.charCodeAt(state.position) === 0x0A/* LF */) {
+      state.position++;
+    }
+  } else {
+    throwError(state, 'a line break is expected');
+  }
+
+  state.line += 1;
+  state.lineStart = state.position;
+  state.firstTabInLine = -1;
+}
+
+function skipSeparationSpace(state, allowComments, checkIndent) {
+  var lineBreaks = 0,
+      ch = state.input.charCodeAt(state.position);
+
+  while (ch !== 0) {
+    while (is_WHITE_SPACE(ch)) {
+      if (ch === 0x09/* Tab */ && state.firstTabInLine === -1) {
+        state.firstTabInLine = state.position;
+      }
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    if (allowComments && ch === 0x23/* # */) {
+      do {
+        ch = state.input.charCodeAt(++state.position);
+      } while (ch !== 0x0A/* LF */ && ch !== 0x0D/* CR */ && ch !== 0);
+    }
+
+    if (is_EOL(ch)) {
+      readLineBreak(state);
+
+      ch = state.input.charCodeAt(state.position);
+      lineBreaks++;
+      state.lineIndent = 0;
+
+      while (ch === 0x20/* Space */) {
+        state.lineIndent++;
+        ch = state.input.charCodeAt(++state.position);
+      }
+    } else {
+      break;
+    }
+  }
+
+  if (checkIndent !== -1 && lineBreaks !== 0 && state.lineIndent < checkIndent) {
+    throwWarning(state, 'deficient indentation');
+  }
+
+  return lineBreaks;
+}
+
+function testDocumentSeparator(state) {
+  var _position = state.position,
+      ch;
+
+  ch = state.input.charCodeAt(_position);
+
+  // Condition state.position === state.lineStart is tested
+  // in parent on each call, for efficiency. No needs to test here again.
+  if ((ch === 0x2D/* - */ || ch === 0x2E/* . */) &&
+      ch === state.input.charCodeAt(_position + 1) &&
+      ch === state.input.charCodeAt(_position + 2)) {
+
+    _position += 3;
+
+    ch = state.input.charCodeAt(_position);
+
+    if (ch === 0 || is_WS_OR_EOL(ch)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function writeFoldedLines(state, count) {
+  if (count === 1) {
+    state.result += ' ';
+  } else if (count > 1) {
+    state.result += common$1.repeat('\n', count - 1);
+  }
+}
+
+
+function readPlainScalar(state, nodeIndent, withinFlowCollection) {
+  var preceding,
+      following,
+      captureStart,
+      captureEnd,
+      hasPendingContent,
+      _line,
+      _lineStart,
+      _lineIndent,
+      _kind = state.kind,
+      _result = state.result,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (is_WS_OR_EOL(ch)      ||
+      is_FLOW_INDICATOR(ch) ||
+      ch === 0x23/* # */    ||
+      ch === 0x26/* & */    ||
+      ch === 0x2A/* * */    ||
+      ch === 0x21/* ! */    ||
+      ch === 0x7C/* | */    ||
+      ch === 0x3E/* > */    ||
+      ch === 0x27/* ' */    ||
+      ch === 0x22/* " */    ||
+      ch === 0x25/* % */    ||
+      ch === 0x40/* @ */    ||
+      ch === 0x60/* ` */) {
+    return false;
+  }
+
+  if (ch === 0x3F/* ? */ || ch === 0x2D/* - */) {
+    following = state.input.charCodeAt(state.position + 1);
+
+    if (is_WS_OR_EOL(following) ||
+        withinFlowCollection && is_FLOW_INDICATOR(following)) {
+      return false;
+    }
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+  captureStart = captureEnd = state.position;
+  hasPendingContent = false;
+
+  while (ch !== 0) {
+    if (ch === 0x3A/* : */) {
+      following = state.input.charCodeAt(state.position + 1);
+
+      if (is_WS_OR_EOL(following) ||
+          withinFlowCollection && is_FLOW_INDICATOR(following)) {
+        break;
+      }
+
+    } else if (ch === 0x23/* # */) {
+      preceding = state.input.charCodeAt(state.position - 1);
+
+      if (is_WS_OR_EOL(preceding)) {
+        break;
+      }
+
+    } else if ((state.position === state.lineStart && testDocumentSeparator(state)) ||
+               withinFlowCollection && is_FLOW_INDICATOR(ch)) {
+      break;
+
+    } else if (is_EOL(ch)) {
+      _line = state.line;
+      _lineStart = state.lineStart;
+      _lineIndent = state.lineIndent;
+      skipSeparationSpace(state, false, -1);
+
+      if (state.lineIndent >= nodeIndent) {
+        hasPendingContent = true;
+        ch = state.input.charCodeAt(state.position);
+        continue;
+      } else {
+        state.position = captureEnd;
+        state.line = _line;
+        state.lineStart = _lineStart;
+        state.lineIndent = _lineIndent;
+        break;
+      }
+    }
+
+    if (hasPendingContent) {
+      captureSegment(state, captureStart, captureEnd, false);
+      writeFoldedLines(state, state.line - _line);
+      captureStart = captureEnd = state.position;
+      hasPendingContent = false;
+    }
+
+    if (!is_WHITE_SPACE(ch)) {
+      captureEnd = state.position + 1;
+    }
+
+    ch = state.input.charCodeAt(++state.position);
+  }
+
+  captureSegment(state, captureStart, captureEnd, false);
+
+  if (state.result) {
+    return true;
+  }
+
+  state.kind = _kind;
+  state.result = _result;
+  return false;
+}
+
+function readSingleQuotedScalar(state, nodeIndent) {
+  var ch,
+      captureStart, captureEnd;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x27/* ' */) {
+    return false;
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+  state.position++;
+  captureStart = captureEnd = state.position;
+
+  while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+    if (ch === 0x27/* ' */) {
+      captureSegment(state, captureStart, state.position, true);
+      ch = state.input.charCodeAt(++state.position);
+
+      if (ch === 0x27/* ' */) {
+        captureStart = state.position;
+        state.position++;
+        captureEnd = state.position;
+      } else {
+        return true;
+      }
+
+    } else if (is_EOL(ch)) {
+      captureSegment(state, captureStart, captureEnd, true);
+      writeFoldedLines(state, skipSeparationSpace(state, false, nodeIndent));
+      captureStart = captureEnd = state.position;
+
+    } else if (state.position === state.lineStart && testDocumentSeparator(state)) {
+      throwError(state, 'unexpected end of the document within a single quoted scalar');
+
+    } else {
+      state.position++;
+      captureEnd = state.position;
+    }
+  }
+
+  throwError(state, 'unexpected end of the stream within a single quoted scalar');
+}
+
+function readDoubleQuotedScalar(state, nodeIndent) {
+  var captureStart,
+      captureEnd,
+      hexLength,
+      hexResult,
+      tmp,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x22/* " */) {
+    return false;
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+  state.position++;
+  captureStart = captureEnd = state.position;
+
+  while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+    if (ch === 0x22/* " */) {
+      captureSegment(state, captureStart, state.position, true);
+      state.position++;
+      return true;
+
+    } else if (ch === 0x5C/* \ */) {
+      captureSegment(state, captureStart, state.position, true);
+      ch = state.input.charCodeAt(++state.position);
+
+      if (is_EOL(ch)) {
+        skipSeparationSpace(state, false, nodeIndent);
+
+        // TODO: rework to inline fn with no type cast?
+      } else if (ch < 256 && simpleEscapeCheck[ch]) {
+        state.result += simpleEscapeMap[ch];
+        state.position++;
+
+      } else if ((tmp = escapedHexLen(ch)) > 0) {
+        hexLength = tmp;
+        hexResult = 0;
+
+        for (; hexLength > 0; hexLength--) {
+          ch = state.input.charCodeAt(++state.position);
+
+          if ((tmp = fromHexCode(ch)) >= 0) {
+            hexResult = (hexResult << 4) + tmp;
+
+          } else {
+            throwError(state, 'expected hexadecimal character');
+          }
+        }
+
+        state.result += charFromCodepoint(hexResult);
+
+        state.position++;
+
+      } else {
+        throwError(state, 'unknown escape sequence');
+      }
+
+      captureStart = captureEnd = state.position;
+
+    } else if (is_EOL(ch)) {
+      captureSegment(state, captureStart, captureEnd, true);
+      writeFoldedLines(state, skipSeparationSpace(state, false, nodeIndent));
+      captureStart = captureEnd = state.position;
+
+    } else if (state.position === state.lineStart && testDocumentSeparator(state)) {
+      throwError(state, 'unexpected end of the document within a double quoted scalar');
+
+    } else {
+      state.position++;
+      captureEnd = state.position;
+    }
+  }
+
+  throwError(state, 'unexpected end of the stream within a double quoted scalar');
+}
+
+function readFlowCollection(state, nodeIndent) {
+  var readNext = true,
+      _line,
+      _lineStart,
+      _pos,
+      _tag     = state.tag,
+      _result,
+      _anchor  = state.anchor,
+      following,
+      terminator,
+      isPair,
+      isExplicitPair,
+      isMapping,
+      overridableKeys = Object.create(null),
+      keyNode,
+      keyTag,
+      valueNode,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch === 0x5B/* [ */) {
+    terminator = 0x5D;/* ] */
+    isMapping = false;
+    _result = [];
+  } else if (ch === 0x7B/* { */) {
+    terminator = 0x7D;/* } */
+    isMapping = true;
+    _result = {};
+  } else {
+    return false;
+  }
+
+  if (state.anchor !== null) {
+    state.anchorMap[state.anchor] = _result;
+  }
+
+  ch = state.input.charCodeAt(++state.position);
+
+  while (ch !== 0) {
+    skipSeparationSpace(state, true, nodeIndent);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if (ch === terminator) {
+      state.position++;
+      state.tag = _tag;
+      state.anchor = _anchor;
+      state.kind = isMapping ? 'mapping' : 'sequence';
+      state.result = _result;
+      return true;
+    } else if (!readNext) {
+      throwError(state, 'missed comma between flow collection entries');
+    } else if (ch === 0x2C/* , */) {
+      // "flow collection entries can never be completely empty", as per YAML 1.2, section 7.4
+      throwError(state, "expected the node content, but found ','");
+    }
+
+    keyTag = keyNode = valueNode = null;
+    isPair = isExplicitPair = false;
+
+    if (ch === 0x3F/* ? */) {
+      following = state.input.charCodeAt(state.position + 1);
+
+      if (is_WS_OR_EOL(following)) {
+        isPair = isExplicitPair = true;
+        state.position++;
+        skipSeparationSpace(state, true, nodeIndent);
+      }
+    }
+
+    _line = state.line; // Save the current line.
+    _lineStart = state.lineStart;
+    _pos = state.position;
+    composeNode(state, nodeIndent, CONTEXT_FLOW_IN, false, true);
+    keyTag = state.tag;
+    keyNode = state.result;
+    skipSeparationSpace(state, true, nodeIndent);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if ((isExplicitPair || state.line === _line) && ch === 0x3A/* : */) {
+      isPair = true;
+      ch = state.input.charCodeAt(++state.position);
+      skipSeparationSpace(state, true, nodeIndent);
+      composeNode(state, nodeIndent, CONTEXT_FLOW_IN, false, true);
+      valueNode = state.result;
+    }
+
+    if (isMapping) {
+      storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _line, _lineStart, _pos);
+    } else if (isPair) {
+      _result.push(storeMappingPair(state, null, overridableKeys, keyTag, keyNode, valueNode, _line, _lineStart, _pos));
+    } else {
+      _result.push(keyNode);
+    }
+
+    skipSeparationSpace(state, true, nodeIndent);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if (ch === 0x2C/* , */) {
+      readNext = true;
+      ch = state.input.charCodeAt(++state.position);
+    } else {
+      readNext = false;
+    }
+  }
+
+  throwError(state, 'unexpected end of the stream within a flow collection');
+}
+
+function readBlockScalar(state, nodeIndent) {
+  var captureStart,
+      folding,
+      chomping       = CHOMPING_CLIP,
+      didReadContent = false,
+      detectedIndent = false,
+      textIndent     = nodeIndent,
+      emptyLines     = 0,
+      atMoreIndented = false,
+      tmp,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch === 0x7C/* | */) {
+    folding = false;
+  } else if (ch === 0x3E/* > */) {
+    folding = true;
+  } else {
+    return false;
+  }
+
+  state.kind = 'scalar';
+  state.result = '';
+
+  while (ch !== 0) {
+    ch = state.input.charCodeAt(++state.position);
+
+    if (ch === 0x2B/* + */ || ch === 0x2D/* - */) {
+      if (CHOMPING_CLIP === chomping) {
+        chomping = (ch === 0x2B/* + */) ? CHOMPING_KEEP : CHOMPING_STRIP;
+      } else {
+        throwError(state, 'repeat of a chomping mode identifier');
+      }
+
+    } else if ((tmp = fromDecimalCode(ch)) >= 0) {
+      if (tmp === 0) {
+        throwError(state, 'bad explicit indentation width of a block scalar; it cannot be less than one');
+      } else if (!detectedIndent) {
+        textIndent = nodeIndent + tmp - 1;
+        detectedIndent = true;
+      } else {
+        throwError(state, 'repeat of an indentation width identifier');
+      }
+
+    } else {
+      break;
+    }
+  }
+
+  if (is_WHITE_SPACE(ch)) {
+    do { ch = state.input.charCodeAt(++state.position); }
+    while (is_WHITE_SPACE(ch));
+
+    if (ch === 0x23/* # */) {
+      do { ch = state.input.charCodeAt(++state.position); }
+      while (!is_EOL(ch) && (ch !== 0));
+    }
+  }
+
+  while (ch !== 0) {
+    readLineBreak(state);
+    state.lineIndent = 0;
+
+    ch = state.input.charCodeAt(state.position);
+
+    while ((!detectedIndent || state.lineIndent < textIndent) &&
+           (ch === 0x20/* Space */)) {
+      state.lineIndent++;
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    if (!detectedIndent && state.lineIndent > textIndent) {
+      textIndent = state.lineIndent;
+    }
+
+    if (is_EOL(ch)) {
+      emptyLines++;
+      continue;
+    }
+
+    // End of the scalar.
+    if (state.lineIndent < textIndent) {
+
+      // Perform the chomping.
+      if (chomping === CHOMPING_KEEP) {
+        state.result += common$1.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
+      } else if (chomping === CHOMPING_CLIP) {
+        if (didReadContent) { // i.e. only if the scalar is not empty.
+          state.result += '\n';
+        }
+      }
+
+      // Break this `while` cycle and go to the funciton's epilogue.
+      break;
+    }
+
+    // Folded style: use fancy rules to handle line breaks.
+    if (folding) {
+
+      // Lines starting with white space characters (more-indented lines) are not folded.
+      if (is_WHITE_SPACE(ch)) {
+        atMoreIndented = true;
+        // except for the first content line (cf. Example 8.1)
+        state.result += common$1.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
+
+      // End of more-indented block.
+      } else if (atMoreIndented) {
+        atMoreIndented = false;
+        state.result += common$1.repeat('\n', emptyLines + 1);
+
+      // Just one line break - perceive as the same line.
+      } else if (emptyLines === 0) {
+        if (didReadContent) { // i.e. only if we have already read some scalar content.
+          state.result += ' ';
+        }
+
+      // Several line breaks - perceive as different lines.
+      } else {
+        state.result += common$1.repeat('\n', emptyLines);
+      }
+
+    // Literal style: just add exact number of line breaks between content lines.
+    } else {
+      // Keep all line breaks except the header line break.
+      state.result += common$1.repeat('\n', didReadContent ? 1 + emptyLines : emptyLines);
+    }
+
+    didReadContent = true;
+    detectedIndent = true;
+    emptyLines = 0;
+    captureStart = state.position;
+
+    while (!is_EOL(ch) && (ch !== 0)) {
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    captureSegment(state, captureStart, state.position, false);
+  }
+
+  return true;
+}
+
+function readBlockSequence(state, nodeIndent) {
+  var _line,
+      _tag      = state.tag,
+      _anchor   = state.anchor,
+      _result   = [],
+      following,
+      detected  = false,
+      ch;
+
+  // there is a leading tab before this token, so it can't be a block sequence/mapping;
+  // it can still be flow sequence/mapping or a scalar
+  if (state.firstTabInLine !== -1) return false;
+
+  if (state.anchor !== null) {
+    state.anchorMap[state.anchor] = _result;
+  }
+
+  ch = state.input.charCodeAt(state.position);
+
+  while (ch !== 0) {
+    if (state.firstTabInLine !== -1) {
+      state.position = state.firstTabInLine;
+      throwError(state, 'tab characters must not be used in indentation');
+    }
+
+    if (ch !== 0x2D/* - */) {
+      break;
+    }
+
+    following = state.input.charCodeAt(state.position + 1);
+
+    if (!is_WS_OR_EOL(following)) {
+      break;
+    }
+
+    detected = true;
+    state.position++;
+
+    if (skipSeparationSpace(state, true, -1)) {
+      if (state.lineIndent <= nodeIndent) {
+        _result.push(null);
+        ch = state.input.charCodeAt(state.position);
+        continue;
+      }
+    }
+
+    _line = state.line;
+    composeNode(state, nodeIndent, CONTEXT_BLOCK_IN, false, true);
+    _result.push(state.result);
+    skipSeparationSpace(state, true, -1);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if ((state.line === _line || state.lineIndent > nodeIndent) && (ch !== 0)) {
+      throwError(state, 'bad indentation of a sequence entry');
+    } else if (state.lineIndent < nodeIndent) {
+      break;
+    }
+  }
+
+  if (detected) {
+    state.tag = _tag;
+    state.anchor = _anchor;
+    state.kind = 'sequence';
+    state.result = _result;
+    return true;
+  }
+  return false;
+}
+
+function readBlockMapping(state, nodeIndent, flowIndent) {
+  var following,
+      allowCompact,
+      _line,
+      _keyLine,
+      _keyLineStart,
+      _keyPos,
+      _tag          = state.tag,
+      _anchor       = state.anchor,
+      _result       = {},
+      overridableKeys = Object.create(null),
+      keyTag        = null,
+      keyNode       = null,
+      valueNode     = null,
+      atExplicitKey = false,
+      detected      = false,
+      ch;
+
+  // there is a leading tab before this token, so it can't be a block sequence/mapping;
+  // it can still be flow sequence/mapping or a scalar
+  if (state.firstTabInLine !== -1) return false;
+
+  if (state.anchor !== null) {
+    state.anchorMap[state.anchor] = _result;
+  }
+
+  ch = state.input.charCodeAt(state.position);
+
+  while (ch !== 0) {
+    if (!atExplicitKey && state.firstTabInLine !== -1) {
+      state.position = state.firstTabInLine;
+      throwError(state, 'tab characters must not be used in indentation');
+    }
+
+    following = state.input.charCodeAt(state.position + 1);
+    _line = state.line; // Save the current line.
+
+    //
+    // Explicit notation case. There are two separate blocks:
+    // first for the key (denoted by "?") and second for the value (denoted by ":")
+    //
+    if ((ch === 0x3F/* ? */ || ch === 0x3A/* : */) && is_WS_OR_EOL(following)) {
+
+      if (ch === 0x3F/* ? */) {
+        if (atExplicitKey) {
+          storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null, _keyLine, _keyLineStart, _keyPos);
+          keyTag = keyNode = valueNode = null;
+        }
+
+        detected = true;
+        atExplicitKey = true;
+        allowCompact = true;
+
+      } else if (atExplicitKey) {
+        // i.e. 0x3A/* : */ === character after the explicit key.
+        atExplicitKey = false;
+        allowCompact = true;
+
+      } else {
+        throwError(state, 'incomplete explicit mapping pair; a key node is missed; or followed by a non-tabulated empty line');
+      }
+
+      state.position += 1;
+      ch = following;
+
+    //
+    // Implicit notation case. Flow-style node as the key first, then ":", and the value.
+    //
+    } else {
+      _keyLine = state.line;
+      _keyLineStart = state.lineStart;
+      _keyPos = state.position;
+
+      if (!composeNode(state, flowIndent, CONTEXT_FLOW_OUT, false, true)) {
+        // Neither implicit nor explicit notation.
+        // Reading is done. Go to the epilogue.
+        break;
+      }
+
+      if (state.line === _line) {
+        ch = state.input.charCodeAt(state.position);
+
+        while (is_WHITE_SPACE(ch)) {
+          ch = state.input.charCodeAt(++state.position);
+        }
+
+        if (ch === 0x3A/* : */) {
+          ch = state.input.charCodeAt(++state.position);
+
+          if (!is_WS_OR_EOL(ch)) {
+            throwError(state, 'a whitespace character is expected after the key-value separator within a block mapping');
+          }
+
+          if (atExplicitKey) {
+            storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null, _keyLine, _keyLineStart, _keyPos);
+            keyTag = keyNode = valueNode = null;
+          }
+
+          detected = true;
+          atExplicitKey = false;
+          allowCompact = false;
+          keyTag = state.tag;
+          keyNode = state.result;
+
+        } else if (detected) {
+          throwError(state, 'can not read an implicit mapping pair; a colon is missed');
+
+        } else {
+          state.tag = _tag;
+          state.anchor = _anchor;
+          return true; // Keep the result of `composeNode`.
+        }
+
+      } else if (detected) {
+        throwError(state, 'can not read a block mapping entry; a multiline key may not be an implicit key');
+
+      } else {
+        state.tag = _tag;
+        state.anchor = _anchor;
+        return true; // Keep the result of `composeNode`.
+      }
+    }
+
+    //
+    // Common reading code for both explicit and implicit notations.
+    //
+    if (state.line === _line || state.lineIndent > nodeIndent) {
+      if (atExplicitKey) {
+        _keyLine = state.line;
+        _keyLineStart = state.lineStart;
+        _keyPos = state.position;
+      }
+
+      if (composeNode(state, nodeIndent, CONTEXT_BLOCK_OUT, true, allowCompact)) {
+        if (atExplicitKey) {
+          keyNode = state.result;
+        } else {
+          valueNode = state.result;
+        }
+      }
+
+      if (!atExplicitKey) {
+        storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valueNode, _keyLine, _keyLineStart, _keyPos);
+        keyTag = keyNode = valueNode = null;
+      }
+
+      skipSeparationSpace(state, true, -1);
+      ch = state.input.charCodeAt(state.position);
+    }
+
+    if ((state.line === _line || state.lineIndent > nodeIndent) && (ch !== 0)) {
+      throwError(state, 'bad indentation of a mapping entry');
+    } else if (state.lineIndent < nodeIndent) {
+      break;
+    }
+  }
+
+  //
+  // Epilogue.
+  //
+
+  // Special case: last mapping's node contains only the key in explicit notation.
+  if (atExplicitKey) {
+    storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, null, _keyLine, _keyLineStart, _keyPos);
+  }
+
+  // Expose the resulting mapping.
+  if (detected) {
+    state.tag = _tag;
+    state.anchor = _anchor;
+    state.kind = 'mapping';
+    state.result = _result;
+  }
+
+  return detected;
+}
+
+function readTagProperty(state) {
+  var _position,
+      isVerbatim = false,
+      isNamed    = false,
+      tagHandle,
+      tagName,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x21/* ! */) return false;
+
+  if (state.tag !== null) {
+    throwError(state, 'duplication of a tag property');
+  }
+
+  ch = state.input.charCodeAt(++state.position);
+
+  if (ch === 0x3C/* < */) {
+    isVerbatim = true;
+    ch = state.input.charCodeAt(++state.position);
+
+  } else if (ch === 0x21/* ! */) {
+    isNamed = true;
+    tagHandle = '!!';
+    ch = state.input.charCodeAt(++state.position);
+
+  } else {
+    tagHandle = '!';
+  }
+
+  _position = state.position;
+
+  if (isVerbatim) {
+    do { ch = state.input.charCodeAt(++state.position); }
+    while (ch !== 0 && ch !== 0x3E/* > */);
+
+    if (state.position < state.length) {
+      tagName = state.input.slice(_position, state.position);
+      ch = state.input.charCodeAt(++state.position);
+    } else {
+      throwError(state, 'unexpected end of the stream within a verbatim tag');
+    }
+  } else {
+    while (ch !== 0 && !is_WS_OR_EOL(ch)) {
+
+      if (ch === 0x21/* ! */) {
+        if (!isNamed) {
+          tagHandle = state.input.slice(_position - 1, state.position + 1);
+
+          if (!PATTERN_TAG_HANDLE.test(tagHandle)) {
+            throwError(state, 'named tag handle cannot contain such characters');
+          }
+
+          isNamed = true;
+          _position = state.position + 1;
+        } else {
+          throwError(state, 'tag suffix cannot contain exclamation marks');
+        }
+      }
+
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    tagName = state.input.slice(_position, state.position);
+
+    if (PATTERN_FLOW_INDICATORS.test(tagName)) {
+      throwError(state, 'tag suffix cannot contain flow indicator characters');
+    }
+  }
+
+  if (tagName && !PATTERN_TAG_URI.test(tagName)) {
+    throwError(state, 'tag name cannot contain such characters: ' + tagName);
+  }
+
+  try {
+    tagName = decodeURIComponent(tagName);
+  } catch (err) {
+    throwError(state, 'tag name is malformed: ' + tagName);
+  }
+
+  if (isVerbatim) {
+    state.tag = tagName;
+
+  } else if (_hasOwnProperty$1.call(state.tagMap, tagHandle)) {
+    state.tag = state.tagMap[tagHandle] + tagName;
+
+  } else if (tagHandle === '!') {
+    state.tag = '!' + tagName;
+
+  } else if (tagHandle === '!!') {
+    state.tag = 'tag:yaml.org,2002:' + tagName;
+
+  } else {
+    throwError(state, 'undeclared tag handle "' + tagHandle + '"');
+  }
+
+  return true;
+}
+
+function readAnchorProperty(state) {
+  var _position,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x26/* & */) return false;
+
+  if (state.anchor !== null) {
+    throwError(state, 'duplication of an anchor property');
+  }
+
+  ch = state.input.charCodeAt(++state.position);
+  _position = state.position;
+
+  while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
+    ch = state.input.charCodeAt(++state.position);
+  }
+
+  if (state.position === _position) {
+    throwError(state, 'name of an anchor node must contain at least one character');
+  }
+
+  state.anchor = state.input.slice(_position, state.position);
+  return true;
+}
+
+function readAlias(state) {
+  var _position, alias,
+      ch;
+
+  ch = state.input.charCodeAt(state.position);
+
+  if (ch !== 0x2A/* * */) return false;
+
+  ch = state.input.charCodeAt(++state.position);
+  _position = state.position;
+
+  while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
+    ch = state.input.charCodeAt(++state.position);
+  }
+
+  if (state.position === _position) {
+    throwError(state, 'name of an alias node must contain at least one character');
+  }
+
+  alias = state.input.slice(_position, state.position);
+
+  if (!_hasOwnProperty$1.call(state.anchorMap, alias)) {
+    throwError(state, 'unidentified alias "' + alias + '"');
+  }
+
+  state.result = state.anchorMap[alias];
+  skipSeparationSpace(state, true, -1);
+  return true;
+}
+
+function composeNode(state, parentIndent, nodeContext, allowToSeek, allowCompact) {
+  var allowBlockStyles,
+      allowBlockScalars,
+      allowBlockCollections,
+      indentStatus = 1, // 1: this>parent, 0: this=parent, -1: this<parent
+      atNewLine  = false,
+      hasContent = false,
+      typeIndex,
+      typeQuantity,
+      typeList,
+      type,
+      flowIndent,
+      blockIndent;
+
+  if (state.listener !== null) {
+    state.listener('open', state);
+  }
+
+  state.tag    = null;
+  state.anchor = null;
+  state.kind   = null;
+  state.result = null;
+
+  allowBlockStyles = allowBlockScalars = allowBlockCollections =
+    CONTEXT_BLOCK_OUT === nodeContext ||
+    CONTEXT_BLOCK_IN  === nodeContext;
+
+  if (allowToSeek) {
+    if (skipSeparationSpace(state, true, -1)) {
+      atNewLine = true;
+
+      if (state.lineIndent > parentIndent) {
+        indentStatus = 1;
+      } else if (state.lineIndent === parentIndent) {
+        indentStatus = 0;
+      } else if (state.lineIndent < parentIndent) {
+        indentStatus = -1;
+      }
+    }
+  }
+
+  if (indentStatus === 1) {
+    while (readTagProperty(state) || readAnchorProperty(state)) {
+      if (skipSeparationSpace(state, true, -1)) {
+        atNewLine = true;
+        allowBlockCollections = allowBlockStyles;
+
+        if (state.lineIndent > parentIndent) {
+          indentStatus = 1;
+        } else if (state.lineIndent === parentIndent) {
+          indentStatus = 0;
+        } else if (state.lineIndent < parentIndent) {
+          indentStatus = -1;
+        }
+      } else {
+        allowBlockCollections = false;
+      }
+    }
+  }
+
+  if (allowBlockCollections) {
+    allowBlockCollections = atNewLine || allowCompact;
+  }
+
+  if (indentStatus === 1 || CONTEXT_BLOCK_OUT === nodeContext) {
+    if (CONTEXT_FLOW_IN === nodeContext || CONTEXT_FLOW_OUT === nodeContext) {
+      flowIndent = parentIndent;
+    } else {
+      flowIndent = parentIndent + 1;
+    }
+
+    blockIndent = state.position - state.lineStart;
+
+    if (indentStatus === 1) {
+      if (allowBlockCollections &&
+          (readBlockSequence(state, blockIndent) ||
+           readBlockMapping(state, blockIndent, flowIndent)) ||
+          readFlowCollection(state, flowIndent)) {
+        hasContent = true;
+      } else {
+        if ((allowBlockScalars && readBlockScalar(state, flowIndent)) ||
+            readSingleQuotedScalar(state, flowIndent) ||
+            readDoubleQuotedScalar(state, flowIndent)) {
+          hasContent = true;
+
+        } else if (readAlias(state)) {
+          hasContent = true;
+
+          if (state.tag !== null || state.anchor !== null) {
+            throwError(state, 'alias node should not have any properties');
+          }
+
+        } else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
+          hasContent = true;
+
+          if (state.tag === null) {
+            state.tag = '?';
+          }
+        }
+
+        if (state.anchor !== null) {
+          state.anchorMap[state.anchor] = state.result;
+        }
+      }
+    } else if (indentStatus === 0) {
+      // Special case: block sequences are allowed to have same indentation level as the parent.
+      // http://www.yaml.org/spec/1.2/spec.html#id2799784
+      hasContent = allowBlockCollections && readBlockSequence(state, blockIndent);
+    }
+  }
+
+  if (state.tag === null) {
+    if (state.anchor !== null) {
+      state.anchorMap[state.anchor] = state.result;
+    }
+
+  } else if (state.tag === '?') {
+    // Implicit resolving is not allowed for non-scalar types, and '?'
+    // non-specific tag is only automatically assigned to plain scalars.
+    //
+    // We only need to check kind conformity in case user explicitly assigns '?'
+    // tag, for example like this: "!<?> [0]"
+    //
+    if (state.result !== null && state.kind !== 'scalar') {
+      throwError(state, 'unacceptable node kind for !<?> tag; it should be "scalar", not "' + state.kind + '"');
+    }
+
+    for (typeIndex = 0, typeQuantity = state.implicitTypes.length; typeIndex < typeQuantity; typeIndex += 1) {
+      type = state.implicitTypes[typeIndex];
+
+      if (type.resolve(state.result)) { // `state.result` updated in resolver if matched
+        state.result = type.construct(state.result);
+        state.tag = type.tag;
+        if (state.anchor !== null) {
+          state.anchorMap[state.anchor] = state.result;
+        }
+        break;
+      }
+    }
+  } else if (state.tag !== '!') {
+    if (_hasOwnProperty$1.call(state.typeMap[state.kind || 'fallback'], state.tag)) {
+      type = state.typeMap[state.kind || 'fallback'][state.tag];
+    } else {
+      // looking for multi type
+      type = null;
+      typeList = state.typeMap.multi[state.kind || 'fallback'];
+
+      for (typeIndex = 0, typeQuantity = typeList.length; typeIndex < typeQuantity; typeIndex += 1) {
+        if (state.tag.slice(0, typeList[typeIndex].tag.length) === typeList[typeIndex].tag) {
+          type = typeList[typeIndex];
+          break;
+        }
+      }
+    }
+
+    if (!type) {
+      throwError(state, 'unknown tag !<' + state.tag + '>');
+    }
+
+    if (state.result !== null && type.kind !== state.kind) {
+      throwError(state, 'unacceptable node kind for !<' + state.tag + '> tag; it should be "' + type.kind + '", not "' + state.kind + '"');
+    }
+
+    if (!type.resolve(state.result, state.tag)) { // `state.result` updated in resolver if matched
+      throwError(state, 'cannot resolve a node with !<' + state.tag + '> explicit tag');
+    } else {
+      state.result = type.construct(state.result, state.tag);
+      if (state.anchor !== null) {
+        state.anchorMap[state.anchor] = state.result;
+      }
+    }
+  }
+
+  if (state.listener !== null) {
+    state.listener('close', state);
+  }
+  return state.tag !== null ||  state.anchor !== null || hasContent;
+}
+
+function readDocument(state) {
+  var documentStart = state.position,
+      _position,
+      directiveName,
+      directiveArgs,
+      hasDirectives = false,
+      ch;
+
+  state.version = null;
+  state.checkLineBreaks = state.legacy;
+  state.tagMap = Object.create(null);
+  state.anchorMap = Object.create(null);
+
+  while ((ch = state.input.charCodeAt(state.position)) !== 0) {
+    skipSeparationSpace(state, true, -1);
+
+    ch = state.input.charCodeAt(state.position);
+
+    if (state.lineIndent > 0 || ch !== 0x25/* % */) {
+      break;
+    }
+
+    hasDirectives = true;
+    ch = state.input.charCodeAt(++state.position);
+    _position = state.position;
+
+    while (ch !== 0 && !is_WS_OR_EOL(ch)) {
+      ch = state.input.charCodeAt(++state.position);
+    }
+
+    directiveName = state.input.slice(_position, state.position);
+    directiveArgs = [];
+
+    if (directiveName.length < 1) {
+      throwError(state, 'directive name must not be less than one character in length');
+    }
+
+    while (ch !== 0) {
+      while (is_WHITE_SPACE(ch)) {
+        ch = state.input.charCodeAt(++state.position);
+      }
+
+      if (ch === 0x23/* # */) {
+        do { ch = state.input.charCodeAt(++state.position); }
+        while (ch !== 0 && !is_EOL(ch));
+        break;
+      }
+
+      if (is_EOL(ch)) break;
+
+      _position = state.position;
+
+      while (ch !== 0 && !is_WS_OR_EOL(ch)) {
+        ch = state.input.charCodeAt(++state.position);
+      }
+
+      directiveArgs.push(state.input.slice(_position, state.position));
+    }
+
+    if (ch !== 0) readLineBreak(state);
+
+    if (_hasOwnProperty$1.call(directiveHandlers, directiveName)) {
+      directiveHandlers[directiveName](state, directiveName, directiveArgs);
+    } else {
+      throwWarning(state, 'unknown document directive "' + directiveName + '"');
+    }
+  }
+
+  skipSeparationSpace(state, true, -1);
+
+  if (state.lineIndent === 0 &&
+      state.input.charCodeAt(state.position)     === 0x2D/* - */ &&
+      state.input.charCodeAt(state.position + 1) === 0x2D/* - */ &&
+      state.input.charCodeAt(state.position + 2) === 0x2D/* - */) {
+    state.position += 3;
+    skipSeparationSpace(state, true, -1);
+
+  } else if (hasDirectives) {
+    throwError(state, 'directives end mark is expected');
+  }
+
+  composeNode(state, state.lineIndent - 1, CONTEXT_BLOCK_OUT, false, true);
+  skipSeparationSpace(state, true, -1);
+
+  if (state.checkLineBreaks &&
+      PATTERN_NON_ASCII_LINE_BREAKS.test(state.input.slice(documentStart, state.position))) {
+    throwWarning(state, 'non-ASCII line breaks are interpreted as content');
+  }
+
+  state.documents.push(state.result);
+
+  if (state.position === state.lineStart && testDocumentSeparator(state)) {
+
+    if (state.input.charCodeAt(state.position) === 0x2E/* . */) {
+      state.position += 3;
+      skipSeparationSpace(state, true, -1);
+    }
+    return;
+  }
+
+  if (state.position < (state.length - 1)) {
+    throwError(state, 'end of the stream or a document separator is expected');
+  } else {
+    return;
+  }
+}
+
+
+function loadDocuments(input, options) {
+  input = String(input);
+  options = options || {};
+
+  if (input.length !== 0) {
+
+    // Add tailing `\n` if not exists
+    if (input.charCodeAt(input.length - 1) !== 0x0A/* LF */ &&
+        input.charCodeAt(input.length - 1) !== 0x0D/* CR */) {
+      input += '\n';
+    }
+
+    // Strip BOM
+    if (input.charCodeAt(0) === 0xFEFF) {
+      input = input.slice(1);
+    }
+  }
+
+  var state = new State$1(input, options);
+
+  var nullpos = input.indexOf('\0');
+
+  if (nullpos !== -1) {
+    state.position = nullpos;
+    throwError(state, 'null byte is not allowed in input');
+  }
+
+  // Use 0 as string terminator. That significantly simplifies bounds check.
+  state.input += '\0';
+
+  while (state.input.charCodeAt(state.position) === 0x20/* Space */) {
+    state.lineIndent += 1;
+    state.position += 1;
+  }
+
+  while (state.position < (state.length - 1)) {
+    readDocument(state);
+  }
+
+  return state.documents;
+}
+
+
+function load$1(input, options) {
+  var documents = loadDocuments(input, options);
+
+  if (documents.length === 0) {
+    /*eslint-disable no-undefined*/
+    return undefined;
+  } else if (documents.length === 1) {
+    return documents[0];
+  }
+  throw new exception('expected a single document in the stream, but found more');
+}
+var load_1    = load$1;
+
+var loader = {
+	load: load_1
+};
+var load                = loader.load;
+
+/** A special constant with type `never` */
+function $constructor(name, initializer, params) {
+    function init(inst, def) {
+        var _a;
+        Object.defineProperty(inst, "_zod", {
+            value: inst._zod ?? {},
+            enumerable: false,
+        });
+        (_a = inst._zod).traits ?? (_a.traits = new Set());
+        inst._zod.traits.add(name);
+        initializer(inst, def);
+        // support prototype modifications
+        for (const k in _.prototype) {
+            if (!(k in inst))
+                Object.defineProperty(inst, k, { value: _.prototype[k].bind(inst) });
+        }
+        inst._zod.constr = _;
+        inst._zod.def = def;
+    }
+    // doesn't work if Parent has a constructor with arguments
+    const Parent = params?.Parent ?? Object;
+    class Definition extends Parent {
+    }
+    Object.defineProperty(Definition, "name", { value: name });
+    function _(def) {
+        var _a;
+        const inst = params?.Parent ? new Definition() : this;
+        init(inst, def);
+        (_a = inst._zod).deferred ?? (_a.deferred = []);
+        for (const fn of inst._zod.deferred) {
+            fn();
+        }
+        return inst;
+    }
+    Object.defineProperty(_, "init", { value: init });
+    Object.defineProperty(_, Symbol.hasInstance, {
+        value: (inst) => {
+            if (params?.Parent && inst instanceof params.Parent)
+                return true;
+            return inst?._zod?.traits?.has(name);
+        },
+    });
+    Object.defineProperty(_, "name", { value: name });
+    return _;
+}
+class $ZodAsyncError extends Error {
+    constructor() {
+        super(`Encountered Promise during synchronous parse. Use .parseAsync() instead.`);
+    }
+}
+class $ZodEncodeError extends Error {
+    constructor(name) {
+        super(`Encountered unidirectional transform during encode: ${name}`);
+        this.name = "ZodEncodeError";
+    }
+}
+const globalConfig = {};
+function config(newConfig) {
+    return globalConfig;
+}
+
+// functions
+function getEnumValues(entries) {
+    const numericValues = Object.values(entries).filter((v) => typeof v === "number");
+    const values = Object.entries(entries)
+        .filter(([k, _]) => numericValues.indexOf(+k) === -1)
+        .map(([_, v]) => v);
+    return values;
+}
+function jsonStringifyReplacer(_, value) {
+    if (typeof value === "bigint")
+        return value.toString();
+    return value;
+}
+function cached(getter) {
+    return {
+        get value() {
+            {
+                const value = getter();
+                Object.defineProperty(this, "value", { value });
+                return value;
+            }
+        },
+    };
+}
+function nullish(input) {
+    return input === null || input === undefined;
+}
+function cleanRegex(source) {
+    const start = source.startsWith("^") ? 1 : 0;
+    const end = source.endsWith("$") ? source.length - 1 : source.length;
+    return source.slice(start, end);
+}
+const EVALUATING = Symbol("evaluating");
+function defineLazy(object, key, getter) {
+    let value = undefined;
+    Object.defineProperty(object, key, {
+        get() {
+            if (value === EVALUATING) {
+                // Circular reference detected, return undefined to break the cycle
+                return undefined;
+            }
+            if (value === undefined) {
+                value = EVALUATING;
+                value = getter();
+            }
+            return value;
+        },
+        set(v) {
+            Object.defineProperty(object, key, {
+                value: v,
+                // configurable: true,
+            });
+            // object[key] = v;
+        },
+        configurable: true,
+    });
+}
+function objectClone(obj) {
+    return Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
+}
+function assignProp(target, prop, value) {
+    Object.defineProperty(target, prop, {
+        value,
+        writable: true,
+        enumerable: true,
+        configurable: true,
+    });
+}
+function mergeDefs(...defs) {
+    const mergedDescriptors = {};
+    for (const def of defs) {
+        const descriptors = Object.getOwnPropertyDescriptors(def);
+        Object.assign(mergedDescriptors, descriptors);
+    }
+    return Object.defineProperties({}, mergedDescriptors);
+}
+function esc(str) {
+    return JSON.stringify(str);
+}
+const captureStackTrace = ("captureStackTrace" in Error ? Error.captureStackTrace : (..._args) => { });
+function isObject(data) {
+    return typeof data === "object" && data !== null && !Array.isArray(data);
+}
+const allowsEval = cached(() => {
+    // @ts-ignore
+    if (typeof navigator !== "undefined" && navigator?.userAgent?.includes("Cloudflare")) {
+        return false;
+    }
+    try {
+        const F = Function;
+        new F("");
+        return true;
+    }
+    catch (_) {
+        return false;
+    }
+});
+function isPlainObject(o) {
+    if (isObject(o) === false)
+        return false;
+    // modified constructor
+    const ctor = o.constructor;
+    if (ctor === undefined)
+        return true;
+    // modified prototype
+    const prot = ctor.prototype;
+    if (isObject(prot) === false)
+        return false;
+    // ctor doesn't have static `isPrototypeOf`
+    if (Object.prototype.hasOwnProperty.call(prot, "isPrototypeOf") === false) {
+        return false;
+    }
+    return true;
+}
+function shallowClone(o) {
+    if (isPlainObject(o))
+        return { ...o };
+    if (Array.isArray(o))
+        return [...o];
+    return o;
+}
+const propertyKeyTypes = new Set(["string", "number", "symbol"]);
+function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+// zod-specific utils
+function clone$1(inst, def, params) {
+    const cl = new inst._zod.constr(def ?? inst._zod.def);
+    if (!def || params?.parent)
+        cl._zod.parent = inst;
+    return cl;
+}
+function normalizeParams(_params) {
+    const params = _params;
+    if (!params)
+        return {};
+    if (typeof params === "string")
+        return { error: () => params };
+    if (params?.message !== undefined) {
+        if (params?.error !== undefined)
+            throw new Error("Cannot specify both `message` and `error` params");
+        params.error = params.message;
+    }
+    delete params.message;
+    if (typeof params.error === "string")
+        return { ...params, error: () => params.error };
+    return params;
+}
+function optionalKeys(shape) {
+    return Object.keys(shape).filter((k) => {
+        return shape[k]._zod.optin === "optional" && shape[k]._zod.optout === "optional";
+    });
+}
+function pick(schema, mask) {
+    const currDef = schema._zod.def;
+    const def = mergeDefs(schema._zod.def, {
+        get shape() {
+            const newShape = {};
+            for (const key in mask) {
+                if (!(key in currDef.shape)) {
+                    throw new Error(`Unrecognized key: "${key}"`);
+                }
+                if (!mask[key])
+                    continue;
+                newShape[key] = currDef.shape[key];
+            }
+            assignProp(this, "shape", newShape); // self-caching
+            return newShape;
+        },
+        checks: [],
+    });
+    return clone$1(schema, def);
+}
+function omit(schema, mask) {
+    const currDef = schema._zod.def;
+    const def = mergeDefs(schema._zod.def, {
+        get shape() {
+            const newShape = { ...schema._zod.def.shape };
+            for (const key in mask) {
+                if (!(key in currDef.shape)) {
+                    throw new Error(`Unrecognized key: "${key}"`);
+                }
+                if (!mask[key])
+                    continue;
+                delete newShape[key];
+            }
+            assignProp(this, "shape", newShape); // self-caching
+            return newShape;
+        },
+        checks: [],
+    });
+    return clone$1(schema, def);
+}
+function extend(schema, shape) {
+    if (!isPlainObject(shape)) {
+        throw new Error("Invalid input to extend: expected a plain object");
+    }
+    const checks = schema._zod.def.checks;
+    const hasChecks = checks && checks.length > 0;
+    if (hasChecks) {
+        throw new Error("Object schemas containing refinements cannot be extended. Use `.safeExtend()` instead.");
+    }
+    const def = mergeDefs(schema._zod.def, {
+        get shape() {
+            const _shape = { ...schema._zod.def.shape, ...shape };
+            assignProp(this, "shape", _shape); // self-caching
+            return _shape;
+        },
+        checks: [],
+    });
+    return clone$1(schema, def);
+}
+function safeExtend(schema, shape) {
+    if (!isPlainObject(shape)) {
+        throw new Error("Invalid input to safeExtend: expected a plain object");
+    }
+    const def = {
+        ...schema._zod.def,
+        get shape() {
+            const _shape = { ...schema._zod.def.shape, ...shape };
+            assignProp(this, "shape", _shape); // self-caching
+            return _shape;
+        },
+        checks: schema._zod.def.checks,
+    };
+    return clone$1(schema, def);
+}
+function merge(a, b) {
+    const def = mergeDefs(a._zod.def, {
+        get shape() {
+            const _shape = { ...a._zod.def.shape, ...b._zod.def.shape };
+            assignProp(this, "shape", _shape); // self-caching
+            return _shape;
+        },
+        get catchall() {
+            return b._zod.def.catchall;
+        },
+        checks: [], // delete existing checks
+    });
+    return clone$1(a, def);
+}
+function partial(Class, schema, mask) {
+    const def = mergeDefs(schema._zod.def, {
+        get shape() {
+            const oldShape = schema._zod.def.shape;
+            const shape = { ...oldShape };
+            if (mask) {
+                for (const key in mask) {
+                    if (!(key in oldShape)) {
+                        throw new Error(`Unrecognized key: "${key}"`);
+                    }
+                    if (!mask[key])
+                        continue;
+                    // if (oldShape[key]!._zod.optin === "optional") continue;
+                    shape[key] = Class
+                        ? new Class({
+                            type: "optional",
+                            innerType: oldShape[key],
+                        })
+                        : oldShape[key];
+                }
+            }
+            else {
+                for (const key in oldShape) {
+                    // if (oldShape[key]!._zod.optin === "optional") continue;
+                    shape[key] = Class
+                        ? new Class({
+                            type: "optional",
+                            innerType: oldShape[key],
+                        })
+                        : oldShape[key];
+                }
+            }
+            assignProp(this, "shape", shape); // self-caching
+            return shape;
+        },
+        checks: [],
+    });
+    return clone$1(schema, def);
+}
+function required(Class, schema, mask) {
+    const def = mergeDefs(schema._zod.def, {
+        get shape() {
+            const oldShape = schema._zod.def.shape;
+            const shape = { ...oldShape };
+            if (mask) {
+                for (const key in mask) {
+                    if (!(key in shape)) {
+                        throw new Error(`Unrecognized key: "${key}"`);
+                    }
+                    if (!mask[key])
+                        continue;
+                    // overwrite with non-optional
+                    shape[key] = new Class({
+                        type: "nonoptional",
+                        innerType: oldShape[key],
+                    });
+                }
+            }
+            else {
+                for (const key in oldShape) {
+                    // overwrite with non-optional
+                    shape[key] = new Class({
+                        type: "nonoptional",
+                        innerType: oldShape[key],
+                    });
+                }
+            }
+            assignProp(this, "shape", shape); // self-caching
+            return shape;
+        },
+        checks: [],
+    });
+    return clone$1(schema, def);
+}
+// invalid_type | too_big | too_small | invalid_format | not_multiple_of | unrecognized_keys | invalid_union | invalid_key | invalid_element | invalid_value | custom
+function aborted(x, startIndex = 0) {
+    if (x.aborted === true)
+        return true;
+    for (let i = startIndex; i < x.issues.length; i++) {
+        if (x.issues[i]?.continue !== true) {
+            return true;
+        }
+    }
+    return false;
+}
+function prefixIssues(path, issues) {
+    return issues.map((iss) => {
+        var _a;
+        (_a = iss).path ?? (_a.path = []);
+        iss.path.unshift(path);
+        return iss;
+    });
+}
+function unwrapMessage(message) {
+    return typeof message === "string" ? message : message?.message;
+}
+function finalizeIssue(iss, ctx, config) {
+    const full = { ...iss, path: iss.path ?? [] };
+    // for backwards compatibility
+    if (!iss.message) {
+        const message = unwrapMessage(iss.inst?._zod.def?.error?.(iss)) ??
+            unwrapMessage(ctx?.error?.(iss)) ??
+            unwrapMessage(config.customError?.(iss)) ??
+            unwrapMessage(config.localeError?.(iss)) ??
+            "Invalid input";
+        full.message = message;
+    }
+    // delete (full as any).def;
+    delete full.inst;
+    delete full.continue;
+    if (!ctx?.reportInput) {
+        delete full.input;
+    }
+    return full;
+}
+function getLengthableOrigin(input) {
+    if (Array.isArray(input))
+        return "array";
+    if (typeof input === "string")
+        return "string";
+    return "unknown";
+}
+function issue(...args) {
+    const [iss, input, inst] = args;
+    if (typeof iss === "string") {
+        return {
+            message: iss,
+            code: "custom",
+            input,
+            inst,
+        };
+    }
+    return { ...iss };
+}
+
+const initializer$1 = (inst, def) => {
+    inst.name = "$ZodError";
+    Object.defineProperty(inst, "_zod", {
+        value: inst._zod,
+        enumerable: false,
+    });
+    Object.defineProperty(inst, "issues", {
+        value: def,
+        enumerable: false,
+    });
+    inst.message = JSON.stringify(def, jsonStringifyReplacer, 2);
+    Object.defineProperty(inst, "toString", {
+        value: () => inst.message,
+        enumerable: false,
+    });
+};
+const $ZodError = $constructor("$ZodError", initializer$1);
+const $ZodRealError = $constructor("$ZodError", initializer$1, { Parent: Error });
+function flattenError(error, mapper = (issue) => issue.message) {
+    const fieldErrors = {};
+    const formErrors = [];
+    for (const sub of error.issues) {
+        if (sub.path.length > 0) {
+            fieldErrors[sub.path[0]] = fieldErrors[sub.path[0]] || [];
+            fieldErrors[sub.path[0]].push(mapper(sub));
+        }
+        else {
+            formErrors.push(mapper(sub));
+        }
+    }
+    return { formErrors, fieldErrors };
+}
+function formatError(error, _mapper) {
+    const mapper = _mapper ||
+        function (issue) {
+            return issue.message;
+        };
+    const fieldErrors = { _errors: [] };
+    const processError = (error) => {
+        for (const issue of error.issues) {
+            if (issue.code === "invalid_union" && issue.errors.length) {
+                issue.errors.map((issues) => processError({ issues }));
+            }
+            else if (issue.code === "invalid_key") {
+                processError({ issues: issue.issues });
+            }
+            else if (issue.code === "invalid_element") {
+                processError({ issues: issue.issues });
+            }
+            else if (issue.path.length === 0) {
+                fieldErrors._errors.push(mapper(issue));
+            }
+            else {
+                let curr = fieldErrors;
+                let i = 0;
+                while (i < issue.path.length) {
+                    const el = issue.path[i];
+                    const terminal = i === issue.path.length - 1;
+                    if (!terminal) {
+                        curr[el] = curr[el] || { _errors: [] };
+                    }
+                    else {
+                        curr[el] = curr[el] || { _errors: [] };
+                        curr[el]._errors.push(mapper(issue));
+                    }
+                    curr = curr[el];
+                    i++;
+                }
+            }
+        }
+    };
+    processError(error);
+    return fieldErrors;
+}
+
+const _parse = (_Err) => (schema, value, _ctx, _params) => {
+    const ctx = _ctx ? Object.assign(_ctx, { async: false }) : { async: false };
+    const result = schema._zod.run({ value, issues: [] }, ctx);
+    if (result instanceof Promise) {
+        throw new $ZodAsyncError();
+    }
+    if (result.issues.length) {
+        const e = new (_params?.Err ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+        captureStackTrace(e, _params?.callee);
+        throw e;
+    }
+    return result.value;
+};
+const _parseAsync = (_Err) => async (schema, value, _ctx, params) => {
+    const ctx = _ctx ? Object.assign(_ctx, { async: true }) : { async: true };
+    let result = schema._zod.run({ value, issues: [] }, ctx);
+    if (result instanceof Promise)
+        result = await result;
+    if (result.issues.length) {
+        const e = new (params?.Err ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+        captureStackTrace(e, params?.callee);
+        throw e;
+    }
+    return result.value;
+};
+const _safeParse = (_Err) => (schema, value, _ctx) => {
+    const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
+    const result = schema._zod.run({ value, issues: [] }, ctx);
+    if (result instanceof Promise) {
+        throw new $ZodAsyncError();
+    }
+    return result.issues.length
+        ? {
+            success: false,
+            error: new (_Err ?? $ZodError)(result.issues.map((iss) => finalizeIssue(iss, ctx, config()))),
+        }
+        : { success: true, data: result.value };
+};
+const safeParse$1 = /* @__PURE__*/ _safeParse($ZodRealError);
+const _safeParseAsync = (_Err) => async (schema, value, _ctx) => {
+    const ctx = _ctx ? Object.assign(_ctx, { async: true }) : { async: true };
+    let result = schema._zod.run({ value, issues: [] }, ctx);
+    if (result instanceof Promise)
+        result = await result;
+    return result.issues.length
+        ? {
+            success: false,
+            error: new _Err(result.issues.map((iss) => finalizeIssue(iss, ctx, config()))),
+        }
+        : { success: true, data: result.value };
+};
+const safeParseAsync$1 = /* @__PURE__*/ _safeParseAsync($ZodRealError);
+const _encode = (_Err) => (schema, value, _ctx) => {
+    const ctx = _ctx ? Object.assign(_ctx, { direction: "backward" }) : { direction: "backward" };
+    return _parse(_Err)(schema, value, ctx);
+};
+const _decode = (_Err) => (schema, value, _ctx) => {
+    return _parse(_Err)(schema, value, _ctx);
+};
+const _encodeAsync = (_Err) => async (schema, value, _ctx) => {
+    const ctx = _ctx ? Object.assign(_ctx, { direction: "backward" }) : { direction: "backward" };
+    return _parseAsync(_Err)(schema, value, ctx);
+};
+const _decodeAsync = (_Err) => async (schema, value, _ctx) => {
+    return _parseAsync(_Err)(schema, value, _ctx);
+};
+const _safeEncode = (_Err) => (schema, value, _ctx) => {
+    const ctx = _ctx ? Object.assign(_ctx, { direction: "backward" }) : { direction: "backward" };
+    return _safeParse(_Err)(schema, value, ctx);
+};
+const _safeDecode = (_Err) => (schema, value, _ctx) => {
+    return _safeParse(_Err)(schema, value, _ctx);
+};
+const _safeEncodeAsync = (_Err) => async (schema, value, _ctx) => {
+    const ctx = _ctx ? Object.assign(_ctx, { direction: "backward" }) : { direction: "backward" };
+    return _safeParseAsync(_Err)(schema, value, ctx);
+};
+const _safeDecodeAsync = (_Err) => async (schema, value, _ctx) => {
+    return _safeParseAsync(_Err)(schema, value, _ctx);
+};
+
+const cuid = /^[cC][^\s-]{8,}$/;
+const cuid2 = /^[0-9a-z]+$/;
+const ulid = /^[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{26}$/;
+const xid = /^[0-9a-vA-V]{20}$/;
+const ksuid = /^[A-Za-z0-9]{27}$/;
+const nanoid = /^[a-zA-Z0-9_-]{21}$/;
+/** ISO 8601-1 duration regex. Does not support the 8601-2 extensions like negative durations or fractional/negative components. */
+const duration$1 = /^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$/;
+/** A regex for any UUID-like identifier: 8-4-4-4-12 hex pattern */
+const guid = /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
+/** Returns a regex for validating an RFC 9562/4122 UUID.
+ *
+ * @param version Optionally specify a version 1-8. If no version is specified, all versions are supported. */
+const uuid = (version) => {
+    if (!version)
+        return /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/;
+    return new RegExp(`^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-${version}[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$`);
+};
+/** Practical email validation */
+const email = /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/;
+// from https://thekevinscott.com/emojis-in-javascript/#writing-a-regular-expression
+const _emoji$1 = `^(\\p{Extended_Pictographic}|\\p{Emoji_Component})+$`;
+function emoji() {
+    return new RegExp(_emoji$1, "u");
+}
+const ipv4 = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/;
+const ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
+const cidrv4 = /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/([0-9]|[1-2][0-9]|3[0-2])$/;
+const cidrv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::|([0-9a-fA-F]{1,4})?::([0-9a-fA-F]{1,4}:?){0,6})\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])$/;
+// https://stackoverflow.com/questions/7860392/determine-if-string-is-in-base64-using-javascript
+const base64 = /^$|^(?:[0-9a-zA-Z+/]{4})*(?:(?:[0-9a-zA-Z+/]{2}==)|(?:[0-9a-zA-Z+/]{3}=))?$/;
+const base64url = /^[A-Za-z0-9_-]*$/;
+// based on https://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address
+// export const hostname: RegExp = /^([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+$/;
+const hostname = /^(?=.{1,253}\.?$)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[-0-9a-zA-Z]{0,61}[0-9a-zA-Z])?)*\.?$/;
+// https://blog.stevenlevithan.com/archives/validate-phone-number#r4-3 (regex sans spaces)
+const e164 = /^\+(?:[0-9]){6,14}[0-9]$/;
+// const dateSource = `((\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\\d|3[01])|(0[469]|11)-(0[1-9]|[12]\\d|30)|(02)-(0[1-9]|1\\d|2[0-8])))`;
+const dateSource = `(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))`;
+const date$2 = /*@__PURE__*/ new RegExp(`^${dateSource}$`);
+function timeSource(args) {
+    const hhmm = `(?:[01]\\d|2[0-3]):[0-5]\\d`;
+    const regex = typeof args.precision === "number"
+        ? args.precision === -1
+            ? `${hhmm}`
+            : args.precision === 0
+                ? `${hhmm}:[0-5]\\d`
+                : `${hhmm}:[0-5]\\d\\.\\d{${args.precision}}`
+        : `${hhmm}(?::[0-5]\\d(?:\\.\\d+)?)?`;
+    return regex;
+}
+function time$1(args) {
+    return new RegExp(`^${timeSource(args)}$`);
+}
+// Adapted from https://stackoverflow.com/a/3143231
+function datetime$2(args) {
+    const time = timeSource({ precision: args.precision });
+    const opts = ["Z"];
+    if (args.local)
+        opts.push("");
+    // if (args.offset) opts.push(`([+-]\\d{2}:\\d{2})`);
+    if (args.offset)
+        opts.push(`([+-](?:[01]\\d|2[0-3]):[0-5]\\d)`);
+    const timeRegex = `${time}(?:${opts.join("|")})`;
+    return new RegExp(`^${dateSource}T(?:${timeRegex})$`);
+}
+const string$1 = (params) => {
+    const regex = params ? `[\\s\\S]{${params?.minimum ?? 0},${params?.maximum ?? ""}}` : `[\\s\\S]*`;
+    return new RegExp(`^${regex}$`);
+};
+// regex for string with no uppercase letters
+const lowercase = /^[^A-Z]*$/;
+// regex for string with no lowercase letters
+const uppercase = /^[^a-z]*$/;
+
+// import { $ZodType } from "./schemas.js";
+const $ZodCheck = /*@__PURE__*/ $constructor("$ZodCheck", (inst, def) => {
+    var _a;
+    inst._zod ?? (inst._zod = {});
+    inst._zod.def = def;
+    (_a = inst._zod).onattach ?? (_a.onattach = []);
+});
+const numericOriginMap = {
+    number: "number",
+    bigint: "bigint",
+    object: "date",
+};
+const $ZodCheckLessThan = /*@__PURE__*/ $constructor("$ZodCheckLessThan", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    const origin = numericOriginMap[typeof def.value];
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        const curr = (def.inclusive ? bag.maximum : bag.exclusiveMaximum) ?? Number.POSITIVE_INFINITY;
+        if (def.value < curr) {
+            if (def.inclusive)
+                bag.maximum = def.value;
+            else
+                bag.exclusiveMaximum = def.value;
+        }
+    });
+    inst._zod.check = (payload) => {
+        if (def.inclusive ? payload.value <= def.value : payload.value < def.value) {
+            return;
+        }
+        payload.issues.push({
+            origin,
+            code: "too_big",
+            maximum: def.value,
+            input: payload.value,
+            inclusive: def.inclusive,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckGreaterThan = /*@__PURE__*/ $constructor("$ZodCheckGreaterThan", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    const origin = numericOriginMap[typeof def.value];
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        const curr = (def.inclusive ? bag.minimum : bag.exclusiveMinimum) ?? Number.NEGATIVE_INFINITY;
+        if (def.value > curr) {
+            if (def.inclusive)
+                bag.minimum = def.value;
+            else
+                bag.exclusiveMinimum = def.value;
+        }
+    });
+    inst._zod.check = (payload) => {
+        if (def.inclusive ? payload.value >= def.value : payload.value > def.value) {
+            return;
+        }
+        payload.issues.push({
+            origin,
+            code: "too_small",
+            minimum: def.value,
+            input: payload.value,
+            inclusive: def.inclusive,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckMaxLength = /*@__PURE__*/ $constructor("$ZodCheckMaxLength", (inst, def) => {
+    var _a;
+    $ZodCheck.init(inst, def);
+    (_a = inst._zod.def).when ?? (_a.when = (payload) => {
+        const val = payload.value;
+        return !nullish(val) && val.length !== undefined;
+    });
+    inst._zod.onattach.push((inst) => {
+        const curr = (inst._zod.bag.maximum ?? Number.POSITIVE_INFINITY);
+        if (def.maximum < curr)
+            inst._zod.bag.maximum = def.maximum;
+    });
+    inst._zod.check = (payload) => {
+        const input = payload.value;
+        const length = input.length;
+        if (length <= def.maximum)
+            return;
+        const origin = getLengthableOrigin(input);
+        payload.issues.push({
+            origin,
+            code: "too_big",
+            maximum: def.maximum,
+            inclusive: true,
+            input,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckMinLength = /*@__PURE__*/ $constructor("$ZodCheckMinLength", (inst, def) => {
+    var _a;
+    $ZodCheck.init(inst, def);
+    (_a = inst._zod.def).when ?? (_a.when = (payload) => {
+        const val = payload.value;
+        return !nullish(val) && val.length !== undefined;
+    });
+    inst._zod.onattach.push((inst) => {
+        const curr = (inst._zod.bag.minimum ?? Number.NEGATIVE_INFINITY);
+        if (def.minimum > curr)
+            inst._zod.bag.minimum = def.minimum;
+    });
+    inst._zod.check = (payload) => {
+        const input = payload.value;
+        const length = input.length;
+        if (length >= def.minimum)
+            return;
+        const origin = getLengthableOrigin(input);
+        payload.issues.push({
+            origin,
+            code: "too_small",
+            minimum: def.minimum,
+            inclusive: true,
+            input,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckLengthEquals = /*@__PURE__*/ $constructor("$ZodCheckLengthEquals", (inst, def) => {
+    var _a;
+    $ZodCheck.init(inst, def);
+    (_a = inst._zod.def).when ?? (_a.when = (payload) => {
+        const val = payload.value;
+        return !nullish(val) && val.length !== undefined;
+    });
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.minimum = def.length;
+        bag.maximum = def.length;
+        bag.length = def.length;
+    });
+    inst._zod.check = (payload) => {
+        const input = payload.value;
+        const length = input.length;
+        if (length === def.length)
+            return;
+        const origin = getLengthableOrigin(input);
+        const tooBig = length > def.length;
+        payload.issues.push({
+            origin,
+            ...(tooBig ? { code: "too_big", maximum: def.length } : { code: "too_small", minimum: def.length }),
+            inclusive: true,
+            exact: true,
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckStringFormat = /*@__PURE__*/ $constructor("$ZodCheckStringFormat", (inst, def) => {
+    var _a, _b;
+    $ZodCheck.init(inst, def);
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.format = def.format;
+        if (def.pattern) {
+            bag.patterns ?? (bag.patterns = new Set());
+            bag.patterns.add(def.pattern);
+        }
+    });
+    if (def.pattern)
+        (_a = inst._zod).check ?? (_a.check = (payload) => {
+            def.pattern.lastIndex = 0;
+            if (def.pattern.test(payload.value))
+                return;
+            payload.issues.push({
+                origin: "string",
+                code: "invalid_format",
+                format: def.format,
+                input: payload.value,
+                ...(def.pattern ? { pattern: def.pattern.toString() } : {}),
+                inst,
+                continue: !def.abort,
+            });
+        });
+    else
+        (_b = inst._zod).check ?? (_b.check = () => { });
+});
+const $ZodCheckRegex = /*@__PURE__*/ $constructor("$ZodCheckRegex", (inst, def) => {
+    $ZodCheckStringFormat.init(inst, def);
+    inst._zod.check = (payload) => {
+        def.pattern.lastIndex = 0;
+        if (def.pattern.test(payload.value))
+            return;
+        payload.issues.push({
+            origin: "string",
+            code: "invalid_format",
+            format: "regex",
+            input: payload.value,
+            pattern: def.pattern.toString(),
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckLowerCase = /*@__PURE__*/ $constructor("$ZodCheckLowerCase", (inst, def) => {
+    def.pattern ?? (def.pattern = lowercase);
+    $ZodCheckStringFormat.init(inst, def);
+});
+const $ZodCheckUpperCase = /*@__PURE__*/ $constructor("$ZodCheckUpperCase", (inst, def) => {
+    def.pattern ?? (def.pattern = uppercase);
+    $ZodCheckStringFormat.init(inst, def);
+});
+const $ZodCheckIncludes = /*@__PURE__*/ $constructor("$ZodCheckIncludes", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    const escapedRegex = escapeRegex(def.includes);
+    const pattern = new RegExp(typeof def.position === "number" ? `^.{${def.position}}${escapedRegex}` : escapedRegex);
+    def.pattern = pattern;
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.patterns ?? (bag.patterns = new Set());
+        bag.patterns.add(pattern);
+    });
+    inst._zod.check = (payload) => {
+        if (payload.value.includes(def.includes, def.position))
+            return;
+        payload.issues.push({
+            origin: "string",
+            code: "invalid_format",
+            format: "includes",
+            includes: def.includes,
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckStartsWith = /*@__PURE__*/ $constructor("$ZodCheckStartsWith", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    const pattern = new RegExp(`^${escapeRegex(def.prefix)}.*`);
+    def.pattern ?? (def.pattern = pattern);
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.patterns ?? (bag.patterns = new Set());
+        bag.patterns.add(pattern);
+    });
+    inst._zod.check = (payload) => {
+        if (payload.value.startsWith(def.prefix))
+            return;
+        payload.issues.push({
+            origin: "string",
+            code: "invalid_format",
+            format: "starts_with",
+            prefix: def.prefix,
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckEndsWith = /*@__PURE__*/ $constructor("$ZodCheckEndsWith", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    const pattern = new RegExp(`.*${escapeRegex(def.suffix)}$`);
+    def.pattern ?? (def.pattern = pattern);
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.patterns ?? (bag.patterns = new Set());
+        bag.patterns.add(pattern);
+    });
+    inst._zod.check = (payload) => {
+        if (payload.value.endsWith(def.suffix))
+            return;
+        payload.issues.push({
+            origin: "string",
+            code: "invalid_format",
+            format: "ends_with",
+            suffix: def.suffix,
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodCheckOverwrite = /*@__PURE__*/ $constructor("$ZodCheckOverwrite", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    inst._zod.check = (payload) => {
+        payload.value = def.tx(payload.value);
+    };
+});
+
+class Doc {
+    constructor(args = []) {
+        this.content = [];
+        this.indent = 0;
+        if (this)
+            this.args = args;
+    }
+    indented(fn) {
+        this.indent += 1;
+        fn(this);
+        this.indent -= 1;
+    }
+    write(arg) {
+        if (typeof arg === "function") {
+            arg(this, { execution: "sync" });
+            arg(this, { execution: "async" });
+            return;
+        }
+        const content = arg;
+        const lines = content.split("\n").filter((x) => x);
+        const minIndent = Math.min(...lines.map((x) => x.length - x.trimStart().length));
+        const dedented = lines.map((x) => x.slice(minIndent)).map((x) => " ".repeat(this.indent * 2) + x);
+        for (const line of dedented) {
+            this.content.push(line);
+        }
+    }
+    compile() {
+        const F = Function;
+        const args = this?.args;
+        const content = this?.content ?? [``];
+        const lines = [...content.map((x) => `  ${x}`)];
+        // console.log(lines.join("\n"));
+        return new F(...args, lines.join("\n"));
+    }
+}
+
+const version = {
+    major: 4,
+    minor: 1,
+    patch: 7,
+};
+
+const $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
+    var _a;
+    inst ?? (inst = {});
+    inst._zod.def = def; // set _def property
+    inst._zod.bag = inst._zod.bag || {}; // initialize _bag object
+    inst._zod.version = version;
+    const checks = [...(inst._zod.def.checks ?? [])];
+    // if inst is itself a checks.$ZodCheck, run it as a check
+    if (inst._zod.traits.has("$ZodCheck")) {
+        checks.unshift(inst);
+    }
+    for (const ch of checks) {
+        for (const fn of ch._zod.onattach) {
+            fn(inst);
+        }
+    }
+    if (checks.length === 0) {
+        // deferred initializer
+        // inst._zod.parse is not yet defined
+        (_a = inst._zod).deferred ?? (_a.deferred = []);
+        inst._zod.deferred?.push(() => {
+            inst._zod.run = inst._zod.parse;
+        });
+    }
+    else {
+        const runChecks = (payload, checks, ctx) => {
+            let isAborted = aborted(payload);
+            let asyncResult;
+            for (const ch of checks) {
+                if (ch._zod.def.when) {
+                    const shouldRun = ch._zod.def.when(payload);
+                    if (!shouldRun)
+                        continue;
+                }
+                else if (isAborted) {
+                    continue;
+                }
+                const currLen = payload.issues.length;
+                const _ = ch._zod.check(payload);
+                if (_ instanceof Promise && ctx?.async === false) {
+                    throw new $ZodAsyncError();
+                }
+                if (asyncResult || _ instanceof Promise) {
+                    asyncResult = (asyncResult ?? Promise.resolve()).then(async () => {
+                        await _;
+                        const nextLen = payload.issues.length;
+                        if (nextLen === currLen)
+                            return;
+                        if (!isAborted)
+                            isAborted = aborted(payload, currLen);
+                    });
+                }
+                else {
+                    const nextLen = payload.issues.length;
+                    if (nextLen === currLen)
+                        continue;
+                    if (!isAborted)
+                        isAborted = aborted(payload, currLen);
+                }
+            }
+            if (asyncResult) {
+                return asyncResult.then(() => {
+                    return payload;
+                });
+            }
+            return payload;
+        };
+        // const handleChecksResult = (
+        //   checkResult: ParsePayload,
+        //   originalResult: ParsePayload,
+        //   ctx: ParseContextInternal
+        // ): util.MaybeAsync<ParsePayload> => {
+        //   // if the checks mutated the value && there are no issues, re-parse the result
+        //   if (checkResult.value !== originalResult.value && !checkResult.issues.length)
+        //     return inst._zod.parse(checkResult, ctx);
+        //   return originalResult;
+        // };
+        const handleCanaryResult = (canary, payload, ctx) => {
+            // abort if the canary is aborted
+            if (aborted(canary)) {
+                canary.aborted = true;
+                return canary;
+            }
+            // run checks first, then
+            const checkResult = runChecks(payload, checks, ctx);
+            if (checkResult instanceof Promise) {
+                if (ctx.async === false)
+                    throw new $ZodAsyncError();
+                return checkResult.then((checkResult) => inst._zod.parse(checkResult, ctx));
+            }
+            return inst._zod.parse(checkResult, ctx);
+        };
+        inst._zod.run = (payload, ctx) => {
+            if (ctx.skipChecks) {
+                return inst._zod.parse(payload, ctx);
+            }
+            if (ctx.direction === "backward") {
+                // run canary
+                // initial pass (no checks)
+                const canary = inst._zod.parse({ value: payload.value, issues: [] }, { ...ctx, skipChecks: true });
+                if (canary instanceof Promise) {
+                    return canary.then((canary) => {
+                        return handleCanaryResult(canary, payload, ctx);
+                    });
+                }
+                return handleCanaryResult(canary, payload, ctx);
+            }
+            // forward
+            const result = inst._zod.parse(payload, ctx);
+            if (result instanceof Promise) {
+                if (ctx.async === false)
+                    throw new $ZodAsyncError();
+                return result.then((result) => runChecks(result, checks, ctx));
+            }
+            return runChecks(result, checks, ctx);
+        };
+    }
+    inst["~standard"] = {
+        validate: (value) => {
+            try {
+                const r = safeParse$1(inst, value);
+                return r.success ? { value: r.data } : { issues: r.error?.issues };
+            }
+            catch (_) {
+                return safeParseAsync$1(inst, value).then((r) => (r.success ? { value: r.data } : { issues: r.error?.issues }));
+            }
+        },
+        vendor: "zod",
+        version: 1,
+    };
+});
+const $ZodString = /*@__PURE__*/ $constructor("$ZodString", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.pattern = [...(inst?._zod.bag?.patterns ?? [])].pop() ?? string$1(inst._zod.bag);
+    inst._zod.parse = (payload, _) => {
+        if (def.coerce)
+            try {
+                payload.value = String(payload.value);
+            }
+            catch (_) { }
+        if (typeof payload.value === "string")
+            return payload;
+        payload.issues.push({
+            expected: "string",
+            code: "invalid_type",
+            input: payload.value,
+            inst,
+        });
+        return payload;
+    };
+});
+const $ZodStringFormat = /*@__PURE__*/ $constructor("$ZodStringFormat", (inst, def) => {
+    // check initialization must come first
+    $ZodCheckStringFormat.init(inst, def);
+    $ZodString.init(inst, def);
+});
+const $ZodGUID = /*@__PURE__*/ $constructor("$ZodGUID", (inst, def) => {
+    def.pattern ?? (def.pattern = guid);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodUUID = /*@__PURE__*/ $constructor("$ZodUUID", (inst, def) => {
+    if (def.version) {
+        const versionMap = {
+            v1: 1,
+            v2: 2,
+            v3: 3,
+            v4: 4,
+            v5: 5,
+            v6: 6,
+            v7: 7,
+            v8: 8,
+        };
+        const v = versionMap[def.version];
+        if (v === undefined)
+            throw new Error(`Invalid UUID version: "${def.version}"`);
+        def.pattern ?? (def.pattern = uuid(v));
+    }
+    else
+        def.pattern ?? (def.pattern = uuid());
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodEmail = /*@__PURE__*/ $constructor("$ZodEmail", (inst, def) => {
+    def.pattern ?? (def.pattern = email);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodURL = /*@__PURE__*/ $constructor("$ZodURL", (inst, def) => {
+    $ZodStringFormat.init(inst, def);
+    inst._zod.check = (payload) => {
+        try {
+            // Trim whitespace from input
+            const trimmed = payload.value.trim();
+            // @ts-ignore
+            const url = new URL(trimmed);
+            if (def.hostname) {
+                def.hostname.lastIndex = 0;
+                if (!def.hostname.test(url.hostname)) {
+                    payload.issues.push({
+                        code: "invalid_format",
+                        format: "url",
+                        note: "Invalid hostname",
+                        pattern: hostname.source,
+                        input: payload.value,
+                        inst,
+                        continue: !def.abort,
+                    });
+                }
+            }
+            if (def.protocol) {
+                def.protocol.lastIndex = 0;
+                if (!def.protocol.test(url.protocol.endsWith(":") ? url.protocol.slice(0, -1) : url.protocol)) {
+                    payload.issues.push({
+                        code: "invalid_format",
+                        format: "url",
+                        note: "Invalid protocol",
+                        pattern: def.protocol.source,
+                        input: payload.value,
+                        inst,
+                        continue: !def.abort,
+                    });
+                }
+            }
+            // Set the output value based on normalize flag
+            if (def.normalize) {
+                // Use normalized URL
+                payload.value = url.href;
+            }
+            else {
+                // Preserve the original input (trimmed)
+                payload.value = trimmed;
+            }
+            return;
+        }
+        catch (_) {
+            payload.issues.push({
+                code: "invalid_format",
+                format: "url",
+                input: payload.value,
+                inst,
+                continue: !def.abort,
+            });
+        }
+    };
+});
+const $ZodEmoji = /*@__PURE__*/ $constructor("$ZodEmoji", (inst, def) => {
+    def.pattern ?? (def.pattern = emoji());
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodNanoID = /*@__PURE__*/ $constructor("$ZodNanoID", (inst, def) => {
+    def.pattern ?? (def.pattern = nanoid);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodCUID = /*@__PURE__*/ $constructor("$ZodCUID", (inst, def) => {
+    def.pattern ?? (def.pattern = cuid);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodCUID2 = /*@__PURE__*/ $constructor("$ZodCUID2", (inst, def) => {
+    def.pattern ?? (def.pattern = cuid2);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodULID = /*@__PURE__*/ $constructor("$ZodULID", (inst, def) => {
+    def.pattern ?? (def.pattern = ulid);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodXID = /*@__PURE__*/ $constructor("$ZodXID", (inst, def) => {
+    def.pattern ?? (def.pattern = xid);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodKSUID = /*@__PURE__*/ $constructor("$ZodKSUID", (inst, def) => {
+    def.pattern ?? (def.pattern = ksuid);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodISODateTime = /*@__PURE__*/ $constructor("$ZodISODateTime", (inst, def) => {
+    def.pattern ?? (def.pattern = datetime$2(def));
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodISODate = /*@__PURE__*/ $constructor("$ZodISODate", (inst, def) => {
+    def.pattern ?? (def.pattern = date$2);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodISOTime = /*@__PURE__*/ $constructor("$ZodISOTime", (inst, def) => {
+    def.pattern ?? (def.pattern = time$1(def));
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodISODuration = /*@__PURE__*/ $constructor("$ZodISODuration", (inst, def) => {
+    def.pattern ?? (def.pattern = duration$1);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodIPv4 = /*@__PURE__*/ $constructor("$ZodIPv4", (inst, def) => {
+    def.pattern ?? (def.pattern = ipv4);
+    $ZodStringFormat.init(inst, def);
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.format = `ipv4`;
+    });
+});
+const $ZodIPv6 = /*@__PURE__*/ $constructor("$ZodIPv6", (inst, def) => {
+    def.pattern ?? (def.pattern = ipv6);
+    $ZodStringFormat.init(inst, def);
+    inst._zod.onattach.push((inst) => {
+        const bag = inst._zod.bag;
+        bag.format = `ipv6`;
+    });
+    inst._zod.check = (payload) => {
+        try {
+            // @ts-ignore
+            new URL(`http://[${payload.value}]`);
+            // return;
+        }
+        catch {
+            payload.issues.push({
+                code: "invalid_format",
+                format: "ipv6",
+                input: payload.value,
+                inst,
+                continue: !def.abort,
+            });
+        }
+    };
+});
+const $ZodCIDRv4 = /*@__PURE__*/ $constructor("$ZodCIDRv4", (inst, def) => {
+    def.pattern ?? (def.pattern = cidrv4);
+    $ZodStringFormat.init(inst, def);
+});
+const $ZodCIDRv6 = /*@__PURE__*/ $constructor("$ZodCIDRv6", (inst, def) => {
+    def.pattern ?? (def.pattern = cidrv6); // not used for validation
+    $ZodStringFormat.init(inst, def);
+    inst._zod.check = (payload) => {
+        const parts = payload.value.split("/");
+        try {
+            if (parts.length !== 2)
+                throw new Error();
+            const [address, prefix] = parts;
+            if (!prefix)
+                throw new Error();
+            const prefixNum = Number(prefix);
+            if (`${prefixNum}` !== prefix)
+                throw new Error();
+            if (prefixNum < 0 || prefixNum > 128)
+                throw new Error();
+            // @ts-ignore
+            new URL(`http://[${address}]`);
+        }
+        catch {
+            payload.issues.push({
+                code: "invalid_format",
+                format: "cidrv6",
+                input: payload.value,
+                inst,
+                continue: !def.abort,
+            });
+        }
+    };
+});
+//////////////////////////////   ZodBase64   //////////////////////////////
+function isValidBase64(data) {
+    if (data === "")
+        return true;
+    if (data.length % 4 !== 0)
+        return false;
+    try {
+        // @ts-ignore
+        atob(data);
+        return true;
+    }
+    catch {
+        return false;
+    }
+}
+const $ZodBase64 = /*@__PURE__*/ $constructor("$ZodBase64", (inst, def) => {
+    def.pattern ?? (def.pattern = base64);
+    $ZodStringFormat.init(inst, def);
+    inst._zod.onattach.push((inst) => {
+        inst._zod.bag.contentEncoding = "base64";
+    });
+    inst._zod.check = (payload) => {
+        if (isValidBase64(payload.value))
+            return;
+        payload.issues.push({
+            code: "invalid_format",
+            format: "base64",
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+//////////////////////////////   ZodBase64   //////////////////////////////
+function isValidBase64URL(data) {
+    if (!base64url.test(data))
+        return false;
+    const base64 = data.replace(/[-_]/g, (c) => (c === "-" ? "+" : "/"));
+    const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+    return isValidBase64(padded);
+}
+const $ZodBase64URL = /*@__PURE__*/ $constructor("$ZodBase64URL", (inst, def) => {
+    def.pattern ?? (def.pattern = base64url);
+    $ZodStringFormat.init(inst, def);
+    inst._zod.onattach.push((inst) => {
+        inst._zod.bag.contentEncoding = "base64url";
+    });
+    inst._zod.check = (payload) => {
+        if (isValidBase64URL(payload.value))
+            return;
+        payload.issues.push({
+            code: "invalid_format",
+            format: "base64url",
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodE164 = /*@__PURE__*/ $constructor("$ZodE164", (inst, def) => {
+    def.pattern ?? (def.pattern = e164);
+    $ZodStringFormat.init(inst, def);
+});
+//////////////////////////////   ZodJWT   //////////////////////////////
+function isValidJWT(token, algorithm = null) {
+    try {
+        const tokensParts = token.split(".");
+        if (tokensParts.length !== 3)
+            return false;
+        const [header] = tokensParts;
+        if (!header)
+            return false;
+        // @ts-ignore
+        const parsedHeader = JSON.parse(atob(header));
+        if ("typ" in parsedHeader && parsedHeader?.typ !== "JWT")
+            return false;
+        if (!parsedHeader.alg)
+            return false;
+        if (algorithm && (!("alg" in parsedHeader) || parsedHeader.alg !== algorithm))
+            return false;
+        return true;
+    }
+    catch {
+        return false;
+    }
+}
+const $ZodJWT = /*@__PURE__*/ $constructor("$ZodJWT", (inst, def) => {
+    $ZodStringFormat.init(inst, def);
+    inst._zod.check = (payload) => {
+        if (isValidJWT(payload.value, def.alg))
+            return;
+        payload.issues.push({
+            code: "invalid_format",
+            format: "jwt",
+            input: payload.value,
+            inst,
+            continue: !def.abort,
+        });
+    };
+});
+const $ZodUnknown = /*@__PURE__*/ $constructor("$ZodUnknown", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload) => payload;
+});
+const $ZodNever = /*@__PURE__*/ $constructor("$ZodNever", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload, _ctx) => {
+        payload.issues.push({
+            expected: "never",
+            code: "invalid_type",
+            input: payload.value,
+            inst,
+        });
+        return payload;
+    };
+});
+const $ZodDate = /*@__PURE__*/ $constructor("$ZodDate", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload, _ctx) => {
+        if (def.coerce) {
+            try {
+                payload.value = new Date(payload.value);
+            }
+            catch (_err) { }
+        }
+        const input = payload.value;
+        const isDate = input instanceof Date;
+        const isValidDate = isDate && !Number.isNaN(input.getTime());
+        if (isValidDate)
+            return payload;
+        payload.issues.push({
+            expected: "date",
+            code: "invalid_type",
+            input,
+            ...(isDate ? { received: "Invalid Date" } : {}),
+            inst,
+        });
+        return payload;
+    };
+});
+function handleArrayResult(result, final, index) {
+    if (result.issues.length) {
+        final.issues.push(...prefixIssues(index, result.issues));
+    }
+    final.value[index] = result.value;
+}
+const $ZodArray = /*@__PURE__*/ $constructor("$ZodArray", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload, ctx) => {
+        const input = payload.value;
+        if (!Array.isArray(input)) {
+            payload.issues.push({
+                expected: "array",
+                code: "invalid_type",
+                input,
+                inst,
+            });
+            return payload;
+        }
+        payload.value = Array(input.length);
+        const proms = [];
+        for (let i = 0; i < input.length; i++) {
+            const item = input[i];
+            const result = def.element._zod.run({
+                value: item,
+                issues: [],
+            }, ctx);
+            if (result instanceof Promise) {
+                proms.push(result.then((result) => handleArrayResult(result, payload, i)));
+            }
+            else {
+                handleArrayResult(result, payload, i);
+            }
+        }
+        if (proms.length) {
+            return Promise.all(proms).then(() => payload);
+        }
+        return payload; //handleArrayResultsAsync(parseResults, final);
+    };
+});
+function handlePropertyResult(result, final, key, input) {
+    if (result.issues.length) {
+        final.issues.push(...prefixIssues(key, result.issues));
+    }
+    if (result.value === undefined) {
+        if (key in input) {
+            final.value[key] = undefined;
+        }
+    }
+    else {
+        final.value[key] = result.value;
+    }
+}
+function normalizeDef(def) {
+    const keys = Object.keys(def.shape);
+    for (const k of keys) {
+        if (!def.shape?.[k]?._zod?.traits?.has("$ZodType")) {
+            throw new Error(`Invalid element at key "${k}": expected a Zod schema`);
+        }
+    }
+    const okeys = optionalKeys(def.shape);
+    return {
+        ...def,
+        keys,
+        keySet: new Set(keys),
+        numKeys: keys.length,
+        optionalKeys: new Set(okeys),
+    };
+}
+function handleCatchall(proms, input, payload, ctx, def, inst) {
+    const unrecognized = [];
+    // iterate over input keys
+    const keySet = def.keySet;
+    const _catchall = def.catchall._zod;
+    const t = _catchall.def.type;
+    for (const key of Object.keys(input)) {
+        if (keySet.has(key))
+            continue;
+        if (t === "never") {
+            unrecognized.push(key);
+            continue;
+        }
+        const r = _catchall.run({ value: input[key], issues: [] }, ctx);
+        if (r instanceof Promise) {
+            proms.push(r.then((r) => handlePropertyResult(r, payload, key, input)));
+        }
+        else {
+            handlePropertyResult(r, payload, key, input);
+        }
+    }
+    if (unrecognized.length) {
+        payload.issues.push({
+            code: "unrecognized_keys",
+            keys: unrecognized,
+            input,
+            inst,
+        });
+    }
+    if (!proms.length)
+        return payload;
+    return Promise.all(proms).then(() => {
+        return payload;
+    });
+}
+const $ZodObject = /*@__PURE__*/ $constructor("$ZodObject", (inst, def) => {
+    // requires cast because technically $ZodObject doesn't extend
+    $ZodType.init(inst, def);
+    const _normalized = cached(() => normalizeDef(def));
+    defineLazy(inst._zod, "propValues", () => {
+        const shape = def.shape;
+        const propValues = {};
+        for (const key in shape) {
+            const field = shape[key]._zod;
+            if (field.values) {
+                propValues[key] ?? (propValues[key] = new Set());
+                for (const v of field.values)
+                    propValues[key].add(v);
+            }
+        }
+        return propValues;
+    });
+    const isObject$1 = isObject;
+    const catchall = def.catchall;
+    let value;
+    inst._zod.parse = (payload, ctx) => {
+        value ?? (value = _normalized.value);
+        const input = payload.value;
+        if (!isObject$1(input)) {
+            payload.issues.push({
+                expected: "object",
+                code: "invalid_type",
+                input,
+                inst,
+            });
+            return payload;
+        }
+        payload.value = {};
+        const proms = [];
+        const shape = value.shape;
+        for (const key of value.keys) {
+            const el = shape[key];
+            const r = el._zod.run({ value: input[key], issues: [] }, ctx);
+            if (r instanceof Promise) {
+                proms.push(r.then((r) => handlePropertyResult(r, payload, key, input)));
+            }
+            else {
+                handlePropertyResult(r, payload, key, input);
+            }
+        }
+        if (!catchall) {
+            return proms.length ? Promise.all(proms).then(() => payload) : payload;
+        }
+        return handleCatchall(proms, input, payload, ctx, _normalized.value, inst);
+    };
+});
+const $ZodObjectJIT = /*@__PURE__*/ $constructor("$ZodObjectJIT", (inst, def) => {
+    // requires cast because technically $ZodObject doesn't extend
+    $ZodObject.init(inst, def);
+    const superParse = inst._zod.parse;
+    const _normalized = cached(() => normalizeDef(def));
+    const generateFastpass = (shape) => {
+        const doc = new Doc(["shape", "payload", "ctx"]);
+        const normalized = _normalized.value;
+        const parseStr = (key) => {
+            const k = esc(key);
+            return `shape[${k}]._zod.run({ value: input[${k}], issues: [] }, ctx)`;
+        };
+        doc.write(`const input = payload.value;`);
+        const ids = Object.create(null);
+        let counter = 0;
+        for (const key of normalized.keys) {
+            ids[key] = `key_${counter++}`;
+        }
+        // A: preserve key order {
+        doc.write(`const newResult = {};`);
+        for (const key of normalized.keys) {
+            const id = ids[key];
+            const k = esc(key);
+            doc.write(`const ${id} = ${parseStr(key)};`);
+            doc.write(`
+        if (${id}.issues.length) {
+          payload.issues = payload.issues.concat(${id}.issues.map(iss => ({
+            ...iss,
+            path: iss.path ? [${k}, ...iss.path] : [${k}]
+          })));
+        }
+        
+        
+        if (${id}.value === undefined) {
+          if (${k} in input) {
+            newResult[${k}] = undefined;
+          }
+        } else {
+          newResult[${k}] = ${id}.value;
+        }
+        
+      `);
+        }
+        doc.write(`payload.value = newResult;`);
+        doc.write(`return payload;`);
+        const fn = doc.compile();
+        return (payload, ctx) => fn(shape, payload, ctx);
+    };
+    let fastpass;
+    const isObject$1 = isObject;
+    const jit = !globalConfig.jitless;
+    const allowsEval$1 = allowsEval;
+    const fastEnabled = jit && allowsEval$1.value; // && !def.catchall;
+    const catchall = def.catchall;
+    let value;
+    inst._zod.parse = (payload, ctx) => {
+        value ?? (value = _normalized.value);
+        const input = payload.value;
+        if (!isObject$1(input)) {
+            payload.issues.push({
+                expected: "object",
+                code: "invalid_type",
+                input,
+                inst,
+            });
+            return payload;
+        }
+        if (jit && fastEnabled && ctx?.async === false && ctx.jitless !== true) {
+            // always synchronous
+            if (!fastpass)
+                fastpass = generateFastpass(def.shape);
+            payload = fastpass(payload, ctx);
+            if (!catchall)
+                return payload;
+            return handleCatchall([], input, payload, ctx, value, inst);
+        }
+        return superParse(payload, ctx);
+    };
+});
+function handleUnionResults(results, final, inst, ctx) {
+    for (const result of results) {
+        if (result.issues.length === 0) {
+            final.value = result.value;
+            return final;
+        }
+    }
+    const nonaborted = results.filter((r) => !aborted(r));
+    if (nonaborted.length === 1) {
+        final.value = nonaborted[0].value;
+        return nonaborted[0];
+    }
+    final.issues.push({
+        code: "invalid_union",
+        input: final.value,
+        inst,
+        errors: results.map((result) => result.issues.map((iss) => finalizeIssue(iss, ctx, config()))),
+    });
+    return final;
+}
+const $ZodUnion = /*@__PURE__*/ $constructor("$ZodUnion", (inst, def) => {
+    $ZodType.init(inst, def);
+    defineLazy(inst._zod, "optin", () => def.options.some((o) => o._zod.optin === "optional") ? "optional" : undefined);
+    defineLazy(inst._zod, "optout", () => def.options.some((o) => o._zod.optout === "optional") ? "optional" : undefined);
+    defineLazy(inst._zod, "values", () => {
+        if (def.options.every((o) => o._zod.values)) {
+            return new Set(def.options.flatMap((option) => Array.from(option._zod.values)));
+        }
+        return undefined;
+    });
+    defineLazy(inst._zod, "pattern", () => {
+        if (def.options.every((o) => o._zod.pattern)) {
+            const patterns = def.options.map((o) => o._zod.pattern);
+            return new RegExp(`^(${patterns.map((p) => cleanRegex(p.source)).join("|")})$`);
+        }
+        return undefined;
+    });
+    const single = def.options.length === 1;
+    const first = def.options[0]._zod.run;
+    inst._zod.parse = (payload, ctx) => {
+        if (single) {
+            return first(payload, ctx);
+        }
+        let async = false;
+        const results = [];
+        for (const option of def.options) {
+            const result = option._zod.run({
+                value: payload.value,
+                issues: [],
+            }, ctx);
+            if (result instanceof Promise) {
+                results.push(result);
+                async = true;
+            }
+            else {
+                if (result.issues.length === 0)
+                    return result;
+                results.push(result);
+            }
+        }
+        if (!async)
+            return handleUnionResults(results, payload, inst, ctx);
+        return Promise.all(results).then((results) => {
+            return handleUnionResults(results, payload, inst, ctx);
+        });
+    };
+});
+const $ZodIntersection = /*@__PURE__*/ $constructor("$ZodIntersection", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload, ctx) => {
+        const input = payload.value;
+        const left = def.left._zod.run({ value: input, issues: [] }, ctx);
+        const right = def.right._zod.run({ value: input, issues: [] }, ctx);
+        const async = left instanceof Promise || right instanceof Promise;
+        if (async) {
+            return Promise.all([left, right]).then(([left, right]) => {
+                return handleIntersectionResults(payload, left, right);
+            });
+        }
+        return handleIntersectionResults(payload, left, right);
+    };
+});
+function mergeValues(a, b) {
+    // const aType = parse.t(a);
+    // const bType = parse.t(b);
+    if (a === b) {
+        return { valid: true, data: a };
+    }
+    if (a instanceof Date && b instanceof Date && +a === +b) {
+        return { valid: true, data: a };
+    }
+    if (isPlainObject(a) && isPlainObject(b)) {
+        const bKeys = Object.keys(b);
+        const sharedKeys = Object.keys(a).filter((key) => bKeys.indexOf(key) !== -1);
+        const newObj = { ...a, ...b };
+        for (const key of sharedKeys) {
+            const sharedValue = mergeValues(a[key], b[key]);
+            if (!sharedValue.valid) {
+                return {
+                    valid: false,
+                    mergeErrorPath: [key, ...sharedValue.mergeErrorPath],
+                };
+            }
+            newObj[key] = sharedValue.data;
+        }
+        return { valid: true, data: newObj };
+    }
+    if (Array.isArray(a) && Array.isArray(b)) {
+        if (a.length !== b.length) {
+            return { valid: false, mergeErrorPath: [] };
+        }
+        const newArray = [];
+        for (let index = 0; index < a.length; index++) {
+            const itemA = a[index];
+            const itemB = b[index];
+            const sharedValue = mergeValues(itemA, itemB);
+            if (!sharedValue.valid) {
+                return {
+                    valid: false,
+                    mergeErrorPath: [index, ...sharedValue.mergeErrorPath],
+                };
+            }
+            newArray.push(sharedValue.data);
+        }
+        return { valid: true, data: newArray };
+    }
+    return { valid: false, mergeErrorPath: [] };
+}
+function handleIntersectionResults(result, left, right) {
+    if (left.issues.length) {
+        result.issues.push(...left.issues);
+    }
+    if (right.issues.length) {
+        result.issues.push(...right.issues);
+    }
+    if (aborted(result))
+        return result;
+    const merged = mergeValues(left.value, right.value);
+    if (!merged.valid) {
+        throw new Error(`Unmergable intersection. Error path: ` + `${JSON.stringify(merged.mergeErrorPath)}`);
+    }
+    result.value = merged.data;
+    return result;
+}
+const $ZodEnum = /*@__PURE__*/ $constructor("$ZodEnum", (inst, def) => {
+    $ZodType.init(inst, def);
+    const values = getEnumValues(def.entries);
+    const valuesSet = new Set(values);
+    inst._zod.values = valuesSet;
+    inst._zod.pattern = new RegExp(`^(${values
+        .filter((k) => propertyKeyTypes.has(typeof k))
+        .map((o) => (typeof o === "string" ? escapeRegex(o) : o.toString()))
+        .join("|")})$`);
+    inst._zod.parse = (payload, _ctx) => {
+        const input = payload.value;
+        if (valuesSet.has(input)) {
+            return payload;
+        }
+        payload.issues.push({
+            code: "invalid_value",
+            values,
+            input,
+            inst,
+        });
+        return payload;
+    };
+});
+const $ZodTransform = /*@__PURE__*/ $constructor("$ZodTransform", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload, ctx) => {
+        if (ctx.direction === "backward") {
+            throw new $ZodEncodeError(inst.constructor.name);
+        }
+        const _out = def.transform(payload.value, payload);
+        if (ctx.async) {
+            const output = _out instanceof Promise ? _out : Promise.resolve(_out);
+            return output.then((output) => {
+                payload.value = output;
+                return payload;
+            });
+        }
+        if (_out instanceof Promise) {
+            throw new $ZodAsyncError();
+        }
+        payload.value = _out;
+        return payload;
+    };
+});
+function handleOptionalResult(result, input) {
+    if (result.issues.length && input === undefined) {
+        return { issues: [], value: undefined };
+    }
+    return result;
+}
+const $ZodOptional = /*@__PURE__*/ $constructor("$ZodOptional", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.optin = "optional";
+    inst._zod.optout = "optional";
+    defineLazy(inst._zod, "values", () => {
+        return def.innerType._zod.values ? new Set([...def.innerType._zod.values, undefined]) : undefined;
+    });
+    defineLazy(inst._zod, "pattern", () => {
+        const pattern = def.innerType._zod.pattern;
+        return pattern ? new RegExp(`^(${cleanRegex(pattern.source)})?$`) : undefined;
+    });
+    inst._zod.parse = (payload, ctx) => {
+        if (def.innerType._zod.optin === "optional") {
+            const result = def.innerType._zod.run(payload, ctx);
+            if (result instanceof Promise)
+                return result.then((r) => handleOptionalResult(r, payload.value));
+            return handleOptionalResult(result, payload.value);
+        }
+        if (payload.value === undefined) {
+            return payload;
+        }
+        return def.innerType._zod.run(payload, ctx);
+    };
+});
+const $ZodNullable = /*@__PURE__*/ $constructor("$ZodNullable", (inst, def) => {
+    $ZodType.init(inst, def);
+    defineLazy(inst._zod, "optin", () => def.innerType._zod.optin);
+    defineLazy(inst._zod, "optout", () => def.innerType._zod.optout);
+    defineLazy(inst._zod, "pattern", () => {
+        const pattern = def.innerType._zod.pattern;
+        return pattern ? new RegExp(`^(${cleanRegex(pattern.source)}|null)$`) : undefined;
+    });
+    defineLazy(inst._zod, "values", () => {
+        return def.innerType._zod.values ? new Set([...def.innerType._zod.values, null]) : undefined;
+    });
+    inst._zod.parse = (payload, ctx) => {
+        // Forward direction (decode): allow null to pass through
+        if (payload.value === null)
+            return payload;
+        return def.innerType._zod.run(payload, ctx);
+    };
+});
+const $ZodDefault = /*@__PURE__*/ $constructor("$ZodDefault", (inst, def) => {
+    $ZodType.init(inst, def);
+    // inst._zod.qin = "true";
+    inst._zod.optin = "optional";
+    defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+    inst._zod.parse = (payload, ctx) => {
+        if (ctx.direction === "backward") {
+            return def.innerType._zod.run(payload, ctx);
+        }
+        // Forward direction (decode): apply defaults for undefined input
+        if (payload.value === undefined) {
+            payload.value = def.defaultValue;
+            /**
+             * $ZodDefault returns the default value immediately in forward direction.
+             * It doesn't pass the default value into the validator ("prefault"). There's no reason to pass the default value through validation. The validity of the default is enforced by TypeScript statically. Otherwise, it's the responsibility of the user to ensure the default is valid. In the case of pipes with divergent in/out types, you can specify the default on the `in` schema of your ZodPipe to set a "prefault" for the pipe.   */
+            return payload;
+        }
+        // Forward direction: continue with default handling
+        const result = def.innerType._zod.run(payload, ctx);
+        if (result instanceof Promise) {
+            return result.then((result) => handleDefaultResult(result, def));
+        }
+        return handleDefaultResult(result, def);
+    };
+});
+function handleDefaultResult(payload, def) {
+    if (payload.value === undefined) {
+        payload.value = def.defaultValue;
+    }
+    return payload;
+}
+const $ZodPrefault = /*@__PURE__*/ $constructor("$ZodPrefault", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst._zod.optin = "optional";
+    defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+    inst._zod.parse = (payload, ctx) => {
+        if (ctx.direction === "backward") {
+            return def.innerType._zod.run(payload, ctx);
+        }
+        // Forward direction (decode): apply prefault for undefined input
+        if (payload.value === undefined) {
+            payload.value = def.defaultValue;
+        }
+        return def.innerType._zod.run(payload, ctx);
+    };
+});
+const $ZodNonOptional = /*@__PURE__*/ $constructor("$ZodNonOptional", (inst, def) => {
+    $ZodType.init(inst, def);
+    defineLazy(inst._zod, "values", () => {
+        const v = def.innerType._zod.values;
+        return v ? new Set([...v].filter((x) => x !== undefined)) : undefined;
+    });
+    inst._zod.parse = (payload, ctx) => {
+        const result = def.innerType._zod.run(payload, ctx);
+        if (result instanceof Promise) {
+            return result.then((result) => handleNonOptionalResult(result, inst));
+        }
+        return handleNonOptionalResult(result, inst);
+    };
+});
+function handleNonOptionalResult(payload, inst) {
+    if (!payload.issues.length && payload.value === undefined) {
+        payload.issues.push({
+            code: "invalid_type",
+            expected: "nonoptional",
+            input: payload.value,
+            inst,
+        });
+    }
+    return payload;
+}
+const $ZodCatch = /*@__PURE__*/ $constructor("$ZodCatch", (inst, def) => {
+    $ZodType.init(inst, def);
+    defineLazy(inst._zod, "optin", () => def.innerType._zod.optin);
+    defineLazy(inst._zod, "optout", () => def.innerType._zod.optout);
+    defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+    inst._zod.parse = (payload, ctx) => {
+        if (ctx.direction === "backward") {
+            return def.innerType._zod.run(payload, ctx);
+        }
+        // Forward direction (decode): apply catch logic
+        const result = def.innerType._zod.run(payload, ctx);
+        if (result instanceof Promise) {
+            return result.then((result) => {
+                payload.value = result.value;
+                if (result.issues.length) {
+                    payload.value = def.catchValue({
+                        ...payload,
+                        error: {
+                            issues: result.issues.map((iss) => finalizeIssue(iss, ctx, config())),
+                        },
+                        input: payload.value,
+                    });
+                    payload.issues = [];
+                }
+                return payload;
+            });
+        }
+        payload.value = result.value;
+        if (result.issues.length) {
+            payload.value = def.catchValue({
+                ...payload,
+                error: {
+                    issues: result.issues.map((iss) => finalizeIssue(iss, ctx, config())),
+                },
+                input: payload.value,
+            });
+            payload.issues = [];
+        }
+        return payload;
+    };
+});
+const $ZodPipe = /*@__PURE__*/ $constructor("$ZodPipe", (inst, def) => {
+    $ZodType.init(inst, def);
+    defineLazy(inst._zod, "values", () => def.in._zod.values);
+    defineLazy(inst._zod, "optin", () => def.in._zod.optin);
+    defineLazy(inst._zod, "optout", () => def.out._zod.optout);
+    defineLazy(inst._zod, "propValues", () => def.in._zod.propValues);
+    inst._zod.parse = (payload, ctx) => {
+        if (ctx.direction === "backward") {
+            const right = def.out._zod.run(payload, ctx);
+            if (right instanceof Promise) {
+                return right.then((right) => handlePipeResult(right, def.in, ctx));
+            }
+            return handlePipeResult(right, def.in, ctx);
+        }
+        const left = def.in._zod.run(payload, ctx);
+        if (left instanceof Promise) {
+            return left.then((left) => handlePipeResult(left, def.out, ctx));
+        }
+        return handlePipeResult(left, def.out, ctx);
+    };
+});
+function handlePipeResult(left, next, ctx) {
+    if (left.issues.length) {
+        // prevent further checks
+        left.aborted = true;
+        return left;
+    }
+    return next._zod.run({ value: left.value, issues: left.issues }, ctx);
+}
+const $ZodReadonly = /*@__PURE__*/ $constructor("$ZodReadonly", (inst, def) => {
+    $ZodType.init(inst, def);
+    defineLazy(inst._zod, "propValues", () => def.innerType._zod.propValues);
+    defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+    defineLazy(inst._zod, "optin", () => def.innerType._zod.optin);
+    defineLazy(inst._zod, "optout", () => def.innerType._zod.optout);
+    inst._zod.parse = (payload, ctx) => {
+        if (ctx.direction === "backward") {
+            return def.innerType._zod.run(payload, ctx);
+        }
+        const result = def.innerType._zod.run(payload, ctx);
+        if (result instanceof Promise) {
+            return result.then(handleReadonlyResult);
+        }
+        return handleReadonlyResult(result);
+    };
+});
+function handleReadonlyResult(payload) {
+    payload.value = Object.freeze(payload.value);
+    return payload;
+}
+const $ZodCustom = /*@__PURE__*/ $constructor("$ZodCustom", (inst, def) => {
+    $ZodCheck.init(inst, def);
+    $ZodType.init(inst, def);
+    inst._zod.parse = (payload, _) => {
+        return payload;
+    };
+    inst._zod.check = (payload) => {
+        const input = payload.value;
+        const r = def.fn(input);
+        if (r instanceof Promise) {
+            return r.then((r) => handleRefineResult(r, payload, input, inst));
+        }
+        handleRefineResult(r, payload, input, inst);
+        return;
+    };
+});
+function handleRefineResult(result, payload, input, inst) {
+    if (!result) {
+        const _iss = {
+            code: "custom",
+            input,
+            inst, // incorporates params.error into issue reporting
+            path: [...(inst._zod.def.path ?? [])], // incorporates params.error into issue reporting
+            continue: !inst._zod.def.abort,
+            // params: inst._zod.def.params,
+        };
+        if (inst._zod.def.params)
+            _iss.params = inst._zod.def.params;
+        payload.issues.push(issue(_iss));
+    }
+}
+
+class $ZodRegistry {
+    constructor() {
+        this._map = new Map();
+        this._idmap = new Map();
+    }
+    add(schema, ..._meta) {
+        const meta = _meta[0];
+        this._map.set(schema, meta);
+        if (meta && typeof meta === "object" && "id" in meta) {
+            if (this._idmap.has(meta.id)) {
+                throw new Error(`ID ${meta.id} already exists in the registry`);
+            }
+            this._idmap.set(meta.id, schema);
+        }
+        return this;
+    }
+    clear() {
+        this._map = new Map();
+        this._idmap = new Map();
+        return this;
+    }
+    remove(schema) {
+        const meta = this._map.get(schema);
+        if (meta && typeof meta === "object" && "id" in meta) {
+            this._idmap.delete(meta.id);
+        }
+        this._map.delete(schema);
+        return this;
+    }
+    get(schema) {
+        // return this._map.get(schema) as any;
+        // inherit metadata
+        const p = schema._zod.parent;
+        if (p) {
+            const pm = { ...(this.get(p) ?? {}) };
+            delete pm.id; // do not inherit id
+            const f = { ...pm, ...this._map.get(schema) };
+            return Object.keys(f).length ? f : undefined;
+        }
+        return this._map.get(schema);
+    }
+    has(schema) {
+        return this._map.has(schema);
+    }
+}
+// registries
+function registry() {
+    return new $ZodRegistry();
+}
+const globalRegistry = /*@__PURE__*/ registry();
+
+function _string(Class, params) {
+    return new Class({
+        type: "string",
+        ...normalizeParams(params),
+    });
+}
+function _email(Class, params) {
+    return new Class({
+        type: "string",
+        format: "email",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _guid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "guid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _uuid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "uuid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _uuidv4(Class, params) {
+    return new Class({
+        type: "string",
+        format: "uuid",
+        check: "string_format",
+        abort: false,
+        version: "v4",
+        ...normalizeParams(params),
+    });
+}
+function _uuidv6(Class, params) {
+    return new Class({
+        type: "string",
+        format: "uuid",
+        check: "string_format",
+        abort: false,
+        version: "v6",
+        ...normalizeParams(params),
+    });
+}
+function _uuidv7(Class, params) {
+    return new Class({
+        type: "string",
+        format: "uuid",
+        check: "string_format",
+        abort: false,
+        version: "v7",
+        ...normalizeParams(params),
+    });
+}
+function _url(Class, params) {
+    return new Class({
+        type: "string",
+        format: "url",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _emoji(Class, params) {
+    return new Class({
+        type: "string",
+        format: "emoji",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _nanoid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "nanoid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _cuid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "cuid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _cuid2(Class, params) {
+    return new Class({
+        type: "string",
+        format: "cuid2",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _ulid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "ulid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _xid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "xid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _ksuid(Class, params) {
+    return new Class({
+        type: "string",
+        format: "ksuid",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _ipv4(Class, params) {
+    return new Class({
+        type: "string",
+        format: "ipv4",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _ipv6(Class, params) {
+    return new Class({
+        type: "string",
+        format: "ipv6",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _cidrv4(Class, params) {
+    return new Class({
+        type: "string",
+        format: "cidrv4",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _cidrv6(Class, params) {
+    return new Class({
+        type: "string",
+        format: "cidrv6",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _base64(Class, params) {
+    return new Class({
+        type: "string",
+        format: "base64",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _base64url(Class, params) {
+    return new Class({
+        type: "string",
+        format: "base64url",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _e164(Class, params) {
+    return new Class({
+        type: "string",
+        format: "e164",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _jwt(Class, params) {
+    return new Class({
+        type: "string",
+        format: "jwt",
+        check: "string_format",
+        abort: false,
+        ...normalizeParams(params),
+    });
+}
+function _isoDateTime(Class, params) {
+    return new Class({
+        type: "string",
+        format: "datetime",
+        check: "string_format",
+        offset: false,
+        local: false,
+        precision: null,
+        ...normalizeParams(params),
+    });
+}
+function _isoDate(Class, params) {
+    return new Class({
+        type: "string",
+        format: "date",
+        check: "string_format",
+        ...normalizeParams(params),
+    });
+}
+function _isoTime(Class, params) {
+    return new Class({
+        type: "string",
+        format: "time",
+        check: "string_format",
+        precision: null,
+        ...normalizeParams(params),
+    });
+}
+function _isoDuration(Class, params) {
+    return new Class({
+        type: "string",
+        format: "duration",
+        check: "string_format",
+        ...normalizeParams(params),
+    });
+}
+function _unknown(Class) {
+    return new Class({
+        type: "unknown",
+    });
+}
+function _never(Class, params) {
+    return new Class({
+        type: "never",
+        ...normalizeParams(params),
+    });
+}
+function _date(Class, params) {
+    return new Class({
+        type: "date",
+        ...normalizeParams(params),
+    });
+}
+function _lte(value, params) {
+    return new $ZodCheckLessThan({
+        check: "less_than",
+        ...normalizeParams(params),
+        value,
+        inclusive: true,
+    });
+}
+function _gte(value, params) {
+    return new $ZodCheckGreaterThan({
+        check: "greater_than",
+        ...normalizeParams(params),
+        value,
+        inclusive: true,
+    });
+}
+function _maxLength(maximum, params) {
+    const ch = new $ZodCheckMaxLength({
+        check: "max_length",
+        ...normalizeParams(params),
+        maximum,
+    });
+    return ch;
+}
+function _minLength(minimum, params) {
+    return new $ZodCheckMinLength({
+        check: "min_length",
+        ...normalizeParams(params),
+        minimum,
+    });
+}
+function _length(length, params) {
+    return new $ZodCheckLengthEquals({
+        check: "length_equals",
+        ...normalizeParams(params),
+        length,
+    });
+}
+function _regex(pattern, params) {
+    return new $ZodCheckRegex({
+        check: "string_format",
+        format: "regex",
+        ...normalizeParams(params),
+        pattern,
+    });
+}
+function _lowercase(params) {
+    return new $ZodCheckLowerCase({
+        check: "string_format",
+        format: "lowercase",
+        ...normalizeParams(params),
+    });
+}
+function _uppercase(params) {
+    return new $ZodCheckUpperCase({
+        check: "string_format",
+        format: "uppercase",
+        ...normalizeParams(params),
+    });
+}
+function _includes(includes, params) {
+    return new $ZodCheckIncludes({
+        check: "string_format",
+        format: "includes",
+        ...normalizeParams(params),
+        includes,
+    });
+}
+function _startsWith(prefix, params) {
+    return new $ZodCheckStartsWith({
+        check: "string_format",
+        format: "starts_with",
+        ...normalizeParams(params),
+        prefix,
+    });
+}
+function _endsWith(suffix, params) {
+    return new $ZodCheckEndsWith({
+        check: "string_format",
+        format: "ends_with",
+        ...normalizeParams(params),
+        suffix,
+    });
+}
+function _overwrite(tx) {
+    return new $ZodCheckOverwrite({
+        check: "overwrite",
+        tx,
+    });
+}
+// normalize
+function _normalize(form) {
+    return _overwrite((input) => input.normalize(form));
+}
+// trim
+function _trim() {
+    return _overwrite((input) => input.trim());
+}
+// toLowerCase
+function _toLowerCase() {
+    return _overwrite((input) => input.toLowerCase());
+}
+// toUpperCase
+function _toUpperCase() {
+    return _overwrite((input) => input.toUpperCase());
+}
+function _array(Class, element, params) {
+    return new Class({
+        type: "array",
+        element,
+        // get element() {
+        //   return element;
+        // },
+        ...normalizeParams(params),
+    });
+}
+// same as _custom but defaults to abort:false
+function _refine(Class, fn, _params) {
+    const schema = new Class({
+        type: "custom",
+        check: "custom",
+        fn: fn,
+        ...normalizeParams(_params),
+    });
+    return schema;
+}
+function _superRefine(fn) {
+    const ch = _check((payload) => {
+        payload.addIssue = (issue$1) => {
+            if (typeof issue$1 === "string") {
+                payload.issues.push(issue(issue$1, payload.value, ch._zod.def));
+            }
+            else {
+                // for Zod 3 backwards compatibility
+                const _issue = issue$1;
+                if (_issue.fatal)
+                    _issue.continue = false;
+                _issue.code ?? (_issue.code = "custom");
+                _issue.input ?? (_issue.input = payload.value);
+                _issue.inst ?? (_issue.inst = ch);
+                _issue.continue ?? (_issue.continue = !ch._zod.def.abort); // abort is always undefined, so this is always true...
+                payload.issues.push(issue(_issue));
+            }
+        };
+        return fn(payload.value, payload);
+    });
+    return ch;
+}
+function _check(fn, params) {
+    const ch = new $ZodCheck({
+        check: "custom",
+        ...normalizeParams(params),
+    });
+    ch._zod.check = fn;
+    return ch;
+}
+
+const ZodISODateTime = /*@__PURE__*/ $constructor("ZodISODateTime", (inst, def) => {
+    $ZodISODateTime.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+function datetime$1(params) {
+    return _isoDateTime(ZodISODateTime, params);
+}
+const ZodISODate = /*@__PURE__*/ $constructor("ZodISODate", (inst, def) => {
+    $ZodISODate.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+function date$1(params) {
+    return _isoDate(ZodISODate, params);
+}
+const ZodISOTime = /*@__PURE__*/ $constructor("ZodISOTime", (inst, def) => {
+    $ZodISOTime.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+function time(params) {
+    return _isoTime(ZodISOTime, params);
+}
+const ZodISODuration = /*@__PURE__*/ $constructor("ZodISODuration", (inst, def) => {
+    $ZodISODuration.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+function duration(params) {
+    return _isoDuration(ZodISODuration, params);
+}
+
+const initializer = (inst, issues) => {
+    $ZodError.init(inst, issues);
+    inst.name = "ZodError";
+    Object.defineProperties(inst, {
+        format: {
+            value: (mapper) => formatError(inst, mapper),
+            // enumerable: false,
+        },
+        flatten: {
+            value: (mapper) => flattenError(inst, mapper),
+            // enumerable: false,
+        },
+        addIssue: {
+            value: (issue) => {
+                inst.issues.push(issue);
+                inst.message = JSON.stringify(inst.issues, jsonStringifyReplacer, 2);
+            },
+            // enumerable: false,
+        },
+        addIssues: {
+            value: (issues) => {
+                inst.issues.push(...issues);
+                inst.message = JSON.stringify(inst.issues, jsonStringifyReplacer, 2);
+            },
+            // enumerable: false,
+        },
+        isEmpty: {
+            get() {
+                return inst.issues.length === 0;
+            },
+            // enumerable: false,
+        },
+    });
+    // Object.defineProperty(inst, "isEmpty", {
+    //   get() {
+    //     return inst.issues.length === 0;
+    //   },
+    // });
+};
+const ZodRealError = $constructor("ZodError", initializer, {
+    Parent: Error,
+});
+// /** @deprecated Use `z.core.$ZodErrorMapCtx` instead. */
+// export type ErrorMapCtx = core.$ZodErrorMapCtx;
+
+const parse = /* @__PURE__ */ _parse(ZodRealError);
+const parseAsync = /* @__PURE__ */ _parseAsync(ZodRealError);
+const safeParse = /* @__PURE__ */ _safeParse(ZodRealError);
+const safeParseAsync = /* @__PURE__ */ _safeParseAsync(ZodRealError);
+// Codec functions
+const encode = /* @__PURE__ */ _encode(ZodRealError);
+const decode = /* @__PURE__ */ _decode(ZodRealError);
+const encodeAsync = /* @__PURE__ */ _encodeAsync(ZodRealError);
+const decodeAsync = /* @__PURE__ */ _decodeAsync(ZodRealError);
+const safeEncode = /* @__PURE__ */ _safeEncode(ZodRealError);
+const safeDecode = /* @__PURE__ */ _safeDecode(ZodRealError);
+const safeEncodeAsync = /* @__PURE__ */ _safeEncodeAsync(ZodRealError);
+const safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync(ZodRealError);
+
+const ZodType = /*@__PURE__*/ $constructor("ZodType", (inst, def) => {
+    $ZodType.init(inst, def);
+    inst.def = def;
+    inst.type = def.type;
+    Object.defineProperty(inst, "_def", { value: def });
+    // base methods
+    inst.check = (...checks) => {
+        return inst.clone({
+            ...def,
+            checks: [
+                ...(def.checks ?? []),
+                ...checks.map((ch) => typeof ch === "function" ? { _zod: { check: ch, def: { check: "custom" }, onattach: [] } } : ch),
+            ],
+        }
+        // { parent: true }
+        );
+    };
+    inst.clone = (def, params) => clone$1(inst, def, params);
+    inst.brand = () => inst;
+    inst.register = ((reg, meta) => {
+        reg.add(inst, meta);
+        return inst;
+    });
+    // parsing
+    inst.parse = (data, params) => parse(inst, data, params, { callee: inst.parse });
+    inst.safeParse = (data, params) => safeParse(inst, data, params);
+    inst.parseAsync = async (data, params) => parseAsync(inst, data, params, { callee: inst.parseAsync });
+    inst.safeParseAsync = async (data, params) => safeParseAsync(inst, data, params);
+    inst.spa = inst.safeParseAsync;
+    // encoding/decoding
+    inst.encode = (data, params) => encode(inst, data, params);
+    inst.decode = (data, params) => decode(inst, data, params);
+    inst.encodeAsync = async (data, params) => encodeAsync(inst, data, params);
+    inst.decodeAsync = async (data, params) => decodeAsync(inst, data, params);
+    inst.safeEncode = (data, params) => safeEncode(inst, data, params);
+    inst.safeDecode = (data, params) => safeDecode(inst, data, params);
+    inst.safeEncodeAsync = async (data, params) => safeEncodeAsync(inst, data, params);
+    inst.safeDecodeAsync = async (data, params) => safeDecodeAsync(inst, data, params);
+    // refinements
+    inst.refine = (check, params) => inst.check(refine(check, params));
+    inst.superRefine = (refinement) => inst.check(superRefine(refinement));
+    inst.overwrite = (fn) => inst.check(_overwrite(fn));
+    // wrappers
+    inst.optional = () => optional(inst);
+    inst.nullable = () => nullable(inst);
+    inst.nullish = () => optional(nullable(inst));
+    inst.nonoptional = (params) => nonoptional(inst, params);
+    inst.array = () => array(inst);
+    inst.or = (arg) => union([inst, arg]);
+    inst.and = (arg) => intersection(inst, arg);
+    inst.transform = (tx) => pipe(inst, transform(tx));
+    inst.default = (def) => _default(inst, def);
+    inst.prefault = (def) => prefault(inst, def);
+    // inst.coalesce = (def, params) => coalesce(inst, def, params);
+    inst.catch = (params) => _catch(inst, params);
+    inst.pipe = (target) => pipe(inst, target);
+    inst.readonly = () => readonly(inst);
+    // meta
+    inst.describe = (description) => {
+        const cl = inst.clone();
+        globalRegistry.add(cl, { description });
+        return cl;
+    };
+    Object.defineProperty(inst, "description", {
+        get() {
+            return globalRegistry.get(inst)?.description;
+        },
+        configurable: true,
+    });
+    inst.meta = (...args) => {
+        if (args.length === 0) {
+            return globalRegistry.get(inst);
+        }
+        const cl = inst.clone();
+        globalRegistry.add(cl, args[0]);
+        return cl;
+    };
+    // helpers
+    inst.isOptional = () => inst.safeParse(undefined).success;
+    inst.isNullable = () => inst.safeParse(null).success;
+    return inst;
+});
+/** @internal */
+const _ZodString = /*@__PURE__*/ $constructor("_ZodString", (inst, def) => {
+    $ZodString.init(inst, def);
+    ZodType.init(inst, def);
+    const bag = inst._zod.bag;
+    inst.format = bag.format ?? null;
+    inst.minLength = bag.minimum ?? null;
+    inst.maxLength = bag.maximum ?? null;
+    // validations
+    inst.regex = (...args) => inst.check(_regex(...args));
+    inst.includes = (...args) => inst.check(_includes(...args));
+    inst.startsWith = (...args) => inst.check(_startsWith(...args));
+    inst.endsWith = (...args) => inst.check(_endsWith(...args));
+    inst.min = (...args) => inst.check(_minLength(...args));
+    inst.max = (...args) => inst.check(_maxLength(...args));
+    inst.length = (...args) => inst.check(_length(...args));
+    inst.nonempty = (...args) => inst.check(_minLength(1, ...args));
+    inst.lowercase = (params) => inst.check(_lowercase(params));
+    inst.uppercase = (params) => inst.check(_uppercase(params));
+    // transforms
+    inst.trim = () => inst.check(_trim());
+    inst.normalize = (...args) => inst.check(_normalize(...args));
+    inst.toLowerCase = () => inst.check(_toLowerCase());
+    inst.toUpperCase = () => inst.check(_toUpperCase());
+});
+const ZodString = /*@__PURE__*/ $constructor("ZodString", (inst, def) => {
+    $ZodString.init(inst, def);
+    _ZodString.init(inst, def);
+    inst.email = (params) => inst.check(_email(ZodEmail, params));
+    inst.url = (params) => inst.check(_url(ZodURL, params));
+    inst.jwt = (params) => inst.check(_jwt(ZodJWT, params));
+    inst.emoji = (params) => inst.check(_emoji(ZodEmoji, params));
+    inst.guid = (params) => inst.check(_guid(ZodGUID, params));
+    inst.uuid = (params) => inst.check(_uuid(ZodUUID, params));
+    inst.uuidv4 = (params) => inst.check(_uuidv4(ZodUUID, params));
+    inst.uuidv6 = (params) => inst.check(_uuidv6(ZodUUID, params));
+    inst.uuidv7 = (params) => inst.check(_uuidv7(ZodUUID, params));
+    inst.nanoid = (params) => inst.check(_nanoid(ZodNanoID, params));
+    inst.guid = (params) => inst.check(_guid(ZodGUID, params));
+    inst.cuid = (params) => inst.check(_cuid(ZodCUID, params));
+    inst.cuid2 = (params) => inst.check(_cuid2(ZodCUID2, params));
+    inst.ulid = (params) => inst.check(_ulid(ZodULID, params));
+    inst.base64 = (params) => inst.check(_base64(ZodBase64, params));
+    inst.base64url = (params) => inst.check(_base64url(ZodBase64URL, params));
+    inst.xid = (params) => inst.check(_xid(ZodXID, params));
+    inst.ksuid = (params) => inst.check(_ksuid(ZodKSUID, params));
+    inst.ipv4 = (params) => inst.check(_ipv4(ZodIPv4, params));
+    inst.ipv6 = (params) => inst.check(_ipv6(ZodIPv6, params));
+    inst.cidrv4 = (params) => inst.check(_cidrv4(ZodCIDRv4, params));
+    inst.cidrv6 = (params) => inst.check(_cidrv6(ZodCIDRv6, params));
+    inst.e164 = (params) => inst.check(_e164(ZodE164, params));
+    // iso
+    inst.datetime = (params) => inst.check(datetime$1(params));
+    inst.date = (params) => inst.check(date$1(params));
+    inst.time = (params) => inst.check(time(params));
+    inst.duration = (params) => inst.check(duration(params));
+});
+function string(params) {
+    return _string(ZodString, params);
+}
+const ZodStringFormat = /*@__PURE__*/ $constructor("ZodStringFormat", (inst, def) => {
+    $ZodStringFormat.init(inst, def);
+    _ZodString.init(inst, def);
+});
+const ZodEmail = /*@__PURE__*/ $constructor("ZodEmail", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodEmail.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodGUID = /*@__PURE__*/ $constructor("ZodGUID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodGUID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodUUID = /*@__PURE__*/ $constructor("ZodUUID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodUUID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodURL = /*@__PURE__*/ $constructor("ZodURL", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodURL.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodEmoji = /*@__PURE__*/ $constructor("ZodEmoji", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodEmoji.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodNanoID = /*@__PURE__*/ $constructor("ZodNanoID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodNanoID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodCUID = /*@__PURE__*/ $constructor("ZodCUID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodCUID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodCUID2 = /*@__PURE__*/ $constructor("ZodCUID2", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodCUID2.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodULID = /*@__PURE__*/ $constructor("ZodULID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodULID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodXID = /*@__PURE__*/ $constructor("ZodXID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodXID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodKSUID = /*@__PURE__*/ $constructor("ZodKSUID", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodKSUID.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodIPv4 = /*@__PURE__*/ $constructor("ZodIPv4", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodIPv4.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodIPv6 = /*@__PURE__*/ $constructor("ZodIPv6", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodIPv6.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodCIDRv4 = /*@__PURE__*/ $constructor("ZodCIDRv4", (inst, def) => {
+    $ZodCIDRv4.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodCIDRv6 = /*@__PURE__*/ $constructor("ZodCIDRv6", (inst, def) => {
+    $ZodCIDRv6.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodBase64 = /*@__PURE__*/ $constructor("ZodBase64", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodBase64.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodBase64URL = /*@__PURE__*/ $constructor("ZodBase64URL", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodBase64URL.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodE164 = /*@__PURE__*/ $constructor("ZodE164", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodE164.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodJWT = /*@__PURE__*/ $constructor("ZodJWT", (inst, def) => {
+    // ZodStringFormat.init(inst, def);
+    $ZodJWT.init(inst, def);
+    ZodStringFormat.init(inst, def);
+});
+const ZodUnknown = /*@__PURE__*/ $constructor("ZodUnknown", (inst, def) => {
+    $ZodUnknown.init(inst, def);
+    ZodType.init(inst, def);
+});
+function unknown() {
+    return _unknown(ZodUnknown);
+}
+const ZodNever = /*@__PURE__*/ $constructor("ZodNever", (inst, def) => {
+    $ZodNever.init(inst, def);
+    ZodType.init(inst, def);
+});
+function never(params) {
+    return _never(ZodNever, params);
+}
+const ZodDate = /*@__PURE__*/ $constructor("ZodDate", (inst, def) => {
+    $ZodDate.init(inst, def);
+    ZodType.init(inst, def);
+    inst.min = (value, params) => inst.check(_gte(value, params));
+    inst.max = (value, params) => inst.check(_lte(value, params));
+    const c = inst._zod.bag;
+    inst.minDate = c.minimum ? new Date(c.minimum) : null;
+    inst.maxDate = c.maximum ? new Date(c.maximum) : null;
+});
+function date(params) {
+    return _date(ZodDate, params);
+}
+const ZodArray = /*@__PURE__*/ $constructor("ZodArray", (inst, def) => {
+    $ZodArray.init(inst, def);
+    ZodType.init(inst, def);
+    inst.element = def.element;
+    inst.min = (minLength, params) => inst.check(_minLength(minLength, params));
+    inst.nonempty = (params) => inst.check(_minLength(1, params));
+    inst.max = (maxLength, params) => inst.check(_maxLength(maxLength, params));
+    inst.length = (len, params) => inst.check(_length(len, params));
+    inst.unwrap = () => inst.element;
+});
+function array(element, params) {
+    return _array(ZodArray, element, params);
+}
+const ZodObject = /*@__PURE__*/ $constructor("ZodObject", (inst, def) => {
+    $ZodObjectJIT.init(inst, def);
+    ZodType.init(inst, def);
+    defineLazy(inst, "shape", () => def.shape);
+    inst.keyof = () => _enum(Object.keys(inst._zod.def.shape));
+    inst.catchall = (catchall) => inst.clone({ ...inst._zod.def, catchall: catchall });
+    inst.passthrough = () => inst.clone({ ...inst._zod.def, catchall: unknown() });
+    inst.loose = () => inst.clone({ ...inst._zod.def, catchall: unknown() });
+    inst.strict = () => inst.clone({ ...inst._zod.def, catchall: never() });
+    inst.strip = () => inst.clone({ ...inst._zod.def, catchall: undefined });
+    inst.extend = (incoming) => {
+        return extend(inst, incoming);
+    };
+    inst.safeExtend = (incoming) => {
+        return safeExtend(inst, incoming);
+    };
+    inst.merge = (other) => merge(inst, other);
+    inst.pick = (mask) => pick(inst, mask);
+    inst.omit = (mask) => omit(inst, mask);
+    inst.partial = (...args) => partial(ZodOptional, inst, args[0]);
+    inst.required = (...args) => required(ZodNonOptional, inst, args[0]);
+});
+function object(shape, params) {
+    const def = {
+        type: "object",
+        get shape() {
+            assignProp(this, "shape", shape ? objectClone(shape) : {});
+            return this.shape;
+        },
+        ...normalizeParams(params),
+    };
+    return new ZodObject(def);
+}
+const ZodUnion = /*@__PURE__*/ $constructor("ZodUnion", (inst, def) => {
+    $ZodUnion.init(inst, def);
+    ZodType.init(inst, def);
+    inst.options = def.options;
+});
+function union(options, params) {
+    return new ZodUnion({
+        type: "union",
+        options: options,
+        ...normalizeParams(params),
+    });
+}
+const ZodIntersection = /*@__PURE__*/ $constructor("ZodIntersection", (inst, def) => {
+    $ZodIntersection.init(inst, def);
+    ZodType.init(inst, def);
+});
+function intersection(left, right) {
+    return new ZodIntersection({
+        type: "intersection",
+        left: left,
+        right: right,
+    });
+}
+const ZodEnum = /*@__PURE__*/ $constructor("ZodEnum", (inst, def) => {
+    $ZodEnum.init(inst, def);
+    ZodType.init(inst, def);
+    inst.enum = def.entries;
+    inst.options = Object.values(def.entries);
+    const keys = new Set(Object.keys(def.entries));
+    inst.extract = (values, params) => {
+        const newEntries = {};
+        for (const value of values) {
+            if (keys.has(value)) {
+                newEntries[value] = def.entries[value];
+            }
+            else
+                throw new Error(`Key ${value} not found in enum`);
+        }
+        return new ZodEnum({
+            ...def,
+            checks: [],
+            ...normalizeParams(params),
+            entries: newEntries,
+        });
+    };
+    inst.exclude = (values, params) => {
+        const newEntries = { ...def.entries };
+        for (const value of values) {
+            if (keys.has(value)) {
+                delete newEntries[value];
+            }
+            else
+                throw new Error(`Key ${value} not found in enum`);
+        }
+        return new ZodEnum({
+            ...def,
+            checks: [],
+            ...normalizeParams(params),
+            entries: newEntries,
+        });
+    };
+});
+function _enum(values, params) {
+    const entries = Array.isArray(values) ? Object.fromEntries(values.map((v) => [v, v])) : values;
+    return new ZodEnum({
+        type: "enum",
+        entries,
+        ...normalizeParams(params),
+    });
+}
+const ZodTransform = /*@__PURE__*/ $constructor("ZodTransform", (inst, def) => {
+    $ZodTransform.init(inst, def);
+    ZodType.init(inst, def);
+    inst._zod.parse = (payload, _ctx) => {
+        if (_ctx.direction === "backward") {
+            throw new $ZodEncodeError(inst.constructor.name);
+        }
+        payload.addIssue = (issue$1) => {
+            if (typeof issue$1 === "string") {
+                payload.issues.push(issue(issue$1, payload.value, def));
+            }
+            else {
+                // for Zod 3 backwards compatibility
+                const _issue = issue$1;
+                if (_issue.fatal)
+                    _issue.continue = false;
+                _issue.code ?? (_issue.code = "custom");
+                _issue.input ?? (_issue.input = payload.value);
+                _issue.inst ?? (_issue.inst = inst);
+                // _issue.continue ??= true;
+                payload.issues.push(issue(_issue));
+            }
+        };
+        const output = def.transform(payload.value, payload);
+        if (output instanceof Promise) {
+            return output.then((output) => {
+                payload.value = output;
+                return payload;
+            });
+        }
+        payload.value = output;
+        return payload;
+    };
+});
+function transform(fn) {
+    return new ZodTransform({
+        type: "transform",
+        transform: fn,
+    });
+}
+const ZodOptional = /*@__PURE__*/ $constructor("ZodOptional", (inst, def) => {
+    $ZodOptional.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+});
+function optional(innerType) {
+    return new ZodOptional({
+        type: "optional",
+        innerType: innerType,
+    });
+}
+const ZodNullable = /*@__PURE__*/ $constructor("ZodNullable", (inst, def) => {
+    $ZodNullable.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+});
+function nullable(innerType) {
+    return new ZodNullable({
+        type: "nullable",
+        innerType: innerType,
+    });
+}
+const ZodDefault = /*@__PURE__*/ $constructor("ZodDefault", (inst, def) => {
+    $ZodDefault.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+    inst.removeDefault = inst.unwrap;
+});
+function _default(innerType, defaultValue) {
+    return new ZodDefault({
+        type: "default",
+        innerType: innerType,
+        get defaultValue() {
+            return typeof defaultValue === "function" ? defaultValue() : shallowClone(defaultValue);
+        },
+    });
+}
+const ZodPrefault = /*@__PURE__*/ $constructor("ZodPrefault", (inst, def) => {
+    $ZodPrefault.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+});
+function prefault(innerType, defaultValue) {
+    return new ZodPrefault({
+        type: "prefault",
+        innerType: innerType,
+        get defaultValue() {
+            return typeof defaultValue === "function" ? defaultValue() : shallowClone(defaultValue);
+        },
+    });
+}
+const ZodNonOptional = /*@__PURE__*/ $constructor("ZodNonOptional", (inst, def) => {
+    $ZodNonOptional.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+});
+function nonoptional(innerType, params) {
+    return new ZodNonOptional({
+        type: "nonoptional",
+        innerType: innerType,
+        ...normalizeParams(params),
+    });
+}
+const ZodCatch = /*@__PURE__*/ $constructor("ZodCatch", (inst, def) => {
+    $ZodCatch.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+    inst.removeCatch = inst.unwrap;
+});
+function _catch(innerType, catchValue) {
+    return new ZodCatch({
+        type: "catch",
+        innerType: innerType,
+        catchValue: (typeof catchValue === "function" ? catchValue : () => catchValue),
+    });
+}
+const ZodPipe = /*@__PURE__*/ $constructor("ZodPipe", (inst, def) => {
+    $ZodPipe.init(inst, def);
+    ZodType.init(inst, def);
+    inst.in = def.in;
+    inst.out = def.out;
+});
+function pipe(in_, out) {
+    return new ZodPipe({
+        type: "pipe",
+        in: in_,
+        out: out,
+        // ...util.normalizeParams(params),
+    });
+}
+const ZodReadonly = /*@__PURE__*/ $constructor("ZodReadonly", (inst, def) => {
+    $ZodReadonly.init(inst, def);
+    ZodType.init(inst, def);
+    inst.unwrap = () => inst._zod.def.innerType;
+});
+function readonly(innerType) {
+    return new ZodReadonly({
+        type: "readonly",
+        innerType: innerType,
+    });
+}
+const ZodCustom = /*@__PURE__*/ $constructor("ZodCustom", (inst, def) => {
+    $ZodCustom.init(inst, def);
+    ZodType.init(inst, def);
+});
+function refine(fn, _params = {}) {
+    return _refine(ZodCustom, fn, _params);
+}
+// superRefine
+function superRefine(fn) {
+    return _superRefine(fn);
+}
+
+const IssueSchema = object({
+    title: string(),
+    body: string().optional(),
+    labels: array(string()).optional(),
+    assignees: array(string()).optional(),
+    schedule: string()
+        .describe(`Recurrence rule for when to create the issue. Can be an ` +
+        `RFC5545 RRULE string (e.g., "FREQ=WEEKLY;BYDAY=TH;INTERVAL=2") ` +
+        `or human-readable text (e.g., "Every other Thursday")`),
+    due: string()
+        .describe(`Recurrence rule for the issue due date. Can be an ` +
+        `RFC5545 RRULE string (e.g., "FREQ=DAILY;BYHOUR=17") ` +
+        `or human-readable text (e.g., "Every day at 5pm")`),
+    start: date()
+        .optional()
+        .default(() => new Date())
+});
+const ConfigSchema = array(IssueSchema);
+/**
+ * Parse a configuration string or file path.
+ *
+ * This function determines if the input string is a path to an existing file.
+ * If it is, the file's content is read. Otherwise, the input string is
+ * treated as the configuration content itself. The content is then parsed
+ * as YAML.
+ *
+ * @param input The configuration as a string or file path.
+ * @returns The parsed configuration object.
+ */
+function parseConfig(input) {
+    let content;
+    try {
+        content = readFileSync(input, 'utf8');
+    }
+    catch {
+        content = input;
+    }
+    try {
+        const yamlContent = load(content);
+        return ConfigSchema.parse(yamlContent);
+    }
+    catch (e) {
+        let message;
+        if (typeof e === 'string') {
+            message = e;
+        }
+        else if (e instanceof Error) {
+            message = e.message;
+        }
+        else {
+            message = 'Unknown error';
+        }
+        throw new Error(`Failed to parse configuration: ${message}
+Content received:
+---
+${content}
+---`);
+    }
+}
+
+// =============================================================================
+// Weekday
+// =============================================================================
+var ALL_WEEKDAYS = [
+    'MO',
+    'TU',
+    'WE',
+    'TH',
+    'FR',
+    'SA',
+    'SU',
+];
+var Weekday = /** @class */ (function () {
+    function Weekday(weekday, n) {
+        if (n === 0)
+            throw new Error("Can't create weekday with n == 0");
+        this.weekday = weekday;
+        this.n = n;
+    }
+    Weekday.fromStr = function (str) {
+        return new Weekday(ALL_WEEKDAYS.indexOf(str));
+    };
+    // __call__ - Cannot call the object directly, do it through
+    // e.g. RRule.TH.nth(-1) instead,
+    Weekday.prototype.nth = function (n) {
+        return this.n === n ? this : new Weekday(this.weekday, n);
+    };
+    // __eq__
+    Weekday.prototype.equals = function (other) {
+        return this.weekday === other.weekday && this.n === other.n;
+    };
+    // __repr__
+    Weekday.prototype.toString = function () {
+        var s = ALL_WEEKDAYS[this.weekday];
+        if (this.n)
+            s = (this.n > 0 ? '+' : '') + String(this.n) + s;
+        return s;
+    };
+    Weekday.prototype.getJsWeekday = function () {
+        return this.weekday === 6 ? 0 : this.weekday + 1;
+    };
+    return Weekday;
+}());
+
+// =============================================================================
+// Helper functions
+// =============================================================================
+var isPresent = function (value) {
+    return value !== null && value !== undefined;
+};
+var isNumber = function (value) {
+    return typeof value === 'number';
+};
+var isWeekdayStr = function (value) {
+    return typeof value === 'string' && ALL_WEEKDAYS.includes(value);
+};
+var isArray = Array.isArray;
+/**
+ * Simplified version of python's range()
+ */
+var range = function (start, end) {
+    if (end === void 0) { end = start; }
+    if (arguments.length === 1) {
+        end = start;
+        start = 0;
+    }
+    var rang = [];
+    for (var i = start; i < end; i++)
+        rang.push(i);
+    return rang;
+};
+var repeat = function (value, times) {
+    var i = 0;
+    var array = [];
+    if (isArray(value)) {
+        for (; i < times; i++)
+            array[i] = [].concat(value);
+    }
+    else {
+        for (; i < times; i++)
+            array[i] = value;
+    }
+    return array;
+};
+var toArray = function (item) {
+    if (isArray(item)) {
+        return item;
+    }
+    return [item];
+};
+function padStart(item, targetLength, padString) {
+    if (padString === void 0) { padString = ' '; }
+    var str = String(item);
+    targetLength = targetLength >> 0;
+    if (str.length > targetLength) {
+        return String(str);
+    }
+    targetLength = targetLength - str.length;
+    if (targetLength > padString.length) {
+        padString += repeat(padString, targetLength / padString.length);
+    }
+    return padString.slice(0, targetLength) + String(str);
+}
+/**
+ * Python like split
+ */
+var split = function (str, sep, num) {
+    var splits = str.split(sep);
+    return num
+        ? splits.slice(0, num).concat([splits.slice(num).join(sep)])
+        : splits;
+};
+/**
+ * closure/goog/math/math.js:modulo
+ * Copyright 2006 The Closure Library Authors.
+ * The % operator in JavaScript returns the remainder of a / b, but differs from
+ * some other languages in that the result will have the same sign as the
+ * dividend. For example, -1 % 8 == -1, whereas in some other languages
+ * (such as Python) the result would be 7. This function emulates the more
+ * correct modulo behavior, which is useful for certain applications such as
+ * calculating an offset index in a circular list.
+ *
+ * @param {number} a The dividend.
+ * @param {number} b The divisor.
+ * @return {number} a % b where the result is between 0 and b (either 0 <= x < b
+ * or b < x <= 0, depending on the sign of b).
+ */
+var pymod = function (a, b) {
+    var r = a % b;
+    // If r and b differ in sign, add b to wrap the result to the correct sign.
+    return r * b < 0 ? r + b : r;
+};
+/**
+ * @see: <http://docs.python.org/library/functions.html#divmod>
+ */
+var divmod = function (a, b) {
+    return { div: Math.floor(a / b), mod: pymod(a, b) };
+};
+var empty = function (obj) {
+    return !isPresent(obj) || obj.length === 0;
+};
+/**
+ * Python-like boolean
+ *
+ * @return {Boolean} value of an object/primitive, taking into account
+ * the fact that in Python an empty list's/tuple's
+ * boolean value is False, whereas in JS it's true
+ */
+var notEmpty = function (obj) {
+    return !empty(obj);
+};
+/**
+ * Return true if a value is in an array
+ */
+var includes = function (arr, val) {
+    return notEmpty(arr) && arr.indexOf(val) !== -1;
+};
+
+var datetime = function (y, m, d, h, i, s) {
+    if (h === void 0) { h = 0; }
+    if (i === void 0) { i = 0; }
+    if (s === void 0) { s = 0; }
+    return new Date(Date.UTC(y, m - 1, d, h, i, s));
+};
+/**
+ * General date-related utilities.
+ * Also handles several incompatibilities between JavaScript and Python
+ *
+ */
+var MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+/**
+ * Number of milliseconds of one day
+ */
+var ONE_DAY = 1000 * 60 * 60 * 24;
+/**
+ * @see: <http://docs.python.org/library/datetime.html#datetime.MAXYEAR>
+ */
+var MAXYEAR = 9999;
+/**
+ * Python uses 1-Jan-1 as the base for calculating ordinals but we don't
+ * want to confuse the JS engine with milliseconds > Number.MAX_NUMBER,
+ * therefore we use 1-Jan-1970 instead
+ */
+var ORDINAL_BASE = datetime(1970, 1, 1);
+/**
+ * Python: MO-SU: 0 - 6
+ * JS: SU-SAT 0 - 6
+ */
+var PY_WEEKDAYS = [6, 0, 1, 2, 3, 4, 5];
+var isLeapYear = function (year) {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+};
+var isDate = function (value) {
+    return value instanceof Date;
+};
+var isValidDate = function (value) {
+    return isDate(value) && !isNaN(value.getTime());
+};
+/**
+ * @see: <http://www.mcfedries.com/JavaScript/DaysBetween.asp>
+ */
+var daysBetween = function (date1, date2) {
+    // The number of milliseconds in one day
+    // Convert both dates to milliseconds
+    var date1ms = date1.getTime();
+    var date2ms = date2.getTime();
+    // Calculate the difference in milliseconds
+    var differencems = date1ms - date2ms;
+    // Convert back to days and return
+    return Math.round(differencems / ONE_DAY);
+};
+/**
+ * @see: <http://docs.python.org/library/datetime.html#datetime.date.toordinal>
+ */
+var toOrdinal = function (date) {
+    return daysBetween(date, ORDINAL_BASE);
+};
+/**
+ * @see - <http://docs.python.org/library/datetime.html#datetime.date.fromordinal>
+ */
+var fromOrdinal = function (ordinal) {
+    return new Date(ORDINAL_BASE.getTime() + ordinal * ONE_DAY);
+};
+var getMonthDays = function (date) {
+    var month = date.getUTCMonth();
+    return month === 1 && isLeapYear(date.getUTCFullYear())
+        ? 29
+        : MONTH_DAYS[month];
+};
+/**
+ * @return {Number} python-like weekday
+ */
+var getWeekday = function (date) {
+    return PY_WEEKDAYS[date.getUTCDay()];
+};
+/**
+ * @see: <http://docs.python.org/library/calendar.html#calendar.monthrange>
+ */
+var monthRange = function (year, month) {
+    var date = datetime(year, month + 1, 1);
+    return [getWeekday(date), getMonthDays(date)];
+};
+/**
+ * @see: <http://docs.python.org/library/datetime.html#datetime.datetime.combine>
+ */
+var combine = function (date, time) {
+    time = time || date;
+    return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds()));
+};
+var clone = function (date) {
+    var dolly = new Date(date.getTime());
+    return dolly;
+};
+var cloneDates = function (dates) {
+    var clones = [];
+    for (var i = 0; i < dates.length; i++) {
+        clones.push(clone(dates[i]));
+    }
+    return clones;
+};
+/**
+ * Sorts an array of Date or Time objects
+ */
+var sort = function (dates) {
+    dates.sort(function (a, b) {
+        return a.getTime() - b.getTime();
+    });
+};
+var timeToUntilString = function (time, utc) {
+    if (utc === void 0) { utc = true; }
+    var date = new Date(time);
+    return [
+        padStart(date.getUTCFullYear().toString(), 4, '0'),
+        padStart(date.getUTCMonth() + 1, 2, '0'),
+        padStart(date.getUTCDate(), 2, '0'),
+        'T',
+        padStart(date.getUTCHours(), 2, '0'),
+        padStart(date.getUTCMinutes(), 2, '0'),
+        padStart(date.getUTCSeconds(), 2, '0'),
+        utc ? 'Z' : '',
+    ].join('');
+};
+var untilStringToDate = function (until) {
+    var re = /^(\d{4})(\d{2})(\d{2})(T(\d{2})(\d{2})(\d{2})Z?)?$/;
+    var bits = re.exec(until);
+    if (!bits)
+        throw new Error("Invalid UNTIL value: ".concat(until));
+    return new Date(Date.UTC(parseInt(bits[1], 10), parseInt(bits[2], 10) - 1, parseInt(bits[3], 10), parseInt(bits[5], 10) || 0, parseInt(bits[6], 10) || 0, parseInt(bits[7], 10) || 0));
+};
+var dateTZtoISO8601 = function (date, timeZone) {
+    // date format for sv-SE is almost ISO8601
+    var dateStr = date.toLocaleString('sv-SE', { timeZone: timeZone });
+    // '2023-02-07 10:41:36'
+    return dateStr.replace(' ', 'T') + 'Z';
+};
+var dateInTimeZone = function (date, timeZone) {
+    var localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // Date constructor can only reliably parse dates in ISO8601 format
+    var dateInLocalTZ = new Date(dateTZtoISO8601(date, localTimeZone));
+    var dateInTargetTZ = new Date(dateTZtoISO8601(date, timeZone !== null && timeZone !== void 0 ? timeZone : 'UTC'));
+    var tzOffset = dateInTargetTZ.getTime() - dateInLocalTZ.getTime();
+    return new Date(date.getTime() - tzOffset);
+};
+
+/**
+ * This class helps us to emulate python's generators, sorta.
+ */
+var IterResult = /** @class */ (function () {
+    function IterResult(method, args) {
+        this.minDate = null;
+        this.maxDate = null;
+        this._result = [];
+        this.total = 0;
+        this.method = method;
+        this.args = args;
+        if (method === 'between') {
+            this.maxDate = args.inc
+                ? args.before
+                : new Date(args.before.getTime() - 1);
+            this.minDate = args.inc ? args.after : new Date(args.after.getTime() + 1);
+        }
+        else if (method === 'before') {
+            this.maxDate = args.inc ? args.dt : new Date(args.dt.getTime() - 1);
+        }
+        else if (method === 'after') {
+            this.minDate = args.inc ? args.dt : new Date(args.dt.getTime() + 1);
+        }
+    }
+    /**
+     * Possibly adds a date into the result.
+     *
+     * @param {Date} date - the date isn't necessarly added to the result
+     * list (if it is too late/too early)
+     * @return {Boolean} true if it makes sense to continue the iteration
+     * false if we're done.
+     */
+    IterResult.prototype.accept = function (date) {
+        ++this.total;
+        var tooEarly = this.minDate && date < this.minDate;
+        var tooLate = this.maxDate && date > this.maxDate;
+        if (this.method === 'between') {
+            if (tooEarly)
+                return true;
+            if (tooLate)
+                return false;
+        }
+        else if (this.method === 'before') {
+            if (tooLate)
+                return false;
+        }
+        else if (this.method === 'after') {
+            if (tooEarly)
+                return true;
+            this.add(date);
+            return false;
+        }
+        return this.add(date);
+    };
+    /**
+     *
+     * @param {Date} date that is part of the result.
+     * @return {Boolean} whether we are interested in more values.
+     */
+    IterResult.prototype.add = function (date) {
+        this._result.push(date);
+        return true;
+    };
+    /**
+     * 'before' and 'after' return only one date, whereas 'all'
+     * and 'between' an array.
+     *
+     * @return {Date,Array?}
+     */
+    IterResult.prototype.getValue = function () {
+        var res = this._result;
+        switch (this.method) {
+            case 'all':
+            case 'between':
+                return res;
+            case 'before':
+            case 'after':
+            default:
+                return (res.length ? res[res.length - 1] : null);
+        }
+    };
+    IterResult.prototype.clone = function () {
+        return new IterResult(this.method, this.args);
+    };
+    return IterResult;
+}());
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+
+/**
+ * IterResult subclass that calls a callback function on each add,
+ * and stops iterating when the callback returns false.
+ */
+var CallbackIterResult = /** @class */ (function (_super) {
+    __extends(CallbackIterResult, _super);
+    function CallbackIterResult(method, args, iterator) {
+        var _this = _super.call(this, method, args) || this;
+        _this.iterator = iterator;
+        return _this;
+    }
+    CallbackIterResult.prototype.add = function (date) {
+        if (this.iterator(date, this._result.length)) {
+            this._result.push(date);
+            return true;
+        }
+        return false;
+    };
+    return CallbackIterResult;
+}(IterResult));
+
+// =============================================================================
+// i18n
+// =============================================================================
+var ENGLISH = {
+    dayNames: [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ],
+    monthNames: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ],
+    tokens: {
+        SKIP: /^[ \r\n\t]+|^\.$/,
+        number: /^[1-9][0-9]*/,
+        numberAsText: /^(one|two|three)/i,
+        every: /^every/i,
+        'day(s)': /^days?/i,
+        'weekday(s)': /^weekdays?/i,
+        'week(s)': /^weeks?/i,
+        'hour(s)': /^hours?/i,
+        'minute(s)': /^minutes?/i,
+        'month(s)': /^months?/i,
+        'year(s)': /^years?/i,
+        on: /^(on|in)/i,
+        at: /^(at)/i,
+        the: /^the/i,
+        first: /^first/i,
+        second: /^second/i,
+        third: /^third/i,
+        nth: /^([1-9][0-9]*)(\.|th|nd|rd|st)/i,
+        last: /^last/i,
+        for: /^for/i,
+        'time(s)': /^times?/i,
+        until: /^(un)?til/i,
+        monday: /^mo(n(day)?)?/i,
+        tuesday: /^tu(e(s(day)?)?)?/i,
+        wednesday: /^we(d(n(esday)?)?)?/i,
+        thursday: /^th(u(r(sday)?)?)?/i,
+        friday: /^fr(i(day)?)?/i,
+        saturday: /^sa(t(urday)?)?/i,
+        sunday: /^su(n(day)?)?/i,
+        january: /^jan(uary)?/i,
+        february: /^feb(ruary)?/i,
+        march: /^mar(ch)?/i,
+        april: /^apr(il)?/i,
+        may: /^may/i,
+        june: /^june?/i,
+        july: /^july?/i,
+        august: /^aug(ust)?/i,
+        september: /^sep(t(ember)?)?/i,
+        october: /^oct(ober)?/i,
+        november: /^nov(ember)?/i,
+        december: /^dec(ember)?/i,
+        comma: /^(,\s*|(and|or)\s*)+/i,
+    },
+};
+
+// =============================================================================
+// Helper functions
+// =============================================================================
+/**
+ * Return true if a value is in an array
+ */
+var contains = function (arr, val) {
+    return arr.indexOf(val) !== -1;
+};
+var defaultGetText = function (id) { return id.toString(); };
+var defaultDateFormatter = function (year, month, day) { return "".concat(month, " ").concat(day, ", ").concat(year); };
+/**
+ *
+ * @param {RRule} rrule
+ * Optional:
+ * @param {Function} gettext function
+ * @param {Object} language definition
+ * @constructor
+ */
+var ToText = /** @class */ (function () {
+    function ToText(rrule, gettext, language, dateFormatter) {
+        if (gettext === void 0) { gettext = defaultGetText; }
+        if (language === void 0) { language = ENGLISH; }
+        if (dateFormatter === void 0) { dateFormatter = defaultDateFormatter; }
+        this.text = [];
+        this.language = language || ENGLISH;
+        this.gettext = gettext;
+        this.dateFormatter = dateFormatter;
+        this.rrule = rrule;
+        this.options = rrule.options;
+        this.origOptions = rrule.origOptions;
+        if (this.origOptions.bymonthday) {
+            var bymonthday = [].concat(this.options.bymonthday);
+            var bynmonthday = [].concat(this.options.bynmonthday);
+            bymonthday.sort(function (a, b) { return a - b; });
+            bynmonthday.sort(function (a, b) { return b - a; });
+            // 1, 2, 3, .., -5, -4, -3, ..
+            this.bymonthday = bymonthday.concat(bynmonthday);
+            if (!this.bymonthday.length)
+                this.bymonthday = null;
+        }
+        if (isPresent(this.origOptions.byweekday)) {
+            var byweekday = !isArray(this.origOptions.byweekday)
+                ? [this.origOptions.byweekday]
+                : this.origOptions.byweekday;
+            var days = String(byweekday);
+            this.byweekday = {
+                allWeeks: byweekday.filter(function (weekday) {
+                    return !weekday.n;
+                }),
+                someWeeks: byweekday.filter(function (weekday) {
+                    return Boolean(weekday.n);
+                }),
+                isWeekdays: days.indexOf('MO') !== -1 &&
+                    days.indexOf('TU') !== -1 &&
+                    days.indexOf('WE') !== -1 &&
+                    days.indexOf('TH') !== -1 &&
+                    days.indexOf('FR') !== -1 &&
+                    days.indexOf('SA') === -1 &&
+                    days.indexOf('SU') === -1,
+                isEveryDay: days.indexOf('MO') !== -1 &&
+                    days.indexOf('TU') !== -1 &&
+                    days.indexOf('WE') !== -1 &&
+                    days.indexOf('TH') !== -1 &&
+                    days.indexOf('FR') !== -1 &&
+                    days.indexOf('SA') !== -1 &&
+                    days.indexOf('SU') !== -1,
+            };
+            var sortWeekDays = function (a, b) {
+                return a.weekday - b.weekday;
+            };
+            this.byweekday.allWeeks.sort(sortWeekDays);
+            this.byweekday.someWeeks.sort(sortWeekDays);
+            if (!this.byweekday.allWeeks.length)
+                this.byweekday.allWeeks = null;
+            if (!this.byweekday.someWeeks.length)
+                this.byweekday.someWeeks = null;
+        }
+        else {
+            this.byweekday = null;
+        }
+    }
+    /**
+     * Test whether the rrule can be fully converted to text.
+     *
+     * @param {RRule} rrule
+     * @return {Boolean}
+     */
+    ToText.isFullyConvertible = function (rrule) {
+        var canConvert = true;
+        if (!(rrule.options.freq in ToText.IMPLEMENTED))
+            return false;
+        if (rrule.origOptions.until && rrule.origOptions.count)
+            return false;
+        for (var key in rrule.origOptions) {
+            if (contains(['dtstart', 'tzid', 'wkst', 'freq'], key))
+                return true;
+            if (!contains(ToText.IMPLEMENTED[rrule.options.freq], key))
+                return false;
+        }
+        return canConvert;
+    };
+    ToText.prototype.isFullyConvertible = function () {
+        return ToText.isFullyConvertible(this.rrule);
+    };
+    /**
+     * Perform the conversion. Only some of the frequencies are supported.
+     * If some of the rrule's options aren't supported, they'll
+     * be omitted from the output an "(~ approximate)" will be appended.
+     *
+     * @return {*}
+     */
+    ToText.prototype.toString = function () {
+        var gettext = this.gettext;
+        if (!(this.options.freq in ToText.IMPLEMENTED)) {
+            return gettext('RRule error: Unable to fully convert this rrule to text');
+        }
+        this.text = [gettext('every')];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this[RRule$1.FREQUENCIES[this.options.freq]]();
+        if (this.options.until) {
+            this.add(gettext('until'));
+            var until = this.options.until;
+            this.add(this.dateFormatter(until.getUTCFullYear(), this.language.monthNames[until.getUTCMonth()], until.getUTCDate()));
+        }
+        else if (this.options.count) {
+            this.add(gettext('for'))
+                .add(this.options.count.toString())
+                .add(this.plural(this.options.count) ? gettext('times') : gettext('time'));
+        }
+        if (!this.isFullyConvertible())
+            this.add(gettext('(~ approximate)'));
+        return this.text.join('');
+    };
+    ToText.prototype.HOURLY = function () {
+        var gettext = this.gettext;
+        if (this.options.interval !== 1)
+            this.add(this.options.interval.toString());
+        this.add(this.plural(this.options.interval) ? gettext('hours') : gettext('hour'));
+    };
+    ToText.prototype.MINUTELY = function () {
+        var gettext = this.gettext;
+        if (this.options.interval !== 1)
+            this.add(this.options.interval.toString());
+        this.add(this.plural(this.options.interval)
+            ? gettext('minutes')
+            : gettext('minute'));
+    };
+    ToText.prototype.DAILY = function () {
+        var gettext = this.gettext;
+        if (this.options.interval !== 1)
+            this.add(this.options.interval.toString());
+        if (this.byweekday && this.byweekday.isWeekdays) {
+            this.add(this.plural(this.options.interval)
+                ? gettext('weekdays')
+                : gettext('weekday'));
+        }
+        else {
+            this.add(this.plural(this.options.interval) ? gettext('days') : gettext('day'));
+        }
+        if (this.origOptions.bymonth) {
+            this.add(gettext('in'));
+            this._bymonth();
+        }
+        if (this.bymonthday) {
+            this._bymonthday();
+        }
+        else if (this.byweekday) {
+            this._byweekday();
+        }
+        else if (this.origOptions.byhour) {
+            this._byhour();
+        }
+    };
+    ToText.prototype.WEEKLY = function () {
+        var gettext = this.gettext;
+        if (this.options.interval !== 1) {
+            this.add(this.options.interval.toString()).add(this.plural(this.options.interval) ? gettext('weeks') : gettext('week'));
+        }
+        if (this.byweekday && this.byweekday.isWeekdays) {
+            if (this.options.interval === 1) {
+                this.add(this.plural(this.options.interval)
+                    ? gettext('weekdays')
+                    : gettext('weekday'));
+            }
+            else {
+                this.add(gettext('on')).add(gettext('weekdays'));
+            }
+        }
+        else if (this.byweekday && this.byweekday.isEveryDay) {
+            this.add(this.plural(this.options.interval) ? gettext('days') : gettext('day'));
+        }
+        else {
+            if (this.options.interval === 1)
+                this.add(gettext('week'));
+            if (this.origOptions.bymonth) {
+                this.add(gettext('in'));
+                this._bymonth();
+            }
+            if (this.bymonthday) {
+                this._bymonthday();
+            }
+            else if (this.byweekday) {
+                this._byweekday();
+            }
+            if (this.origOptions.byhour) {
+                this._byhour();
+            }
+        }
+    };
+    ToText.prototype.MONTHLY = function () {
+        var gettext = this.gettext;
+        if (this.origOptions.bymonth) {
+            if (this.options.interval !== 1) {
+                this.add(this.options.interval.toString()).add(gettext('months'));
+                if (this.plural(this.options.interval))
+                    this.add(gettext('in'));
+            }
+            this._bymonth();
+        }
+        else {
+            if (this.options.interval !== 1) {
+                this.add(this.options.interval.toString());
+            }
+            this.add(this.plural(this.options.interval)
+                ? gettext('months')
+                : gettext('month'));
+        }
+        if (this.bymonthday) {
+            this._bymonthday();
+        }
+        else if (this.byweekday && this.byweekday.isWeekdays) {
+            this.add(gettext('on')).add(gettext('weekdays'));
+        }
+        else if (this.byweekday) {
+            this._byweekday();
+        }
+    };
+    ToText.prototype.YEARLY = function () {
+        var gettext = this.gettext;
+        if (this.origOptions.bymonth) {
+            if (this.options.interval !== 1) {
+                this.add(this.options.interval.toString());
+                this.add(gettext('years'));
+            }
+            this._bymonth();
+        }
+        else {
+            if (this.options.interval !== 1) {
+                this.add(this.options.interval.toString());
+            }
+            this.add(this.plural(this.options.interval) ? gettext('years') : gettext('year'));
+        }
+        if (this.bymonthday) {
+            this._bymonthday();
+        }
+        else if (this.byweekday) {
+            this._byweekday();
+        }
+        if (this.options.byyearday) {
+            this.add(gettext('on the'))
+                .add(this.list(this.options.byyearday, this.nth, gettext('and')))
+                .add(gettext('day'));
+        }
+        if (this.options.byweekno) {
+            this.add(gettext('in'))
+                .add(this.plural(this.options.byweekno.length)
+                ? gettext('weeks')
+                : gettext('week'))
+                .add(this.list(this.options.byweekno, undefined, gettext('and')));
+        }
+    };
+    ToText.prototype._bymonthday = function () {
+        var gettext = this.gettext;
+        if (this.byweekday && this.byweekday.allWeeks) {
+            this.add(gettext('on'))
+                .add(this.list(this.byweekday.allWeeks, this.weekdaytext, gettext('or')))
+                .add(gettext('the'))
+                .add(this.list(this.bymonthday, this.nth, gettext('or')));
+        }
+        else {
+            this.add(gettext('on the')).add(this.list(this.bymonthday, this.nth, gettext('and')));
+        }
+        // this.add(gettext('DAY'))
+    };
+    ToText.prototype._byweekday = function () {
+        var gettext = this.gettext;
+        if (this.byweekday.allWeeks && !this.byweekday.isWeekdays) {
+            this.add(gettext('on')).add(this.list(this.byweekday.allWeeks, this.weekdaytext));
+        }
+        if (this.byweekday.someWeeks) {
+            if (this.byweekday.allWeeks)
+                this.add(gettext('and'));
+            this.add(gettext('on the')).add(this.list(this.byweekday.someWeeks, this.weekdaytext, gettext('and')));
+        }
+    };
+    ToText.prototype._byhour = function () {
+        var gettext = this.gettext;
+        this.add(gettext('at')).add(this.list(this.origOptions.byhour, undefined, gettext('and')));
+    };
+    ToText.prototype._bymonth = function () {
+        this.add(this.list(this.options.bymonth, this.monthtext, this.gettext('and')));
+    };
+    ToText.prototype.nth = function (n) {
+        n = parseInt(n.toString(), 10);
+        var nth;
+        var gettext = this.gettext;
+        if (n === -1)
+            return gettext('last');
+        var npos = Math.abs(n);
+        switch (npos) {
+            case 1:
+            case 21:
+            case 31:
+                nth = npos + gettext('st');
+                break;
+            case 2:
+            case 22:
+                nth = npos + gettext('nd');
+                break;
+            case 3:
+            case 23:
+                nth = npos + gettext('rd');
+                break;
+            default:
+                nth = npos + gettext('th');
+        }
+        return n < 0 ? nth + ' ' + gettext('last') : nth;
+    };
+    ToText.prototype.monthtext = function (m) {
+        return this.language.monthNames[m - 1];
+    };
+    ToText.prototype.weekdaytext = function (wday) {
+        var weekday = isNumber(wday) ? (wday + 1) % 7 : wday.getJsWeekday();
+        return ((wday.n ? this.nth(wday.n) + ' ' : '') +
+            this.language.dayNames[weekday]);
+    };
+    ToText.prototype.plural = function (n) {
+        return n % 100 !== 1;
+    };
+    ToText.prototype.add = function (s) {
+        this.text.push(' ');
+        this.text.push(s);
+        return this;
+    };
+    ToText.prototype.list = function (arr, callback, finalDelim, delim) {
+        var _this = this;
+        if (delim === void 0) { delim = ','; }
+        if (!isArray(arr)) {
+            arr = [arr];
+        }
+        var delimJoin = function (array, delimiter, finalDelimiter) {
+            var list = '';
+            for (var i = 0; i < array.length; i++) {
+                if (i !== 0) {
+                    if (i === array.length - 1) {
+                        list += ' ' + finalDelimiter + ' ';
+                    }
+                    else {
+                        list += delimiter + ' ';
+                    }
+                }
+                list += array[i];
+            }
+            return list;
+        };
+        callback =
+            callback ||
+                function (o) {
+                    return o.toString();
+                };
+        var realCallback = function (arg) {
+            return callback && callback.call(_this, arg);
+        };
+        if (finalDelim) {
+            return delimJoin(arr.map(realCallback), delim, finalDelim);
+        }
+        else {
+            return arr.map(realCallback).join(delim + ' ');
+        }
+    };
+    return ToText;
+}());
+
+// =============================================================================
+// Parser
+// =============================================================================
+var Parser = /** @class */ (function () {
+    function Parser(rules) {
+        this.done = true;
+        this.rules = rules;
+    }
+    Parser.prototype.start = function (text) {
+        this.text = text;
+        this.done = false;
+        return this.nextSymbol();
+    };
+    Parser.prototype.isDone = function () {
+        return this.done && this.symbol === null;
+    };
+    Parser.prototype.nextSymbol = function () {
+        var best;
+        var bestSymbol;
+        this.symbol = null;
+        this.value = null;
+        do {
+            if (this.done)
+                return false;
+            var rule = void 0;
+            best = null;
+            for (var name_1 in this.rules) {
+                rule = this.rules[name_1];
+                var match = rule.exec(this.text);
+                if (match) {
+                    if (best === null || match[0].length > best[0].length) {
+                        best = match;
+                        bestSymbol = name_1;
+                    }
+                }
+            }
+            if (best != null) {
+                this.text = this.text.substr(best[0].length);
+                if (this.text === '')
+                    this.done = true;
+            }
+            if (best == null) {
+                this.done = true;
+                this.symbol = null;
+                this.value = null;
+                return;
+            }
+        } while (bestSymbol === 'SKIP');
+        this.symbol = bestSymbol;
+        this.value = best;
+        return true;
+    };
+    Parser.prototype.accept = function (name) {
+        if (this.symbol === name) {
+            if (this.value) {
+                var v = this.value;
+                this.nextSymbol();
+                return v;
+            }
+            this.nextSymbol();
+            return true;
+        }
+        return false;
+    };
+    Parser.prototype.acceptNumber = function () {
+        return this.accept('number');
+    };
+    Parser.prototype.expect = function (name) {
+        if (this.accept(name))
+            return true;
+        throw new Error('expected ' + name + ' but found ' + this.symbol);
+    };
+    return Parser;
+}());
+function parseText(text, language) {
+    if (language === void 0) { language = ENGLISH; }
+    var options = {};
+    var ttr = new Parser(language.tokens);
+    if (!ttr.start(text))
+        return null;
+    S();
+    return options;
+    function S() {
+        // every [n]
+        ttr.expect('every');
+        var n = ttr.acceptNumber();
+        if (n)
+            options.interval = parseInt(n[0], 10);
+        if (ttr.isDone())
+            throw new Error('Unexpected end');
+        switch (ttr.symbol) {
+            case 'day(s)':
+                options.freq = RRule$1.DAILY;
+                if (ttr.nextSymbol()) {
+                    AT();
+                    F();
+                }
+                break;
+            // FIXME Note: every 2 weekdays != every two weeks on weekdays.
+            // DAILY on weekdays is not a valid rule
+            case 'weekday(s)':
+                options.freq = RRule$1.WEEKLY;
+                options.byweekday = [RRule$1.MO, RRule$1.TU, RRule$1.WE, RRule$1.TH, RRule$1.FR];
+                ttr.nextSymbol();
+                AT();
+                F();
+                break;
+            case 'week(s)':
+                options.freq = RRule$1.WEEKLY;
+                if (ttr.nextSymbol()) {
+                    ON();
+                    AT();
+                    F();
+                }
+                break;
+            case 'hour(s)':
+                options.freq = RRule$1.HOURLY;
+                if (ttr.nextSymbol()) {
+                    ON();
+                    F();
+                }
+                break;
+            case 'minute(s)':
+                options.freq = RRule$1.MINUTELY;
+                if (ttr.nextSymbol()) {
+                    ON();
+                    F();
+                }
+                break;
+            case 'month(s)':
+                options.freq = RRule$1.MONTHLY;
+                if (ttr.nextSymbol()) {
+                    ON();
+                    F();
+                }
+                break;
+            case 'year(s)':
+                options.freq = RRule$1.YEARLY;
+                if (ttr.nextSymbol()) {
+                    ON();
+                    F();
+                }
+                break;
+            case 'monday':
+            case 'tuesday':
+            case 'wednesday':
+            case 'thursday':
+            case 'friday':
+            case 'saturday':
+            case 'sunday':
+                options.freq = RRule$1.WEEKLY;
+                var key = ttr.symbol
+                    .substr(0, 2)
+                    .toUpperCase();
+                options.byweekday = [RRule$1[key]];
+                if (!ttr.nextSymbol())
+                    return;
+                // TODO check for duplicates
+                while (ttr.accept('comma')) {
+                    if (ttr.isDone())
+                        throw new Error('Unexpected end');
+                    var wkd = decodeWKD();
+                    if (!wkd) {
+                        throw new Error('Unexpected symbol ' + ttr.symbol + ', expected weekday');
+                    }
+                    options.byweekday.push(RRule$1[wkd]);
+                    ttr.nextSymbol();
+                }
+                AT();
+                MDAYs();
+                F();
+                break;
+            case 'january':
+            case 'february':
+            case 'march':
+            case 'april':
+            case 'may':
+            case 'june':
+            case 'july':
+            case 'august':
+            case 'september':
+            case 'october':
+            case 'november':
+            case 'december':
+                options.freq = RRule$1.YEARLY;
+                options.bymonth = [decodeM()];
+                if (!ttr.nextSymbol())
+                    return;
+                // TODO check for duplicates
+                while (ttr.accept('comma')) {
+                    if (ttr.isDone())
+                        throw new Error('Unexpected end');
+                    var m = decodeM();
+                    if (!m) {
+                        throw new Error('Unexpected symbol ' + ttr.symbol + ', expected month');
+                    }
+                    options.bymonth.push(m);
+                    ttr.nextSymbol();
+                }
+                ON();
+                F();
+                break;
+            default:
+                throw new Error('Unknown symbol');
+        }
+    }
+    function ON() {
+        var on = ttr.accept('on');
+        var the = ttr.accept('the');
+        if (!(on || the))
+            return;
+        do {
+            var nth = decodeNTH();
+            var wkd = decodeWKD();
+            var m = decodeM();
+            // nth <weekday> | <weekday>
+            if (nth) {
+                // ttr.nextSymbol()
+                if (wkd) {
+                    ttr.nextSymbol();
+                    if (!options.byweekday)
+                        options.byweekday = [];
+                    options.byweekday.push(RRule$1[wkd].nth(nth));
+                }
+                else {
+                    if (!options.bymonthday)
+                        options.bymonthday = [];
+                    options.bymonthday.push(nth);
+                    ttr.accept('day(s)');
+                }
+                // <weekday>
+            }
+            else if (wkd) {
+                ttr.nextSymbol();
+                if (!options.byweekday)
+                    options.byweekday = [];
+                options.byweekday.push(RRule$1[wkd]);
+            }
+            else if (ttr.symbol === 'weekday(s)') {
+                ttr.nextSymbol();
+                if (!options.byweekday) {
+                    options.byweekday = [RRule$1.MO, RRule$1.TU, RRule$1.WE, RRule$1.TH, RRule$1.FR];
+                }
+            }
+            else if (ttr.symbol === 'week(s)') {
+                ttr.nextSymbol();
+                var n = ttr.acceptNumber();
+                if (!n) {
+                    throw new Error('Unexpected symbol ' + ttr.symbol + ', expected week number');
+                }
+                options.byweekno = [parseInt(n[0], 10)];
+                while (ttr.accept('comma')) {
+                    n = ttr.acceptNumber();
+                    if (!n) {
+                        throw new Error('Unexpected symbol ' + ttr.symbol + '; expected monthday');
+                    }
+                    options.byweekno.push(parseInt(n[0], 10));
+                }
+            }
+            else if (m) {
+                ttr.nextSymbol();
+                if (!options.bymonth)
+                    options.bymonth = [];
+                options.bymonth.push(m);
+            }
+            else {
+                return;
+            }
+        } while (ttr.accept('comma') || ttr.accept('the') || ttr.accept('on'));
+    }
+    function AT() {
+        var at = ttr.accept('at');
+        if (!at)
+            return;
+        do {
+            var n = ttr.acceptNumber();
+            if (!n) {
+                throw new Error('Unexpected symbol ' + ttr.symbol + ', expected hour');
+            }
+            options.byhour = [parseInt(n[0], 10)];
+            while (ttr.accept('comma')) {
+                n = ttr.acceptNumber();
+                if (!n) {
+                    throw new Error('Unexpected symbol ' + ttr.symbol + '; expected hour');
+                }
+                options.byhour.push(parseInt(n[0], 10));
+            }
+        } while (ttr.accept('comma') || ttr.accept('at'));
+    }
+    function decodeM() {
+        switch (ttr.symbol) {
+            case 'january':
+                return 1;
+            case 'february':
+                return 2;
+            case 'march':
+                return 3;
+            case 'april':
+                return 4;
+            case 'may':
+                return 5;
+            case 'june':
+                return 6;
+            case 'july':
+                return 7;
+            case 'august':
+                return 8;
+            case 'september':
+                return 9;
+            case 'october':
+                return 10;
+            case 'november':
+                return 11;
+            case 'december':
+                return 12;
+            default:
+                return false;
+        }
+    }
+    function decodeWKD() {
+        switch (ttr.symbol) {
+            case 'monday':
+            case 'tuesday':
+            case 'wednesday':
+            case 'thursday':
+            case 'friday':
+            case 'saturday':
+            case 'sunday':
+                return ttr.symbol.substr(0, 2).toUpperCase();
+            default:
+                return false;
+        }
+    }
+    function decodeNTH() {
+        switch (ttr.symbol) {
+            case 'last':
+                ttr.nextSymbol();
+                return -1;
+            case 'first':
+                ttr.nextSymbol();
+                return 1;
+            case 'second':
+                ttr.nextSymbol();
+                return ttr.accept('last') ? -2 : 2;
+            case 'third':
+                ttr.nextSymbol();
+                return ttr.accept('last') ? -3 : 3;
+            case 'nth':
+                var v = parseInt(ttr.value[1], 10);
+                if (v < -366 || v > 366)
+                    throw new Error('Nth out of range: ' + v);
+                ttr.nextSymbol();
+                return ttr.accept('last') ? -v : v;
+            default:
+                return false;
+        }
+    }
+    function MDAYs() {
+        ttr.accept('on');
+        ttr.accept('the');
+        var nth = decodeNTH();
+        if (!nth)
+            return;
+        options.bymonthday = [nth];
+        ttr.nextSymbol();
+        while (ttr.accept('comma')) {
+            nth = decodeNTH();
+            if (!nth) {
+                throw new Error('Unexpected symbol ' + ttr.symbol + '; expected monthday');
+            }
+            options.bymonthday.push(nth);
+            ttr.nextSymbol();
+        }
+    }
+    function F() {
+        if (ttr.symbol === 'until') {
+            var date = Date.parse(ttr.text);
+            if (!date)
+                throw new Error('Cannot parse until date:' + ttr.text);
+            options.until = new Date(date);
+        }
+        else if (ttr.accept('for')) {
+            options.count = parseInt(ttr.value[0], 10);
+            ttr.expect('number');
+            // ttr.expect('times')
+        }
+    }
+}
+
+var Frequency;
+(function (Frequency) {
+    Frequency[Frequency["YEARLY"] = 0] = "YEARLY";
+    Frequency[Frequency["MONTHLY"] = 1] = "MONTHLY";
+    Frequency[Frequency["WEEKLY"] = 2] = "WEEKLY";
+    Frequency[Frequency["DAILY"] = 3] = "DAILY";
+    Frequency[Frequency["HOURLY"] = 4] = "HOURLY";
+    Frequency[Frequency["MINUTELY"] = 5] = "MINUTELY";
+    Frequency[Frequency["SECONDLY"] = 6] = "SECONDLY";
+})(Frequency || (Frequency = {}));
+function freqIsDailyOrGreater(freq) {
+    return freq < Frequency.HOURLY;
+}
+
+/* !
+ * rrule.js - Library for working with recurrence rules for calendar dates.
+ * https://github.com/jakubroztocil/rrule
+ *
+ * Copyright 2010, Jakub Roztocil and Lars Schoning
+ * Licenced under the BSD licence.
+ * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
+ *
+ */
+/**
+ *
+ * Implementation of RRule.fromText() and RRule::toText().
+ *
+ *
+ * On the client side, this file needs to be included
+ * when those functions are used.
+ *
+ */
+// =============================================================================
+// fromText
+// =============================================================================
+/**
+ * Will be able to convert some of the below described rules from
+ * text format to a rule object.
+ *
+ *
+ * RULES
+ *
+ * Every ([n])
+ * day(s)
+ * | [weekday], ..., (and) [weekday]
+ * | weekday(s)
+ * | week(s)
+ * | month(s)
+ * | [month], ..., (and) [month]
+ * | year(s)
+ *
+ *
+ * Plus 0, 1, or multiple of these:
+ *
+ * on [weekday], ..., (or) [weekday] the [monthday], [monthday], ... (or) [monthday]
+ *
+ * on [weekday], ..., (and) [weekday]
+ *
+ * on the [monthday], [monthday], ... (and) [monthday] (day of the month)
+ *
+ * on the [nth-weekday], ..., (and) [nth-weekday] (of the month/year)
+ *
+ *
+ * Plus 0 or 1 of these:
+ *
+ * for [n] time(s)
+ *
+ * until [date]
+ *
+ * Plus (.)
+ *
+ *
+ * Definitely no supported for parsing:
+ *
+ * (for year):
+ * in week(s) [n], ..., (and) [n]
+ *
+ * on the [yearday], ..., (and) [n] day of the year
+ * on day [yearday], ..., (and) [n]
+ *
+ *
+ * NON-TERMINALS
+ *
+ * [n]: 1, 2 ..., one, two, three ..
+ * [month]: January, February, March, April, May, ... December
+ * [weekday]: Monday, ... Sunday
+ * [nth-weekday]: first [weekday], 2nd [weekday], ... last [weekday], ...
+ * [monthday]: first, 1., 2., 1st, 2nd, second, ... 31st, last day, 2nd last day, ..
+ * [date]:
+ * - [month] (0-31(,) ([year])),
+ * - (the) 0-31.(1-12.([year])),
+ * - (the) 0-31/(1-12/([year])),
+ * - [weekday]
+ *
+ * [year]: 0000, 0001, ... 01, 02, ..
+ *
+ * Definitely not supported for parsing:
+ *
+ * [yearday]: first, 1., 2., 1st, 2nd, second, ... 366th, last day, 2nd last day, ..
+ *
+ * @param {String} text
+ * @return {Object, Boolean} the rule, or null.
+ */
+var fromText = function (text, language) {
+    if (language === void 0) { language = ENGLISH; }
+    return new RRule$1(parseText(text, language) || undefined);
+};
+var common = [
+    'count',
+    'until',
+    'interval',
+    'byweekday',
+    'bymonthday',
+    'bymonth',
+];
+ToText.IMPLEMENTED = [];
+ToText.IMPLEMENTED[Frequency.HOURLY] = common;
+ToText.IMPLEMENTED[Frequency.MINUTELY] = common;
+ToText.IMPLEMENTED[Frequency.DAILY] = ['byhour'].concat(common);
+ToText.IMPLEMENTED[Frequency.WEEKLY] = common;
+ToText.IMPLEMENTED[Frequency.MONTHLY] = common;
+ToText.IMPLEMENTED[Frequency.YEARLY] = ['byweekno', 'byyearday'].concat(common);
+// =============================================================================
+// Export
+// =============================================================================
+var toText = function (rrule, gettext, language, dateFormatter) {
+    return new ToText(rrule, gettext, language, dateFormatter).toString();
+};
+var isFullyConvertible = ToText.isFullyConvertible;
+
+var Time = /** @class */ (function () {
+    function Time(hour, minute, second, millisecond) {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+        this.millisecond = millisecond || 0;
+    }
+    Time.prototype.getHours = function () {
+        return this.hour;
+    };
+    Time.prototype.getMinutes = function () {
+        return this.minute;
+    };
+    Time.prototype.getSeconds = function () {
+        return this.second;
+    };
+    Time.prototype.getMilliseconds = function () {
+        return this.millisecond;
+    };
+    Time.prototype.getTime = function () {
+        return ((this.hour * 60 * 60 + this.minute * 60 + this.second) * 1000 +
+            this.millisecond);
+    };
+    return Time;
+}());
+var DateTime = /** @class */ (function (_super) {
+    __extends(DateTime, _super);
+    function DateTime(year, month, day, hour, minute, second, millisecond) {
+        var _this = _super.call(this, hour, minute, second, millisecond) || this;
+        _this.year = year;
+        _this.month = month;
+        _this.day = day;
+        return _this;
+    }
+    DateTime.fromDate = function (date) {
+        return new this(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.valueOf() % 1000);
+    };
+    DateTime.prototype.getWeekday = function () {
+        return getWeekday(new Date(this.getTime()));
+    };
+    DateTime.prototype.getTime = function () {
+        return new Date(Date.UTC(this.year, this.month - 1, this.day, this.hour, this.minute, this.second, this.millisecond)).getTime();
+    };
+    DateTime.prototype.getDay = function () {
+        return this.day;
+    };
+    DateTime.prototype.getMonth = function () {
+        return this.month;
+    };
+    DateTime.prototype.getYear = function () {
+        return this.year;
+    };
+    DateTime.prototype.addYears = function (years) {
+        this.year += years;
+    };
+    DateTime.prototype.addMonths = function (months) {
+        this.month += months;
+        if (this.month > 12) {
+            var yearDiv = Math.floor(this.month / 12);
+            var monthMod = pymod(this.month, 12);
+            this.month = monthMod;
+            this.year += yearDiv;
+            if (this.month === 0) {
+                this.month = 12;
+                --this.year;
+            }
+        }
+    };
+    DateTime.prototype.addWeekly = function (days, wkst) {
+        if (wkst > this.getWeekday()) {
+            this.day += -(this.getWeekday() + 1 + (6 - wkst)) + days * 7;
+        }
+        else {
+            this.day += -(this.getWeekday() - wkst) + days * 7;
+        }
+        this.fixDay();
+    };
+    DateTime.prototype.addDaily = function (days) {
+        this.day += days;
+        this.fixDay();
+    };
+    DateTime.prototype.addHours = function (hours, filtered, byhour) {
+        if (filtered) {
+            // Jump to one iteration before next day
+            this.hour += Math.floor((23 - this.hour) / hours) * hours;
+        }
+        for (;;) {
+            this.hour += hours;
+            var _a = divmod(this.hour, 24), dayDiv = _a.div, hourMod = _a.mod;
+            if (dayDiv) {
+                this.hour = hourMod;
+                this.addDaily(dayDiv);
+            }
+            if (empty(byhour) || includes(byhour, this.hour))
+                break;
+        }
+    };
+    DateTime.prototype.addMinutes = function (minutes, filtered, byhour, byminute) {
+        if (filtered) {
+            // Jump to one iteration before next day
+            this.minute +=
+                Math.floor((1439 - (this.hour * 60 + this.minute)) / minutes) * minutes;
+        }
+        for (;;) {
+            this.minute += minutes;
+            var _a = divmod(this.minute, 60), hourDiv = _a.div, minuteMod = _a.mod;
+            if (hourDiv) {
+                this.minute = minuteMod;
+                this.addHours(hourDiv, false, byhour);
+            }
+            if ((empty(byhour) || includes(byhour, this.hour)) &&
+                (empty(byminute) || includes(byminute, this.minute))) {
+                break;
+            }
+        }
+    };
+    DateTime.prototype.addSeconds = function (seconds, filtered, byhour, byminute, bysecond) {
+        if (filtered) {
+            // Jump to one iteration before next day
+            this.second +=
+                Math.floor((86399 - (this.hour * 3600 + this.minute * 60 + this.second)) /
+                    seconds) * seconds;
+        }
+        for (;;) {
+            this.second += seconds;
+            var _a = divmod(this.second, 60), minuteDiv = _a.div, secondMod = _a.mod;
+            if (minuteDiv) {
+                this.second = secondMod;
+                this.addMinutes(minuteDiv, false, byhour, byminute);
+            }
+            if ((empty(byhour) || includes(byhour, this.hour)) &&
+                (empty(byminute) || includes(byminute, this.minute)) &&
+                (empty(bysecond) || includes(bysecond, this.second))) {
+                break;
+            }
+        }
+    };
+    DateTime.prototype.fixDay = function () {
+        if (this.day <= 28) {
+            return;
+        }
+        var daysinmonth = monthRange(this.year, this.month - 1)[1];
+        if (this.day <= daysinmonth) {
+            return;
+        }
+        while (this.day > daysinmonth) {
+            this.day -= daysinmonth;
+            ++this.month;
+            if (this.month === 13) {
+                this.month = 1;
+                ++this.year;
+                if (this.year > MAXYEAR) {
+                    return;
+                }
+            }
+            daysinmonth = monthRange(this.year, this.month - 1)[1];
+        }
+    };
+    DateTime.prototype.add = function (options, filtered) {
+        var freq = options.freq, interval = options.interval, wkst = options.wkst, byhour = options.byhour, byminute = options.byminute, bysecond = options.bysecond;
+        switch (freq) {
+            case Frequency.YEARLY:
+                return this.addYears(interval);
+            case Frequency.MONTHLY:
+                return this.addMonths(interval);
+            case Frequency.WEEKLY:
+                return this.addWeekly(interval, wkst);
+            case Frequency.DAILY:
+                return this.addDaily(interval);
+            case Frequency.HOURLY:
+                return this.addHours(interval, filtered, byhour);
+            case Frequency.MINUTELY:
+                return this.addMinutes(interval, filtered, byhour, byminute);
+            case Frequency.SECONDLY:
+                return this.addSeconds(interval, filtered, byhour, byminute, bysecond);
+        }
+    };
+    return DateTime;
+}(Time));
+
+function initializeOptions$1(options) {
+    var invalid = [];
+    var keys = Object.keys(options);
+    // Shallow copy for options and origOptions and check for invalid
+    for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+        var key = keys_1[_i];
+        if (!includes(defaultKeys, key))
+            invalid.push(key);
+        if (isDate(options[key]) && !isValidDate(options[key])) {
+            invalid.push(key);
+        }
+    }
+    if (invalid.length) {
+        throw new Error('Invalid options: ' + invalid.join(', '));
+    }
+    return __assign({}, options);
+}
+function parseOptions(options) {
+    var opts = __assign(__assign({}, DEFAULT_OPTIONS$1), initializeOptions$1(options));
+    if (isPresent(opts.byeaster))
+        opts.freq = RRule$1.YEARLY;
+    if (!(isPresent(opts.freq) && RRule$1.FREQUENCIES[opts.freq])) {
+        throw new Error("Invalid frequency: ".concat(opts.freq, " ").concat(options.freq));
+    }
+    if (!opts.dtstart)
+        opts.dtstart = new Date(new Date().setMilliseconds(0));
+    if (!isPresent(opts.wkst)) {
+        opts.wkst = RRule$1.MO.weekday;
+    }
+    else if (isNumber(opts.wkst)) ;
+    else {
+        opts.wkst = opts.wkst.weekday;
+    }
+    if (isPresent(opts.bysetpos)) {
+        if (isNumber(opts.bysetpos))
+            opts.bysetpos = [opts.bysetpos];
+        for (var i = 0; i < opts.bysetpos.length; i++) {
+            var v = opts.bysetpos[i];
+            if (v === 0 || !(v >= -366 && v <= 366)) {
+                throw new Error('bysetpos must be between 1 and 366,' + ' or between -366 and -1');
+            }
+        }
+    }
+    if (!(Boolean(opts.byweekno) ||
+        notEmpty(opts.byweekno) ||
+        notEmpty(opts.byyearday) ||
+        Boolean(opts.bymonthday) ||
+        notEmpty(opts.bymonthday) ||
+        isPresent(opts.byweekday) ||
+        isPresent(opts.byeaster))) {
+        switch (opts.freq) {
+            case RRule$1.YEARLY:
+                if (!opts.bymonth)
+                    opts.bymonth = opts.dtstart.getUTCMonth() + 1;
+                opts.bymonthday = opts.dtstart.getUTCDate();
+                break;
+            case RRule$1.MONTHLY:
+                opts.bymonthday = opts.dtstart.getUTCDate();
+                break;
+            case RRule$1.WEEKLY:
+                opts.byweekday = [getWeekday(opts.dtstart)];
+                break;
+        }
+    }
+    // bymonth
+    if (isPresent(opts.bymonth) && !isArray(opts.bymonth)) {
+        opts.bymonth = [opts.bymonth];
+    }
+    // byyearday
+    if (isPresent(opts.byyearday) &&
+        !isArray(opts.byyearday) &&
+        isNumber(opts.byyearday)) {
+        opts.byyearday = [opts.byyearday];
+    }
+    // bymonthday
+    if (!isPresent(opts.bymonthday)) {
+        opts.bymonthday = [];
+        opts.bynmonthday = [];
+    }
+    else if (isArray(opts.bymonthday)) {
+        var bymonthday = [];
+        var bynmonthday = [];
+        for (var i = 0; i < opts.bymonthday.length; i++) {
+            var v = opts.bymonthday[i];
+            if (v > 0) {
+                bymonthday.push(v);
+            }
+            else if (v < 0) {
+                bynmonthday.push(v);
+            }
+        }
+        opts.bymonthday = bymonthday;
+        opts.bynmonthday = bynmonthday;
+    }
+    else if (opts.bymonthday < 0) {
+        opts.bynmonthday = [opts.bymonthday];
+        opts.bymonthday = [];
+    }
+    else {
+        opts.bynmonthday = [];
+        opts.bymonthday = [opts.bymonthday];
+    }
+    // byweekno
+    if (isPresent(opts.byweekno) && !isArray(opts.byweekno)) {
+        opts.byweekno = [opts.byweekno];
+    }
+    // byweekday / bynweekday
+    if (!isPresent(opts.byweekday)) {
+        opts.bynweekday = null;
+    }
+    else if (isNumber(opts.byweekday)) {
+        opts.byweekday = [opts.byweekday];
+        opts.bynweekday = null;
+    }
+    else if (isWeekdayStr(opts.byweekday)) {
+        opts.byweekday = [Weekday.fromStr(opts.byweekday).weekday];
+        opts.bynweekday = null;
+    }
+    else if (opts.byweekday instanceof Weekday) {
+        if (!opts.byweekday.n || opts.freq > RRule$1.MONTHLY) {
+            opts.byweekday = [opts.byweekday.weekday];
+            opts.bynweekday = null;
+        }
+        else {
+            opts.bynweekday = [[opts.byweekday.weekday, opts.byweekday.n]];
+            opts.byweekday = null;
+        }
+    }
+    else {
+        var byweekday = [];
+        var bynweekday = [];
+        for (var i = 0; i < opts.byweekday.length; i++) {
+            var wday = opts.byweekday[i];
+            if (isNumber(wday)) {
+                byweekday.push(wday);
+                continue;
+            }
+            else if (isWeekdayStr(wday)) {
+                byweekday.push(Weekday.fromStr(wday).weekday);
+                continue;
+            }
+            if (!wday.n || opts.freq > RRule$1.MONTHLY) {
+                byweekday.push(wday.weekday);
+            }
+            else {
+                bynweekday.push([wday.weekday, wday.n]);
+            }
+        }
+        opts.byweekday = notEmpty(byweekday) ? byweekday : null;
+        opts.bynweekday = notEmpty(bynweekday) ? bynweekday : null;
+    }
+    // byhour
+    if (!isPresent(opts.byhour)) {
+        opts.byhour = opts.freq < RRule$1.HOURLY ? [opts.dtstart.getUTCHours()] : null;
+    }
+    else if (isNumber(opts.byhour)) {
+        opts.byhour = [opts.byhour];
+    }
+    // byminute
+    if (!isPresent(opts.byminute)) {
+        opts.byminute =
+            opts.freq < RRule$1.MINUTELY ? [opts.dtstart.getUTCMinutes()] : null;
+    }
+    else if (isNumber(opts.byminute)) {
+        opts.byminute = [opts.byminute];
+    }
+    // bysecond
+    if (!isPresent(opts.bysecond)) {
+        opts.bysecond =
+            opts.freq < RRule$1.SECONDLY ? [opts.dtstart.getUTCSeconds()] : null;
+    }
+    else if (isNumber(opts.bysecond)) {
+        opts.bysecond = [opts.bysecond];
+    }
+    return { parsedOptions: opts };
+}
+function buildTimeset(opts) {
+    var millisecondModulo = opts.dtstart.getTime() % 1000;
+    if (!freqIsDailyOrGreater(opts.freq)) {
+        return [];
+    }
+    var timeset = [];
+    opts.byhour.forEach(function (hour) {
+        opts.byminute.forEach(function (minute) {
+            opts.bysecond.forEach(function (second) {
+                timeset.push(new Time(hour, minute, second, millisecondModulo));
+            });
+        });
+    });
+    return timeset;
+}
+
+function parseString(rfcString) {
+    var options = rfcString
+        .split('\n')
+        .map(parseLine)
+        .filter(function (x) { return x !== null; });
+    return __assign(__assign({}, options[0]), options[1]);
+}
+function parseDtstart(line) {
+    var options = {};
+    var dtstartWithZone = /DTSTART(?:;TZID=([^:=]+?))?(?::|=)([^;\s]+)/i.exec(line);
+    if (!dtstartWithZone) {
+        return options;
+    }
+    var tzid = dtstartWithZone[1], dtstart = dtstartWithZone[2];
+    if (tzid) {
+        options.tzid = tzid;
+    }
+    options.dtstart = untilStringToDate(dtstart);
+    return options;
+}
+function parseLine(rfcString) {
+    rfcString = rfcString.replace(/^\s+|\s+$/, '');
+    if (!rfcString.length)
+        return null;
+    var header = /^([A-Z]+?)[:;]/.exec(rfcString.toUpperCase());
+    if (!header) {
+        return parseRrule(rfcString);
+    }
+    var key = header[1];
+    switch (key.toUpperCase()) {
+        case 'RRULE':
+        case 'EXRULE':
+            return parseRrule(rfcString);
+        case 'DTSTART':
+            return parseDtstart(rfcString);
+        default:
+            throw new Error("Unsupported RFC prop ".concat(key, " in ").concat(rfcString));
+    }
+}
+function parseRrule(line) {
+    var strippedLine = line.replace(/^RRULE:/i, '');
+    var options = parseDtstart(strippedLine);
+    var attrs = line.replace(/^(?:RRULE|EXRULE):/i, '').split(';');
+    attrs.forEach(function (attr) {
+        var _a = attr.split('='), key = _a[0], value = _a[1];
+        switch (key.toUpperCase()) {
+            case 'FREQ':
+                options.freq = Frequency[value.toUpperCase()];
+                break;
+            case 'WKST':
+                options.wkst = Days[value.toUpperCase()];
+                break;
+            case 'COUNT':
+            case 'INTERVAL':
+            case 'BYSETPOS':
+            case 'BYMONTH':
+            case 'BYMONTHDAY':
+            case 'BYYEARDAY':
+            case 'BYWEEKNO':
+            case 'BYHOUR':
+            case 'BYMINUTE':
+            case 'BYSECOND':
+                var num = parseNumber(value);
+                var optionKey = key.toLowerCase();
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                options[optionKey] = num;
+                break;
+            case 'BYWEEKDAY':
+            case 'BYDAY':
+                options.byweekday = parseWeekday(value);
+                break;
+            case 'DTSTART':
+            case 'TZID':
+                // for backwards compatibility
+                var dtstart = parseDtstart(line);
+                options.tzid = dtstart.tzid;
+                options.dtstart = dtstart.dtstart;
+                break;
+            case 'UNTIL':
+                options.until = untilStringToDate(value);
+                break;
+            case 'BYEASTER':
+                options.byeaster = Number(value);
+                break;
+            default:
+                throw new Error("Unknown RRULE property '" + key + "'");
+        }
+    });
+    return options;
+}
+function parseNumber(value) {
+    if (value.indexOf(',') !== -1) {
+        var values = value.split(',');
+        return values.map(parseIndividualNumber);
+    }
+    return parseIndividualNumber(value);
+}
+function parseIndividualNumber(value) {
+    if (/^[+-]?\d+$/.test(value)) {
+        return Number(value);
+    }
+    return value;
+}
+function parseWeekday(value) {
+    var days = value.split(',');
+    return days.map(function (day) {
+        if (day.length === 2) {
+            // MO, TU, ...
+            return Days[day]; // wday instanceof Weekday
+        }
+        // -1MO, +3FR, 1SO, 13TU ...
+        var parts = day.match(/^([+-]?\d{1,2})([A-Z]{2})$/);
+        if (!parts || parts.length < 3) {
+            throw new SyntaxError("Invalid weekday string: ".concat(day));
+        }
+        var n = Number(parts[1]);
+        var wdaypart = parts[2];
+        var wday = Days[wdaypart].weekday;
+        return new Weekday(wday, n);
+    });
+}
+
+var DateWithZone = /** @class */ (function () {
+    function DateWithZone(date, tzid) {
+        if (isNaN(date.getTime())) {
+            throw new RangeError('Invalid date passed to DateWithZone');
+        }
+        this.date = date;
+        this.tzid = tzid;
+    }
+    Object.defineProperty(DateWithZone.prototype, "isUTC", {
+        get: function () {
+            return !this.tzid || this.tzid.toUpperCase() === 'UTC';
+        },
+        enumerable: false,
+        configurable: true
+    });
+    DateWithZone.prototype.toString = function () {
+        var datestr = timeToUntilString(this.date.getTime(), this.isUTC);
+        if (!this.isUTC) {
+            return ";TZID=".concat(this.tzid, ":").concat(datestr);
+        }
+        return ":".concat(datestr);
+    };
+    DateWithZone.prototype.getTime = function () {
+        return this.date.getTime();
+    };
+    DateWithZone.prototype.rezonedDate = function () {
+        if (this.isUTC) {
+            return this.date;
+        }
+        return dateInTimeZone(this.date, this.tzid);
+    };
+    return DateWithZone;
+}());
+
+function optionsToString(options) {
+    var rrule = [];
+    var dtstart = '';
+    var keys = Object.keys(options);
+    var defaultKeys = Object.keys(DEFAULT_OPTIONS$1);
+    for (var i = 0; i < keys.length; i++) {
+        if (keys[i] === 'tzid')
+            continue;
+        if (!includes(defaultKeys, keys[i]))
+            continue;
+        var key = keys[i].toUpperCase();
+        var value = options[keys[i]];
+        var outValue = '';
+        if (!isPresent(value) || (isArray(value) && !value.length))
+            continue;
+        switch (key) {
+            case 'FREQ':
+                outValue = RRule$1.FREQUENCIES[options.freq];
+                break;
+            case 'WKST':
+                if (isNumber(value)) {
+                    outValue = new Weekday(value).toString();
+                }
+                else {
+                    outValue = value.toString();
+                }
+                break;
+            case 'BYWEEKDAY':
+                /*
+                  NOTE: BYWEEKDAY is a special case.
+                  RRule() deconstructs the rule.options.byweekday array
+                  into an array of Weekday arguments.
+                  On the other hand, rule.origOptions is an array of Weekdays.
+                  We need to handle both cases here.
+                  It might be worth change RRule to keep the Weekdays.
+        
+                  Also, BYWEEKDAY (used by RRule) vs. BYDAY (RFC)
+        
+                  */
+                key = 'BYDAY';
+                outValue = toArray(value)
+                    .map(function (wday) {
+                    if (wday instanceof Weekday) {
+                        return wday;
+                    }
+                    if (isArray(wday)) {
+                        return new Weekday(wday[0], wday[1]);
+                    }
+                    return new Weekday(wday);
+                })
+                    .toString();
+                break;
+            case 'DTSTART':
+                dtstart = buildDtstart(value, options.tzid);
+                break;
+            case 'UNTIL':
+                outValue = timeToUntilString(value, !options.tzid);
+                break;
+            default:
+                if (isArray(value)) {
+                    var strValues = [];
+                    for (var j = 0; j < value.length; j++) {
+                        strValues[j] = String(value[j]);
+                    }
+                    outValue = strValues.toString();
+                }
+                else {
+                    outValue = String(value);
+                }
+        }
+        if (outValue) {
+            rrule.push([key, outValue]);
+        }
+    }
+    var rules = rrule
+        .map(function (_a) {
+        var key = _a[0], value = _a[1];
+        return "".concat(key, "=").concat(value.toString());
+    })
+        .join(';');
+    var ruleString = '';
+    if (rules !== '') {
+        ruleString = "RRULE:".concat(rules);
+    }
+    return [dtstart, ruleString].filter(function (x) { return !!x; }).join('\n');
+}
+function buildDtstart(dtstart, tzid) {
+    if (!dtstart) {
+        return '';
+    }
+    return 'DTSTART' + new DateWithZone(new Date(dtstart), tzid).toString();
+}
+
+function argsMatch(left, right) {
+    if (Array.isArray(left)) {
+        if (!Array.isArray(right))
+            return false;
+        if (left.length !== right.length)
+            return false;
+        return left.every(function (date, i) { return date.getTime() === right[i].getTime(); });
+    }
+    if (left instanceof Date) {
+        return right instanceof Date && left.getTime() === right.getTime();
+    }
+    return left === right;
+}
+var Cache = /** @class */ (function () {
+    function Cache() {
+        this.all = false;
+        this.before = [];
+        this.after = [];
+        this.between = [];
+    }
+    /**
+     * @param {String} what - all/before/after/between
+     * @param {Array,Date} value - an array of dates, one date, or null
+     * @param {Object?} args - _iter arguments
+     */
+    Cache.prototype._cacheAdd = function (what, value, args) {
+        if (value) {
+            value = value instanceof Date ? clone(value) : cloneDates(value);
+        }
+        if (what === 'all') {
+            this.all = value;
+        }
+        else {
+            args._value = value;
+            this[what].push(args);
+        }
+    };
+    /**
+     * @return false - not in the cache
+     * @return null  - cached, but zero occurrences (before/after)
+     * @return Date  - cached (before/after)
+     * @return []    - cached, but zero occurrences (all/between)
+     * @return [Date1, DateN] - cached (all/between)
+     */
+    Cache.prototype._cacheGet = function (what, args) {
+        var cached = false;
+        var argsKeys = args ? Object.keys(args) : [];
+        var findCacheDiff = function (item) {
+            for (var i = 0; i < argsKeys.length; i++) {
+                var key = argsKeys[i];
+                if (!argsMatch(args[key], item[key])) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        var cachedObject = this[what];
+        if (what === 'all') {
+            cached = this.all;
+        }
+        else if (isArray(cachedObject)) {
+            // Let's see whether we've already called the
+            // 'what' method with the same 'args'
+            for (var i = 0; i < cachedObject.length; i++) {
+                var item = cachedObject[i];
+                if (argsKeys.length && findCacheDiff(item))
+                    continue;
+                cached = item._value;
+                break;
+            }
+        }
+        if (!cached && this.all) {
+            // Not in the cache, but we already know all the occurrences,
+            // so we can find the correct dates from the cached ones.
+            var iterResult = new IterResult(what, args);
+            for (var i = 0; i < this.all.length; i++) {
+                if (!iterResult.accept(this.all[i]))
+                    break;
+            }
+            cached = iterResult.getValue();
+            this._cacheAdd(what, cached, args);
+        }
+        return isArray(cached)
+            ? cloneDates(cached)
+            : cached instanceof Date
+                ? clone(cached)
+                : cached;
+    };
+    return Cache;
+}());
+
+// =============================================================================
+// Date masks
+// =============================================================================
+// Every mask is 7 days longer to handle cross-year weekly periods.
+var M365MASK = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], repeat(1, 31), true), repeat(2, 28), true), repeat(3, 31), true), repeat(4, 30), true), repeat(5, 31), true), repeat(6, 30), true), repeat(7, 31), true), repeat(8, 31), true), repeat(9, 30), true), repeat(10, 31), true), repeat(11, 30), true), repeat(12, 31), true), repeat(1, 7), true);
+var M366MASK = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], repeat(1, 31), true), repeat(2, 29), true), repeat(3, 31), true), repeat(4, 30), true), repeat(5, 31), true), repeat(6, 30), true), repeat(7, 31), true), repeat(8, 31), true), repeat(9, 30), true), repeat(10, 31), true), repeat(11, 30), true), repeat(12, 31), true), repeat(1, 7), true);
+var M28 = range(1, 29);
+var M29 = range(1, 30);
+var M30 = range(1, 31);
+var M31 = range(1, 32);
+var MDAY366MASK = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], M31, true), M29, true), M31, true), M30, true), M31, true), M30, true), M31, true), M31, true), M30, true), M31, true), M30, true), M31, true), M31.slice(0, 7), true);
+var MDAY365MASK = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], M31, true), M28, true), M31, true), M30, true), M31, true), M30, true), M31, true), M31, true), M30, true), M31, true), M30, true), M31, true), M31.slice(0, 7), true);
+var NM28 = range(-28, 0);
+var NM29 = range(-29, 0);
+var NM30 = range(-30, 0);
+var NM31 = range(-31, 0);
+var NMDAY366MASK = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], NM31, true), NM29, true), NM31, true), NM30, true), NM31, true), NM30, true), NM31, true), NM31, true), NM30, true), NM31, true), NM30, true), NM31, true), NM31.slice(0, 7), true);
+var NMDAY365MASK = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], NM31, true), NM28, true), NM31, true), NM30, true), NM31, true), NM30, true), NM31, true), NM31, true), NM30, true), NM31, true), NM30, true), NM31, true), NM31.slice(0, 7), true);
+var M366RANGE = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+var M365RANGE = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365];
+var WDAYMASK = (function () {
+    var wdaymask = [];
+    for (var i = 0; i < 55; i++)
+        wdaymask = wdaymask.concat(range(7));
+    return wdaymask;
+})();
+
+function rebuildYear(year, options) {
+    var firstyday = datetime(year, 1, 1);
+    var yearlen = isLeapYear(year) ? 366 : 365;
+    var nextyearlen = isLeapYear(year + 1) ? 366 : 365;
+    var yearordinal = toOrdinal(firstyday);
+    var yearweekday = getWeekday(firstyday);
+    var result = __assign(__assign({ yearlen: yearlen, nextyearlen: nextyearlen, yearordinal: yearordinal, yearweekday: yearweekday }, baseYearMasks(year)), { wnomask: null });
+    if (empty(options.byweekno)) {
+        return result;
+    }
+    result.wnomask = repeat(0, yearlen + 7);
+    var firstwkst;
+    var wyearlen;
+    var no1wkst = (firstwkst = pymod(7 - yearweekday + options.wkst, 7));
+    if (no1wkst >= 4) {
+        no1wkst = 0;
+        // Number of days in the year, plus the days we got
+        // from last year.
+        wyearlen = result.yearlen + pymod(yearweekday - options.wkst, 7);
+    }
+    else {
+        // Number of days in the year, minus the days we
+        // left in last year.
+        wyearlen = yearlen - no1wkst;
+    }
+    var div = Math.floor(wyearlen / 7);
+    var mod = pymod(wyearlen, 7);
+    var numweeks = Math.floor(div + mod / 4);
+    for (var j = 0; j < options.byweekno.length; j++) {
+        var n = options.byweekno[j];
+        if (n < 0) {
+            n += numweeks + 1;
+        }
+        if (!(n > 0 && n <= numweeks)) {
+            continue;
+        }
+        var i = void 0;
+        if (n > 1) {
+            i = no1wkst + (n - 1) * 7;
+            if (no1wkst !== firstwkst) {
+                i -= 7 - firstwkst;
+            }
+        }
+        else {
+            i = no1wkst;
+        }
+        for (var k = 0; k < 7; k++) {
+            result.wnomask[i] = 1;
+            i++;
+            if (result.wdaymask[i] === options.wkst)
+                break;
+        }
+    }
+    if (includes(options.byweekno, 1)) {
+        // Check week number 1 of next year as well
+        // orig-TODO : Check -numweeks for next year.
+        var i = no1wkst + numweeks * 7;
+        if (no1wkst !== firstwkst)
+            i -= 7 - firstwkst;
+        if (i < yearlen) {
+            // If week starts in next year, we
+            // don't care about it.
+            for (var j = 0; j < 7; j++) {
+                result.wnomask[i] = 1;
+                i += 1;
+                if (result.wdaymask[i] === options.wkst)
+                    break;
+            }
+        }
+    }
+    if (no1wkst) {
+        // Check last week number of last year as
+        // well. If no1wkst is 0, either the year
+        // started on week start, or week number 1
+        // got days from last year, so there are no
+        // days from last year's last week number in
+        // this year.
+        var lnumweeks = void 0;
+        if (!includes(options.byweekno, -1)) {
+            var lyearweekday = getWeekday(datetime(year - 1, 1, 1));
+            var lno1wkst = pymod(7 - lyearweekday.valueOf() + options.wkst, 7);
+            var lyearlen = isLeapYear(year - 1) ? 366 : 365;
+            var weekst = void 0;
+            if (lno1wkst >= 4) {
+                lno1wkst = 0;
+                weekst = lyearlen + pymod(lyearweekday - options.wkst, 7);
+            }
+            else {
+                weekst = yearlen - no1wkst;
+            }
+            lnumweeks = Math.floor(52 + pymod(weekst, 7) / 4);
+        }
+        else {
+            lnumweeks = -1;
+        }
+        if (includes(options.byweekno, lnumweeks)) {
+            for (var i = 0; i < no1wkst; i++)
+                result.wnomask[i] = 1;
+        }
+    }
+    return result;
+}
+function baseYearMasks(year) {
+    var yearlen = isLeapYear(year) ? 366 : 365;
+    var firstyday = datetime(year, 1, 1);
+    var wday = getWeekday(firstyday);
+    if (yearlen === 365) {
+        return {
+            mmask: M365MASK,
+            mdaymask: MDAY365MASK,
+            nmdaymask: NMDAY365MASK,
+            wdaymask: WDAYMASK.slice(wday),
+            mrange: M365RANGE,
+        };
+    }
+    return {
+        mmask: M366MASK,
+        mdaymask: MDAY366MASK,
+        nmdaymask: NMDAY366MASK,
+        wdaymask: WDAYMASK.slice(wday),
+        mrange: M366RANGE,
+    };
+}
+
+function rebuildMonth(year, month, yearlen, mrange, wdaymask, options) {
+    var result = {
+        lastyear: year,
+        lastmonth: month,
+        nwdaymask: [],
+    };
+    var ranges = [];
+    if (options.freq === RRule$1.YEARLY) {
+        if (empty(options.bymonth)) {
+            ranges = [[0, yearlen]];
+        }
+        else {
+            for (var j = 0; j < options.bymonth.length; j++) {
+                month = options.bymonth[j];
+                ranges.push(mrange.slice(month - 1, month + 1));
+            }
+        }
+    }
+    else if (options.freq === RRule$1.MONTHLY) {
+        ranges = [mrange.slice(month - 1, month + 1)];
+    }
+    if (empty(ranges)) {
+        return result;
+    }
+    // Weekly frequency won't get here, so we may not
+    // care about cross-year weekly periods.
+    result.nwdaymask = repeat(0, yearlen);
+    for (var j = 0; j < ranges.length; j++) {
+        var rang = ranges[j];
+        var first = rang[0];
+        var last = rang[1] - 1;
+        for (var k = 0; k < options.bynweekday.length; k++) {
+            var i = void 0;
+            var _a = options.bynweekday[k], wday = _a[0], n = _a[1];
+            if (n < 0) {
+                i = last + (n + 1) * 7;
+                i -= pymod(wdaymask[i] - wday, 7);
+            }
+            else {
+                i = first + (n - 1) * 7;
+                i += pymod(7 - wdaymask[i] + wday, 7);
+            }
+            if (first <= i && i <= last)
+                result.nwdaymask[i] = 1;
+        }
+    }
+    return result;
+}
+
+function easter(y, offset) {
+    if (offset === void 0) { offset = 0; }
+    var a = y % 19;
+    var b = Math.floor(y / 100);
+    var c = y % 100;
+    var d = Math.floor(b / 4);
+    var e = b % 4;
+    var f = Math.floor((b + 8) / 25);
+    var g = Math.floor((b - f + 1) / 3);
+    var h = Math.floor(19 * a + b - d - g + 15) % 30;
+    var i = Math.floor(c / 4);
+    var k = c % 4;
+    var l = Math.floor(32 + 2 * e + 2 * i - h - k) % 7;
+    var m = Math.floor((a + 11 * h + 22 * l) / 451);
+    var month = Math.floor((h + l - 7 * m + 114) / 31);
+    var day = ((h + l - 7 * m + 114) % 31) + 1;
+    var date = Date.UTC(y, month - 1, day + offset);
+    var yearStart = Date.UTC(y, 0, 1);
+    return [Math.ceil((date - yearStart) / (1000 * 60 * 60 * 24))];
+}
+
+// =============================================================================
+// Iterinfo
+// =============================================================================
+var Iterinfo = /** @class */ (function () {
+    // eslint-disable-next-line no-empty-function
+    function Iterinfo(options) {
+        this.options = options;
+    }
+    Iterinfo.prototype.rebuild = function (year, month) {
+        var options = this.options;
+        if (year !== this.lastyear) {
+            this.yearinfo = rebuildYear(year, options);
+        }
+        if (notEmpty(options.bynweekday) &&
+            (month !== this.lastmonth || year !== this.lastyear)) {
+            var _a = this.yearinfo, yearlen = _a.yearlen, mrange = _a.mrange, wdaymask = _a.wdaymask;
+            this.monthinfo = rebuildMonth(year, month, yearlen, mrange, wdaymask, options);
+        }
+        if (isPresent(options.byeaster)) {
+            this.eastermask = easter(year, options.byeaster);
+        }
+    };
+    Object.defineProperty(Iterinfo.prototype, "lastyear", {
+        get: function () {
+            return this.monthinfo ? this.monthinfo.lastyear : null;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "lastmonth", {
+        get: function () {
+            return this.monthinfo ? this.monthinfo.lastmonth : null;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "yearlen", {
+        get: function () {
+            return this.yearinfo.yearlen;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "yearordinal", {
+        get: function () {
+            return this.yearinfo.yearordinal;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "mrange", {
+        get: function () {
+            return this.yearinfo.mrange;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "wdaymask", {
+        get: function () {
+            return this.yearinfo.wdaymask;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "mmask", {
+        get: function () {
+            return this.yearinfo.mmask;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "wnomask", {
+        get: function () {
+            return this.yearinfo.wnomask;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "nwdaymask", {
+        get: function () {
+            return this.monthinfo ? this.monthinfo.nwdaymask : [];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "nextyearlen", {
+        get: function () {
+            return this.yearinfo.nextyearlen;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "mdaymask", {
+        get: function () {
+            return this.yearinfo.mdaymask;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Iterinfo.prototype, "nmdaymask", {
+        get: function () {
+            return this.yearinfo.nmdaymask;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Iterinfo.prototype.ydayset = function () {
+        return [range(this.yearlen), 0, this.yearlen];
+    };
+    Iterinfo.prototype.mdayset = function (_, month) {
+        var start = this.mrange[month - 1];
+        var end = this.mrange[month];
+        var set = repeat(null, this.yearlen);
+        for (var i = start; i < end; i++)
+            set[i] = i;
+        return [set, start, end];
+    };
+    Iterinfo.prototype.wdayset = function (year, month, day) {
+        // We need to handle cross-year weeks here.
+        var set = repeat(null, this.yearlen + 7);
+        var i = toOrdinal(datetime(year, month, day)) - this.yearordinal;
+        var start = i;
+        for (var j = 0; j < 7; j++) {
+            set[i] = i;
+            ++i;
+            if (this.wdaymask[i] === this.options.wkst)
+                break;
+        }
+        return [set, start, i];
+    };
+    Iterinfo.prototype.ddayset = function (year, month, day) {
+        var set = repeat(null, this.yearlen);
+        var i = toOrdinal(datetime(year, month, day)) - this.yearordinal;
+        set[i] = i;
+        return [set, i, i + 1];
+    };
+    Iterinfo.prototype.htimeset = function (hour, _, second, millisecond) {
+        var _this = this;
+        var set = [];
+        this.options.byminute.forEach(function (minute) {
+            set = set.concat(_this.mtimeset(hour, minute, second, millisecond));
+        });
+        sort(set);
+        return set;
+    };
+    Iterinfo.prototype.mtimeset = function (hour, minute, _, millisecond) {
+        var set = this.options.bysecond.map(function (second) { return new Time(hour, minute, second, millisecond); });
+        sort(set);
+        return set;
+    };
+    Iterinfo.prototype.stimeset = function (hour, minute, second, millisecond) {
+        return [new Time(hour, minute, second, millisecond)];
+    };
+    Iterinfo.prototype.getdayset = function (freq) {
+        switch (freq) {
+            case Frequency.YEARLY:
+                return this.ydayset.bind(this);
+            case Frequency.MONTHLY:
+                return this.mdayset.bind(this);
+            case Frequency.WEEKLY:
+                return this.wdayset.bind(this);
+            case Frequency.DAILY:
+                return this.ddayset.bind(this);
+            default:
+                return this.ddayset.bind(this);
+        }
+    };
+    Iterinfo.prototype.gettimeset = function (freq) {
+        switch (freq) {
+            case Frequency.HOURLY:
+                return this.htimeset.bind(this);
+            case Frequency.MINUTELY:
+                return this.mtimeset.bind(this);
+            case Frequency.SECONDLY:
+                return this.stimeset.bind(this);
+        }
+    };
+    return Iterinfo;
+}());
+
+function buildPoslist(bysetpos, timeset, start, end, ii, dayset) {
+    var poslist = [];
+    for (var j = 0; j < bysetpos.length; j++) {
+        var daypos = void 0;
+        var timepos = void 0;
+        var pos = bysetpos[j];
+        if (pos < 0) {
+            daypos = Math.floor(pos / timeset.length);
+            timepos = pymod(pos, timeset.length);
+        }
+        else {
+            daypos = Math.floor((pos - 1) / timeset.length);
+            timepos = pymod(pos - 1, timeset.length);
+        }
+        var tmp = [];
+        for (var k = start; k < end; k++) {
+            var val = dayset[k];
+            if (!isPresent(val))
+                continue;
+            tmp.push(val);
+        }
+        var i = void 0;
+        if (daypos < 0) {
+            i = tmp.slice(daypos)[0];
+        }
+        else {
+            i = tmp[daypos];
+        }
+        var time = timeset[timepos];
+        var date = fromOrdinal(ii.yearordinal + i);
+        var res = combine(date, time);
+        // XXX: can this ever be in the array?
+        // - compare the actual date instead?
+        if (!includes(poslist, res))
+            poslist.push(res);
+    }
+    sort(poslist);
+    return poslist;
+}
+
+function iter(iterResult, options) {
+    var dtstart = options.dtstart, freq = options.freq, interval = options.interval, until = options.until, bysetpos = options.bysetpos;
+    var count = options.count;
+    if (count === 0 || interval === 0) {
+        return emitResult(iterResult);
+    }
+    var counterDate = DateTime.fromDate(dtstart);
+    var ii = new Iterinfo(options);
+    ii.rebuild(counterDate.year, counterDate.month);
+    var timeset = makeTimeset(ii, counterDate, options);
+    for (;;) {
+        var _a = ii.getdayset(freq)(counterDate.year, counterDate.month, counterDate.day), dayset = _a[0], start = _a[1], end = _a[2];
+        var filtered = removeFilteredDays(dayset, start, end, ii, options);
+        if (notEmpty(bysetpos)) {
+            var poslist = buildPoslist(bysetpos, timeset, start, end, ii, dayset);
+            for (var j = 0; j < poslist.length; j++) {
+                var res = poslist[j];
+                if (until && res > until) {
+                    return emitResult(iterResult);
+                }
+                if (res >= dtstart) {
+                    var rezonedDate = rezoneIfNeeded(res, options);
+                    if (!iterResult.accept(rezonedDate)) {
+                        return emitResult(iterResult);
+                    }
+                    if (count) {
+                        --count;
+                        if (!count) {
+                            return emitResult(iterResult);
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (var j = start; j < end; j++) {
+                var currentDay = dayset[j];
+                if (!isPresent(currentDay)) {
+                    continue;
+                }
+                var date = fromOrdinal(ii.yearordinal + currentDay);
+                for (var k = 0; k < timeset.length; k++) {
+                    var time = timeset[k];
+                    var res = combine(date, time);
+                    if (until && res > until) {
+                        return emitResult(iterResult);
+                    }
+                    if (res >= dtstart) {
+                        var rezonedDate = rezoneIfNeeded(res, options);
+                        if (!iterResult.accept(rezonedDate)) {
+                            return emitResult(iterResult);
+                        }
+                        if (count) {
+                            --count;
+                            if (!count) {
+                                return emitResult(iterResult);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (options.interval === 0) {
+            return emitResult(iterResult);
+        }
+        // Handle frequency and interval
+        counterDate.add(options, filtered);
+        if (counterDate.year > MAXYEAR) {
+            return emitResult(iterResult);
+        }
+        if (!freqIsDailyOrGreater(freq)) {
+            timeset = ii.gettimeset(freq)(counterDate.hour, counterDate.minute, counterDate.second, 0);
+        }
+        ii.rebuild(counterDate.year, counterDate.month);
+    }
+}
+function isFiltered(ii, currentDay, options) {
+    var bymonth = options.bymonth, byweekno = options.byweekno, byweekday = options.byweekday, byeaster = options.byeaster, bymonthday = options.bymonthday, bynmonthday = options.bynmonthday, byyearday = options.byyearday;
+    return ((notEmpty(bymonth) && !includes(bymonth, ii.mmask[currentDay])) ||
+        (notEmpty(byweekno) && !ii.wnomask[currentDay]) ||
+        (notEmpty(byweekday) && !includes(byweekday, ii.wdaymask[currentDay])) ||
+        (notEmpty(ii.nwdaymask) && !ii.nwdaymask[currentDay]) ||
+        (byeaster !== null && !includes(ii.eastermask, currentDay)) ||
+        ((notEmpty(bymonthday) || notEmpty(bynmonthday)) &&
+            !includes(bymonthday, ii.mdaymask[currentDay]) &&
+            !includes(bynmonthday, ii.nmdaymask[currentDay])) ||
+        (notEmpty(byyearday) &&
+            ((currentDay < ii.yearlen &&
+                !includes(byyearday, currentDay + 1) &&
+                !includes(byyearday, -ii.yearlen + currentDay)) ||
+                (currentDay >= ii.yearlen &&
+                    !includes(byyearday, currentDay + 1 - ii.yearlen) &&
+                    !includes(byyearday, -ii.nextyearlen + currentDay - ii.yearlen)))));
+}
+function rezoneIfNeeded(date, options) {
+    return new DateWithZone(date, options.tzid).rezonedDate();
+}
+function emitResult(iterResult) {
+    return iterResult.getValue();
+}
+function removeFilteredDays(dayset, start, end, ii, options) {
+    var filtered = false;
+    for (var dayCounter = start; dayCounter < end; dayCounter++) {
+        var currentDay = dayset[dayCounter];
+        filtered = isFiltered(ii, currentDay, options);
+        if (filtered)
+            dayset[currentDay] = null;
+    }
+    return filtered;
+}
+function makeTimeset(ii, counterDate, options) {
+    var freq = options.freq, byhour = options.byhour, byminute = options.byminute, bysecond = options.bysecond;
+    if (freqIsDailyOrGreater(freq)) {
+        return buildTimeset(options);
+    }
+    if ((freq >= RRule$1.HOURLY &&
+        notEmpty(byhour) &&
+        !includes(byhour, counterDate.hour)) ||
+        (freq >= RRule$1.MINUTELY &&
+            notEmpty(byminute) &&
+            !includes(byminute, counterDate.minute)) ||
+        (freq >= RRule$1.SECONDLY &&
+            notEmpty(bysecond) &&
+            !includes(bysecond, counterDate.second))) {
+        return [];
+    }
+    return ii.gettimeset(freq)(counterDate.hour, counterDate.minute, counterDate.second, counterDate.millisecond);
+}
+
+// =============================================================================
+// RRule
+// =============================================================================
+var Days = {
+    MO: new Weekday(0),
+    TU: new Weekday(1),
+    WE: new Weekday(2),
+    TH: new Weekday(3),
+    FR: new Weekday(4),
+    SA: new Weekday(5),
+    SU: new Weekday(6),
+};
+var DEFAULT_OPTIONS$1 = {
+    freq: Frequency.YEARLY,
+    dtstart: null,
+    interval: 1,
+    wkst: Days.MO,
+    count: null,
+    until: null,
+    tzid: null,
+    bysetpos: null,
+    bymonth: null,
+    bymonthday: null,
+    bynmonthday: null,
+    byyearday: null,
+    byweekno: null,
+    byweekday: null,
+    bynweekday: null,
+    byhour: null,
+    byminute: null,
+    bysecond: null,
+    byeaster: null,
+};
+var defaultKeys = Object.keys(DEFAULT_OPTIONS$1);
+/**
+ *
+ * @param {Options?} options - see <http://labix.org/python-dateutil/#head-cf004ee9a75592797e076752b2a889c10f445418>
+ * - The only required option is `freq`, one of RRule.YEARLY, RRule.MONTHLY, ...
+ * @constructor
+ */
+var RRule$1 = /** @class */ (function () {
+    function RRule(options, noCache) {
+        if (options === void 0) { options = {}; }
+        if (noCache === void 0) { noCache = false; }
+        // RFC string
+        this._cache = noCache ? null : new Cache();
+        // used by toString()
+        this.origOptions = initializeOptions$1(options);
+        var parsedOptions = parseOptions(options).parsedOptions;
+        this.options = parsedOptions;
+    }
+    RRule.parseText = function (text, language) {
+        return parseText(text, language);
+    };
+    RRule.fromText = function (text, language) {
+        return fromText(text, language);
+    };
+    RRule.fromString = function (str) {
+        return new RRule(RRule.parseString(str) || undefined);
+    };
+    RRule.prototype._iter = function (iterResult) {
+        return iter(iterResult, this.options);
+    };
+    RRule.prototype._cacheGet = function (what, args) {
+        if (!this._cache)
+            return false;
+        return this._cache._cacheGet(what, args);
+    };
+    RRule.prototype._cacheAdd = function (what, value, args) {
+        if (!this._cache)
+            return;
+        return this._cache._cacheAdd(what, value, args);
+    };
+    /**
+     * @param {Function} iterator - optional function that will be called
+     * on each date that is added. It can return false
+     * to stop the iteration.
+     * @return Array containing all recurrences.
+     */
+    RRule.prototype.all = function (iterator) {
+        if (iterator) {
+            return this._iter(new CallbackIterResult('all', {}, iterator));
+        }
+        var result = this._cacheGet('all');
+        if (result === false) {
+            result = this._iter(new IterResult('all', {}));
+            this._cacheAdd('all', result);
+        }
+        return result;
+    };
+    /**
+     * Returns all the occurrences of the rrule between after and before.
+     * The inc keyword defines what happens if after and/or before are
+     * themselves occurrences. With inc == True, they will be included in the
+     * list, if they are found in the recurrence set.
+     *
+     * @return Array
+     */
+    RRule.prototype.between = function (after, before, inc, iterator) {
+        if (inc === void 0) { inc = false; }
+        if (!isValidDate(after) || !isValidDate(before)) {
+            throw new Error('Invalid date passed in to RRule.between');
+        }
+        var args = {
+            before: before,
+            after: after,
+            inc: inc,
+        };
+        if (iterator) {
+            return this._iter(new CallbackIterResult('between', args, iterator));
+        }
+        var result = this._cacheGet('between', args);
+        if (result === false) {
+            result = this._iter(new IterResult('between', args));
+            this._cacheAdd('between', result, args);
+        }
+        return result;
+    };
+    /**
+     * Returns the last recurrence before the given datetime instance.
+     * The inc keyword defines what happens if dt is an occurrence.
+     * With inc == True, if dt itself is an occurrence, it will be returned.
+     *
+     * @return Date or null
+     */
+    RRule.prototype.before = function (dt, inc) {
+        if (inc === void 0) { inc = false; }
+        if (!isValidDate(dt)) {
+            throw new Error('Invalid date passed in to RRule.before');
+        }
+        var args = { dt: dt, inc: inc };
+        var result = this._cacheGet('before', args);
+        if (result === false) {
+            result = this._iter(new IterResult('before', args));
+            this._cacheAdd('before', result, args);
+        }
+        return result;
+    };
+    /**
+     * Returns the first recurrence after the given datetime instance.
+     * The inc keyword defines what happens if dt is an occurrence.
+     * With inc == True, if dt itself is an occurrence, it will be returned.
+     *
+     * @return Date or null
+     */
+    RRule.prototype.after = function (dt, inc) {
+        if (inc === void 0) { inc = false; }
+        if (!isValidDate(dt)) {
+            throw new Error('Invalid date passed in to RRule.after');
+        }
+        var args = { dt: dt, inc: inc };
+        var result = this._cacheGet('after', args);
+        if (result === false) {
+            result = this._iter(new IterResult('after', args));
+            this._cacheAdd('after', result, args);
+        }
+        return result;
+    };
+    /**
+     * Returns the number of recurrences in this set. It will have go trough
+     * the whole recurrence, if this hasn't been done before.
+     */
+    RRule.prototype.count = function () {
+        return this.all().length;
+    };
+    /**
+     * Converts the rrule into its string representation
+     *
+     * @see <http://www.ietf.org/rfc/rfc2445.txt>
+     * @return String
+     */
+    RRule.prototype.toString = function () {
+        return optionsToString(this.origOptions);
+    };
+    /**
+     * Will convert all rules described in nlp:ToText
+     * to text.
+     */
+    RRule.prototype.toText = function (gettext, language, dateFormatter) {
+        return toText(this, gettext, language, dateFormatter);
+    };
+    RRule.prototype.isFullyConvertibleToText = function () {
+        return isFullyConvertible(this);
+    };
+    /**
+     * @return a RRule instance with the same freq and options
+     * as this one (cache is not cloned)
+     */
+    RRule.prototype.clone = function () {
+        return new RRule(this.origOptions);
+    };
+    // RRule class 'constants'
+    RRule.FREQUENCIES = [
+        'YEARLY',
+        'MONTHLY',
+        'WEEKLY',
+        'DAILY',
+        'HOURLY',
+        'MINUTELY',
+        'SECONDLY',
+    ];
+    RRule.YEARLY = Frequency.YEARLY;
+    RRule.MONTHLY = Frequency.MONTHLY;
+    RRule.WEEKLY = Frequency.WEEKLY;
+    RRule.DAILY = Frequency.DAILY;
+    RRule.HOURLY = Frequency.HOURLY;
+    RRule.MINUTELY = Frequency.MINUTELY;
+    RRule.SECONDLY = Frequency.SECONDLY;
+    RRule.MO = Days.MO;
+    RRule.TU = Days.TU;
+    RRule.WE = Days.WE;
+    RRule.TH = Days.TH;
+    RRule.FR = Days.FR;
+    RRule.SA = Days.SA;
+    RRule.SU = Days.SU;
+    RRule.parseString = parseString;
+    RRule.optionsToString = optionsToString;
+    return RRule;
+}());
+
+function iterSet(iterResult, _rrule, _exrule, _rdate, _exdate, tzid) {
+    var _exdateHash = {};
+    var _accept = iterResult.accept;
+    function evalExdate(after, before) {
+        _exrule.forEach(function (rrule) {
+            rrule.between(after, before, true).forEach(function (date) {
+                _exdateHash[Number(date)] = true;
+            });
+        });
+    }
+    _exdate.forEach(function (date) {
+        var zonedDate = new DateWithZone(date, tzid).rezonedDate();
+        _exdateHash[Number(zonedDate)] = true;
+    });
+    iterResult.accept = function (date) {
+        var dt = Number(date);
+        if (isNaN(dt))
+            return _accept.call(this, date);
+        if (!_exdateHash[dt]) {
+            evalExdate(new Date(dt - 1), new Date(dt + 1));
+            if (!_exdateHash[dt]) {
+                _exdateHash[dt] = true;
+                return _accept.call(this, date);
+            }
+        }
+        return true;
+    };
+    if (iterResult.method === 'between') {
+        evalExdate(iterResult.args.after, iterResult.args.before);
+        iterResult.accept = function (date) {
+            var dt = Number(date);
+            if (!_exdateHash[dt]) {
+                _exdateHash[dt] = true;
+                return _accept.call(this, date);
+            }
+            return true;
+        };
+    }
+    for (var i = 0; i < _rdate.length; i++) {
+        var zonedDate = new DateWithZone(_rdate[i], tzid).rezonedDate();
+        if (!iterResult.accept(new Date(zonedDate.getTime())))
+            break;
+    }
+    _rrule.forEach(function (rrule) {
+        iter(iterResult, rrule.options);
+    });
+    var res = iterResult._result;
+    sort(res);
+    switch (iterResult.method) {
+        case 'all':
+        case 'between':
+            return res;
+        case 'before':
+            return ((res.length && res[res.length - 1]) || null);
+        case 'after':
+        default:
+            return ((res.length && res[0]) || null);
+    }
+}
+
+/**
+ * RRuleStr
+ * To parse a set of rrule strings
+ */
+var DEFAULT_OPTIONS = {
+    dtstart: null,
+    cache: false,
+    unfold: false,
+    forceset: false,
+    compatible: false,
+    tzid: null,
+};
+function parseInput(s, options) {
+    var rrulevals = [];
+    var rdatevals = [];
+    var exrulevals = [];
+    var exdatevals = [];
+    var parsedDtstart = parseDtstart(s);
+    var dtstart = parsedDtstart.dtstart;
+    var tzid = parsedDtstart.tzid;
+    var lines = splitIntoLines(s, options.unfold);
+    lines.forEach(function (line) {
+        var _a;
+        if (!line)
+            return;
+        var _b = breakDownLine(line), name = _b.name, parms = _b.parms, value = _b.value;
+        switch (name.toUpperCase()) {
+            case 'RRULE':
+                if (parms.length) {
+                    throw new Error("unsupported RRULE parm: ".concat(parms.join(',')));
+                }
+                rrulevals.push(parseString(line));
+                break;
+            case 'RDATE':
+                var _c = (_a = /RDATE(?:;TZID=([^:=]+))?/i.exec(line)) !== null && _a !== void 0 ? _a : [], rdateTzid = _c[1];
+                if (rdateTzid && !tzid) {
+                    tzid = rdateTzid;
+                }
+                rdatevals = rdatevals.concat(parseRDate(value, parms));
+                break;
+            case 'EXRULE':
+                if (parms.length) {
+                    throw new Error("unsupported EXRULE parm: ".concat(parms.join(',')));
+                }
+                exrulevals.push(parseString(value));
+                break;
+            case 'EXDATE':
+                exdatevals = exdatevals.concat(parseRDate(value, parms));
+                break;
+            case 'DTSTART':
+                break;
+            default:
+                throw new Error('unsupported property: ' + name);
+        }
+    });
+    return {
+        dtstart: dtstart,
+        tzid: tzid,
+        rrulevals: rrulevals,
+        rdatevals: rdatevals,
+        exrulevals: exrulevals,
+        exdatevals: exdatevals,
+    };
+}
+function buildRule(s, options) {
+    var _a = parseInput(s, options), rrulevals = _a.rrulevals, rdatevals = _a.rdatevals, exrulevals = _a.exrulevals, exdatevals = _a.exdatevals, dtstart = _a.dtstart, tzid = _a.tzid;
+    var noCache = options.cache === false;
+    if (options.compatible) {
+        options.forceset = true;
+        options.unfold = true;
+    }
+    if (options.forceset ||
+        rrulevals.length > 1 ||
+        rdatevals.length ||
+        exrulevals.length ||
+        exdatevals.length) {
+        var rset_1 = new RRuleSet(noCache);
+        rset_1.dtstart(dtstart);
+        rset_1.tzid(tzid || undefined);
+        rrulevals.forEach(function (val) {
+            rset_1.rrule(new RRule$1(groomRruleOptions(val, dtstart, tzid), noCache));
+        });
+        rdatevals.forEach(function (date) {
+            rset_1.rdate(date);
+        });
+        exrulevals.forEach(function (val) {
+            rset_1.exrule(new RRule$1(groomRruleOptions(val, dtstart, tzid), noCache));
+        });
+        exdatevals.forEach(function (date) {
+            rset_1.exdate(date);
+        });
+        if (options.compatible && options.dtstart)
+            rset_1.rdate(dtstart);
+        return rset_1;
+    }
+    var val = rrulevals[0] || {};
+    return new RRule$1(groomRruleOptions(val, val.dtstart || options.dtstart || dtstart, val.tzid || options.tzid || tzid), noCache);
+}
+function rrulestr(s, options) {
+    if (options === void 0) { options = {}; }
+    return buildRule(s, initializeOptions(options));
+}
+function groomRruleOptions(val, dtstart, tzid) {
+    return __assign(__assign({}, val), { dtstart: dtstart, tzid: tzid });
+}
+function initializeOptions(options) {
+    var invalid = [];
+    var keys = Object.keys(options);
+    var defaultKeys = Object.keys(DEFAULT_OPTIONS);
+    keys.forEach(function (key) {
+        if (!includes(defaultKeys, key))
+            invalid.push(key);
+    });
+    if (invalid.length) {
+        throw new Error('Invalid options: ' + invalid.join(', '));
+    }
+    return __assign(__assign({}, DEFAULT_OPTIONS), options);
+}
+function extractName(line) {
+    if (line.indexOf(':') === -1) {
+        return {
+            name: 'RRULE',
+            value: line,
+        };
+    }
+    var _a = split(line, ':', 1), name = _a[0], value = _a[1];
+    return {
+        name: name,
+        value: value,
+    };
+}
+function breakDownLine(line) {
+    var _a = extractName(line), name = _a.name, value = _a.value;
+    var parms = name.split(';');
+    if (!parms)
+        throw new Error('empty property name');
+    return {
+        name: parms[0].toUpperCase(),
+        parms: parms.slice(1),
+        value: value,
+    };
+}
+function splitIntoLines(s, unfold) {
+    if (unfold === void 0) { unfold = false; }
+    s = s && s.trim();
+    if (!s)
+        throw new Error('Invalid empty string');
+    // More info about 'unfold' option
+    // Go head to http://www.ietf.org/rfc/rfc2445.txt
+    if (!unfold) {
+        return s.split(/\s/);
+    }
+    var lines = s.split('\n');
+    var i = 0;
+    while (i < lines.length) {
+        // TODO
+        var line = (lines[i] = lines[i].replace(/\s+$/g, ''));
+        if (!line) {
+            lines.splice(i, 1);
+        }
+        else if (i > 0 && line[0] === ' ') {
+            lines[i - 1] += line.slice(1);
+            lines.splice(i, 1);
+        }
+        else {
+            i += 1;
+        }
+    }
+    return lines;
+}
+function validateDateParm(parms) {
+    parms.forEach(function (parm) {
+        if (!/(VALUE=DATE(-TIME)?)|(TZID=)/.test(parm)) {
+            throw new Error('unsupported RDATE/EXDATE parm: ' + parm);
+        }
+    });
+}
+function parseRDate(rdateval, parms) {
+    validateDateParm(parms);
+    return rdateval.split(',').map(function (datestr) { return untilStringToDate(datestr); });
+}
+
+function createGetterSetter(fieldName) {
+    var _this = this;
+    return function (field) {
+        if (field !== undefined) {
+            _this["_".concat(fieldName)] = field;
+        }
+        if (_this["_".concat(fieldName)] !== undefined) {
+            return _this["_".concat(fieldName)];
+        }
+        for (var i = 0; i < _this._rrule.length; i++) {
+            var field_1 = _this._rrule[i].origOptions[fieldName];
+            if (field_1) {
+                return field_1;
+            }
+        }
+    };
+}
+var RRuleSet = /** @class */ (function (_super) {
+    __extends(RRuleSet, _super);
+    /**
+     *
+     * @param {Boolean?} noCache
+     * The same stratagy as RRule on cache, default to false
+     * @constructor
+     */
+    function RRuleSet(noCache) {
+        if (noCache === void 0) { noCache = false; }
+        var _this = _super.call(this, {}, noCache) || this;
+        _this.dtstart = createGetterSetter.apply(_this, ['dtstart']);
+        _this.tzid = createGetterSetter.apply(_this, ['tzid']);
+        _this._rrule = [];
+        _this._rdate = [];
+        _this._exrule = [];
+        _this._exdate = [];
+        return _this;
+    }
+    RRuleSet.prototype._iter = function (iterResult) {
+        return iterSet(iterResult, this._rrule, this._exrule, this._rdate, this._exdate, this.tzid());
+    };
+    /**
+     * Adds an RRule to the set
+     *
+     * @param {RRule}
+     */
+    RRuleSet.prototype.rrule = function (rrule) {
+        _addRule(rrule, this._rrule);
+    };
+    /**
+     * Adds an EXRULE to the set
+     *
+     * @param {RRule}
+     */
+    RRuleSet.prototype.exrule = function (rrule) {
+        _addRule(rrule, this._exrule);
+    };
+    /**
+     * Adds an RDate to the set
+     *
+     * @param {Date}
+     */
+    RRuleSet.prototype.rdate = function (date) {
+        _addDate(date, this._rdate);
+    };
+    /**
+     * Adds an EXDATE to the set
+     *
+     * @param {Date}
+     */
+    RRuleSet.prototype.exdate = function (date) {
+        _addDate(date, this._exdate);
+    };
+    /**
+     * Get list of included rrules in this recurrence set.
+     *
+     * @return List of rrules
+     */
+    RRuleSet.prototype.rrules = function () {
+        return this._rrule.map(function (e) { return rrulestr(e.toString()); });
+    };
+    /**
+     * Get list of excluded rrules in this recurrence set.
+     *
+     * @return List of exrules
+     */
+    RRuleSet.prototype.exrules = function () {
+        return this._exrule.map(function (e) { return rrulestr(e.toString()); });
+    };
+    /**
+     * Get list of included datetimes in this recurrence set.
+     *
+     * @return List of rdates
+     */
+    RRuleSet.prototype.rdates = function () {
+        return this._rdate.map(function (e) { return new Date(e.getTime()); });
+    };
+    /**
+     * Get list of included datetimes in this recurrence set.
+     *
+     * @return List of exdates
+     */
+    RRuleSet.prototype.exdates = function () {
+        return this._exdate.map(function (e) { return new Date(e.getTime()); });
+    };
+    RRuleSet.prototype.valueOf = function () {
+        var result = [];
+        if (!this._rrule.length && this._dtstart) {
+            result = result.concat(optionsToString({ dtstart: this._dtstart }));
+        }
+        this._rrule.forEach(function (rrule) {
+            result = result.concat(rrule.toString().split('\n'));
+        });
+        this._exrule.forEach(function (exrule) {
+            result = result.concat(exrule
+                .toString()
+                .split('\n')
+                .map(function (line) { return line.replace(/^RRULE:/, 'EXRULE:'); })
+                .filter(function (line) { return !/^DTSTART/.test(line); }));
+        });
+        if (this._rdate.length) {
+            result.push(rdatesToString('RDATE', this._rdate, this.tzid()));
+        }
+        if (this._exdate.length) {
+            result.push(rdatesToString('EXDATE', this._exdate, this.tzid()));
+        }
+        return result;
+    };
+    /**
+     * to generate recurrence field such as:
+     * DTSTART:19970902T010000Z
+     * RRULE:FREQ=YEARLY;COUNT=2;BYDAY=TU
+     * RRULE:FREQ=YEARLY;COUNT=1;BYDAY=TH
+     */
+    RRuleSet.prototype.toString = function () {
+        return this.valueOf().join('\n');
+    };
+    /**
+     * Create a new RRuleSet Object completely base on current instance
+     */
+    RRuleSet.prototype.clone = function () {
+        var rrs = new RRuleSet(!!this._cache);
+        this._rrule.forEach(function (rule) { return rrs.rrule(rule.clone()); });
+        this._exrule.forEach(function (rule) { return rrs.exrule(rule.clone()); });
+        this._rdate.forEach(function (date) { return rrs.rdate(new Date(date.getTime())); });
+        this._exdate.forEach(function (date) { return rrs.exdate(new Date(date.getTime())); });
+        return rrs;
+    };
+    return RRuleSet;
+}(RRule$1));
+function _addRule(rrule, collection) {
+    if (!(rrule instanceof RRule$1)) {
+        throw new TypeError(String(rrule) + ' is not RRule instance');
+    }
+    if (!includes(collection.map(String), String(rrule))) {
+        collection.push(rrule);
+    }
+}
+function _addDate(date, collection) {
+    if (!(date instanceof Date)) {
+        throw new TypeError(String(date) + ' is not Date instance');
+    }
+    if (!includes(collection.map(Number), Number(date))) {
+        collection.push(date);
+        sort(collection);
+    }
+}
+function rdatesToString(param, rdates, tzid) {
+    var isUTC = !tzid || tzid.toUpperCase() === 'UTC';
+    var header = isUTC ? "".concat(param, ":") : "".concat(param, ";TZID=").concat(tzid, ":");
+    var dateString = rdates
+        .map(function (rdate) { return timeToUntilString(rdate.valueOf(), isUTC); })
+        .join(',');
+    return "".concat(header).concat(dateString);
+}
+
+/* !
+ * rrule.js - Library for working with recurrence rules for calendar dates.
+ * https://github.com/jakubroztocil/rrule
+ *
+ * Copyright 2010, Jakub Roztocil and Lars Schoning
+ * Licenced under the BSD licence.
+ * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
+ *
+ * Based on:
+ * python-dateutil - Extensions to the standard Python datetime module.
+ * Copyright (c) 2003-2011 - Gustavo Niemeyer <gustavo@niemeyer.net>
+ * Copyright (c) 2012 - Tomi Pieviläinen <tomi.pievilainen@iki.fi>
+ * https://github.com/jakubroztocil/rrule/blob/master/LICENCE
+ *
+ */
+
+var rruleModule = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	ALL_WEEKDAYS: ALL_WEEKDAYS,
+	get Frequency () { return Frequency; },
+	RRule: RRule$1,
+	RRuleSet: RRuleSet,
+	Weekday: Weekday,
+	datetime: datetime,
+	rrulestr: rrulestr
+});
+
+// Handle both ESM and CommonJS module formats
+const rrule = rruleModule;
+const { RRule } = rrule;
+/**
+ * Calculate the next date based on the recurrence rule, timezone, & start date.
+ *
+ * @param rule A recurrence rule in string format, can either be an RFC5545 string or a
+ * human-readable text. I.e. "FREQ=DAILY;INTERVAL=1" or "Every day".
+ * @param timezone The timezone identifier. I.e. "America/New_York".
+ * @param start The start date of the recurrence.
+ * @param now The current date to calculate the next occurrence from. Defaults to the
+ * current date and time.
+ *
+ * @returns A Date object representing the next occurrence, or null if there are no
+ * future occurrences.
+ */
+function calculateNextDate(rule, timezone, start, now = new Date()) {
+    let options;
+    try {
+        options = RRule.parseString(rule);
+    }
+    catch {
+        options = RRule.fromText(rule).origOptions;
+    }
+    options.dtstart = start;
+    options.tzid = timezone;
+    return new RRule(options).after(now);
+}
 
 /**
  * The main function for the action.
@@ -27253,13 +40842,82 @@ var coreExports = requireCore();
  */
 async function run() {
     try {
-        const ms = coreExports.getInput('milliseconds');
-        // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-        coreExports.debug(`Waiting ${ms} milliseconds ...`);
-        // Log the current timestamp, wait, then log the new timestamp
-        coreExports.debug(new Date().toTimeString());
-        await new Promise((resolve) => setTimeout(resolve, Number(ms)));
-        coreExports.debug(new Date().toTimeString());
+        // Set a consistent "now" timestamp for the action run
+        const now = new Date();
+        coreExports.info(`Action started at: ${now.toISOString()}`);
+        // Get inputs defined in action metadata file
+        const token = coreExports.getInput('token');
+        const config = coreExports.getInput('config');
+        const timezone = coreExports.getInput('timezone');
+        // Parse the configuration
+        const parsed = parseConfig(config);
+        // Get an octokit client for GitHub API requests
+        const octokit = githubExports.getOctokit(token);
+        // Loop through each issue configuration and log details
+        parsed.forEach((issue, index) => {
+            // Log the issue being processed
+            coreExports.info(`Processing Issue ${index + 1}: ${issue.title}`);
+            // Calculate the next occurrence date based on the schedule
+            const nextDate = calculateNextDate(issue.schedule, timezone, issue.start || new Date(), now);
+            if (nextDate === null || nextDate > now) {
+                coreExports.info(`The next occurrence for "${issue.title}" is ${nextDate?.toISOString()}, ` +
+                    `which is in the future or there are no future occurrences. ` +
+                    `Skipping issue creation.`);
+                return;
+            }
+            coreExports.info(`The next occurrence for "${issue.title}" is ${nextDate.toISOString()}.`);
+            // Calculate the due date based on the due rule
+            const dueDate = calculateNextDate(issue.due, timezone, nextDate, now);
+            if (dueDate === null) {
+                coreExports.info(`The due date for "${issue.title}" could not ` +
+                    `be calculated. Skipping issue creation.`);
+                return;
+            }
+            coreExports.info(`The due date for "${issue.title}" is ${dueDate.toISOString()}.`);
+            // Create the issue on GitHub
+            let issueData = {
+                owner: githubExports.context.repo.owner,
+                repo: githubExports.context.repo.repo,
+                title: formatDateString(issue.title, dueDate, timezone)
+            };
+            if (issue.body) {
+                issueData = {
+                    ...issueData,
+                    body: formatDateString(issue.body, dueDate, timezone)
+                };
+            }
+            if (issue.assignees) {
+                issueData = {
+                    ...issueData,
+                    assignees: issue.assignees
+                };
+            }
+            const issueNumber = octokit.rest.issues
+                .create(issueData)
+                .then(({ data: issueResp }) => {
+                coreExports.info(`Created issue #${issueResp.number}: ${issueResp.html_url}`);
+                if (issue.labels) {
+                    octokit.rest.issues
+                        .addLabels({
+                        owner: githubExports.context.repo.owner,
+                        repo: githubExports.context.repo.repo,
+                        issue_number: issueResp.number,
+                        labels: issue.labels
+                    })
+                        .then(() => {
+                        coreExports.info(`Added labels to issue #${issueResp.number}: ${issue.labels?.join(', ')}`);
+                    })
+                        .catch((error) => {
+                        coreExports.error(`Failed to add labels to issue #${issueResp.number}: ${error.message}`);
+                    });
+                }
+                return issueResp.number;
+            })
+                .catch((error) => {
+                coreExports.error(`Failed to create issue "${issue.title}": ${error.message}`);
+            });
+            return issueNumber;
+        });
         // Set outputs for other workflow steps to use
         coreExports.setOutput('time', new Date().toTimeString());
     }
