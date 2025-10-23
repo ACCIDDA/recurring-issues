@@ -2,7 +2,7 @@
 
 # Unordered list style
 MD004:
-  style: dash
+  style: 'dash'
 
 # Disable line length for tables
 MD013:
@@ -10,7 +10,7 @@ MD013:
 
 # Ordered list item prefix
 MD029:
-  style: one
+  style: 'one_or_ordered'
 
 # Spaces after list markers
 MD030:
@@ -21,4 +21,4 @@ MD030:
 
 # Code block style
 MD046:
-  style: fenced
+  style: 'fenced'

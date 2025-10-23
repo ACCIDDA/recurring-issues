@@ -1,4 +1,4 @@
-# Create a GitHub Action Using TypeScript
+# Recurring Issues
 
 [![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 ![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
@@ -6,300 +6,502 @@
 [![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
-Use this template to bootstrap the creation of a TypeScript action. :rocket:
+Automatically create GitHub issues on a recurring schedule using human-readable
+recurrence rules or RFC5545 RRULE syntax.
 
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
-
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
-
-## Create Your Own Action
-
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
-
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
-
-> [!IMPORTANT]
+> [!CAUTION]
 >
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+> This GitHub action is still under development and API is subject to change
+> until a v1 release.
 
-## Initial Setup
+## Features
 
-After you've cloned the repository to your local machine or codespace, you'll
-need to perform some initial setup steps before you can develop your action.
+- **Flexible Scheduling**: Use natural language ("every Monday") or RFC5545
+  RRULE syntax.
+- **Timezone Support**: Schedule issues in your preferred timezone.
+- **Dynamic Date Formatting**: Include formatted dates in issue titles and
+  bodies.
+- **Separate Due Dates**: Optionally set different due date schedules for issue
+  formatting.
+- **Full Issue Configuration**: Set labels, assignees, and body content.
+- **YAML or Inline Config**: Configure via external file or inline YAML.
 
-> [!NOTE]
->
-> You'll need to have a reasonably modern version of
-> [Node.js](https://nodejs.org) handy (20.x or later should work!). If you are
-> using a version manager like [`nodenv`](https://github.com/nodenv/nodenv) or
-> [`fnm`](https://github.com/Schniz/fnm), this template has a `.node-version`
-> file at the root of the repository that can be used to automatically switch to
-> the correct version when you `cd` into the repository. Additionally, this
-> `.node-version` file is used by GitHub Actions in any `actions/setup-node`
-> actions.
+## Use Cases
 
-1. :hammer_and_wrench: Install the dependencies
-
-   ```bash
-   npm install
-   ```
-
-1. :building_construction: Package the TypeScript for distribution
-
-   ```bash
-   npm run bundle
-   ```
-
-1. :white_check_mark: Run the tests
-
-   ```bash
-   $ npm test
-
-   PASS  ./index.test.js
-     ✓ throws invalid number (3ms)
-     ✓ wait 500 ms (504ms)
-     ✓ test runs (95ms)
-
-   ...
-   ```
-
-## Update the Action Metadata
-
-The [`action.yml`](action.yml) file defines metadata about your action, such as
-input(s) and output(s). For details about this file, see
-[Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
-
-When you copy this repository, update `action.yml` with the name, description,
-inputs, and outputs for your action.
-
-## Update the Action Code
-
-The [`src/`](./src/) directory is the heart of your action! This contains the
-source code that will be run when your action is invoked. You can replace the
-contents of this directory with your own code.
-
-There are a few things to keep in mind when writing your action code:
-
-- Most GitHub Actions toolkit and CI/CD operations are processed asynchronously.
-  In `main.ts`, you will see that the action is run in an `async` function.
-
-  ```javascript
-  import * as core from '@actions/core'
-  //...
-
-  async function run() {
-    try {
-      //...
-    } catch (error) {
-      core.setFailed(error.message)
-    }
-  }
-  ```
-
-  For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/main/README.md).
-
-So, what are you waiting for? Go ahead and start customizing your action!
-
-1. Create a new branch
-
-   ```bash
-   git checkout -b releases/v1
-   ```
-
-1. Replace the contents of `src/` with your action code
-1. Add tests to `__tests__/` for your source code
-1. Format, test, and build the action
-
-   ```bash
-   npm run all
-   ```
-
-   > This step is important! It will run [`rollup`](https://rollupjs.org/) to
-   > build the final JavaScript action code with all dependencies included. If
-   > you do not run this step, your action will not work correctly when it is
-   > used in a workflow.
-
-1. (Optional) Test your action locally
-
-   The [`@github/local-action`](https://github.com/github/local-action) utility
-   can be used to test your action locally. It is a simple command-line tool
-   that "stubs" (or simulates) the GitHub Actions Toolkit. This way, you can run
-   your TypeScript action locally without having to commit and push your changes
-   to a repository.
-
-   The `local-action` utility can be run in the following ways:
-   - Visual Studio Code Debugger
-
-     Make sure to review and, if needed, update
-     [`.vscode/launch.json`](./.vscode/launch.json)
-
-   - Terminal/Command Prompt
-
-     ```bash
-     # npx @github/local action <action-yaml-path> <entrypoint> <dotenv-file>
-     npx @github/local-action . src/main.ts .env
-     ```
-
-   You can provide a `.env` file to the `local-action` CLI to set environment
-   variables used by the GitHub Actions Toolkit. For example, setting inputs and
-   event payload data used by your action. For more information, see the example
-   file, [`.env.example`](./.env.example), and the
-   [GitHub Actions Documentation](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables).
-
-1. Commit your changes
-
-   ```bash
-   git add .
-   git commit -m "My first action is ready!"
-   ```
-
-1. Push them to your repository
-
-   ```bash
-   git push -u origin releases/v1
-   ```
-
-1. Create a pull request and get feedback on your action
-1. Merge the pull request into the `main` branch
-
-Your action is now published! :rocket:
-
-For information about versioning your action, see
-[Versioning](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md)
-in the GitHub Actions toolkit.
-
-## Validate the Action
-
-You can now validate the action by referencing it in a workflow file. For
-example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
-action in the same repository.
-
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
-
-  - name: Test Local Action
-    id: test-action
-    uses: ./
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
-
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/typescript-action/actions)! :rocket:
+- **Recurring Reminders**: Weekly security review reminders, monthly dependency
+  updates.
+- **Team Standups**: Daily standup issues in team repositories.
+- **Report Deadlines**: Monthly or quarterly report issues with proper due
+  dates.
+- **Maintenance Tasks**: Regular maintenance windows or deployment freeze
+  reminders.
+- **Meeting Agendas**: Recurring meeting issues with consistent formatting.
 
 ## Usage
 
-After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md)
-in the GitHub Actions toolkit.
+### Basic Example
 
-To include the action in a workflow in another repository, you can use the
-`uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
-hash.
+Create a workflow file (e.g., `.github/workflows/recurring-issues.yml`):
 
 ```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v4
+name: Create Recurring Issues
+on:
+  schedule:
+    # Run at midnight UTC every day
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
-  - name: Test Local Action
-    id: test-action
-    uses: actions/typescript-action@v1 # Commit with the `v1` tag
-    with:
-      milliseconds: 1000
+permissions:
+  issues: write
 
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ACCIDDA/recurring-issues@v0.1.0
+        with:
+          config: |
+            - title: "Weekly Team Sync - [YYYY-MM-DD]"
+              body: |
+                ## Agenda
+                - Review last week's progress
+                - Plan for upcoming week
+
+                Meeting Date: [dddd, MMMM D, YYYY]
+              labels:
+                - meeting
+                - team-sync
+              assignees:
+                - team-lead
+              schedule: "every Monday"
 ```
 
-## Publishing a New Release
+### Configuration File
 
-This project includes a helper script, [`script/release`](./script/release)
-designed to streamline the process of tagging and pushing new releases for
-GitHub Actions.
+For complex configurations, use an external YAML file:
 
-GitHub Actions allows users to select a specific version of the action to use,
-based on release tags. This script simplifies this process by performing the
-following steps:
+**.github/recurring-issues.yml**:
 
-1. **Retrieving the latest release tag:** The script starts by fetching the most
-   recent SemVer release tag of the current branch, by looking at the local data
-   available in your repository.
-1. **Prompting for a new release tag:** The user is then prompted to enter a new
-   release tag. To assist with this, the script displays the tag retrieved in
-   the previous step, and validates the format of the inputted tag (vX.X.X). The
-   user is also reminded to update the version field in package.json.
-1. **Tagging the new release:** The script then tags a new release and syncs the
-   separate major tag (e.g. v1, v2) with the new release tag (e.g. v1.0.0,
-   v2.1.2). When the user is creating a new major release, the script
-   auto-detects this and creates a `releases/v#` branch for the previous major
-   version.
-1. **Pushing changes to remote:** Finally, the script pushes the necessary
-   commits, tags and branches to the remote repository. From here, you will need
-   to create a new release in GitHub so users can easily reference the new tags
-   in their workflows.
+```yaml
+- title: 'Sprint Planning - Sprint Starting [YYYY-MM-DD]'
+  body: |
+    ## Sprint Goals
+    - [ ] Define sprint objectives
+    - [ ] Estimate story points
+    - [ ] Assign tasks
 
-## Dependency License Management
+    Sprint Start: [MMMM D, YYYY]
+  labels:
+    - sprint-planning
+    - planning
+  assignees:
+    - scrum-master
+  schedule: 'every other Monday'
 
-This template includes a GitHub Actions workflow,
-[`licensed.yml`](./.github/workflows/licensed.yml), that uses
-[Licensed](https://github.com/licensee/licensed) to check for dependencies with
-missing or non-compliant licenses. This workflow is initially disabled. To
-enable the workflow, follow the below steps.
-
-1. Open [`licensed.yml`](./.github/workflows/licensed.yml)
-1. Uncomment the following lines:
-
-   ```yaml
-   # pull_request:
-   #   branches:
-   #     - main
-   # push:
-   #   branches:
-   #     - main
-   ```
-
-1. Save and commit the changes
-
-Once complete, this workflow will run any time a pull request is created or
-changes pushed directly to `main`. If the workflow detects any dependencies with
-missing or non-compliant licenses, it will fail the workflow and provide details
-on the issue(s) found.
-
-### Updating Licenses
-
-Whenever you install or update dependencies, you can use the Licensed CLI to
-update the licenses database. To install Licensed, see the project's
-[Readme](https://github.com/licensee/licensed?tab=readme-ov-file#installation).
-
-To update the cached licenses, run the following command:
-
-```bash
-licensed cache
+- title: 'Security Review - [YYYY-MM-DD]'
+  body: 'Weekly security review for the week of [YYYY-MM-DD]'
+  labels:
+    - security
+    - review
+  schedule: 'FREQ=WEEKLY;BYDAY=FR'
+  due: 'FREQ=WEEKLY;BYDAY=FR;BYHOUR=17'
 ```
 
-To check the status of cached licenses, run the following command:
+**Workflow**:
 
-```bash
-licensed status
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  with:
+    config: .github/recurring-issues.yml
 ```
+
+### Timezone Example
+
+Schedule issues in a specific timezone:
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  with:
+    timezone: 'America/New_York'
+    config: |
+      - title: "Daily Standup - [YYYY-MM-DD]"
+        body: "Standup for [dddd, MMMM D]"
+        schedule: "every weekday"
+        labels:
+          - standup
+```
+
+### RFC5545 RRULE Example
+
+For advanced scheduling, use RFC5545 RRULE syntax:
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  with:
+    config: |
+      - title: "Quarterly Review - Q[Q] [YYYY]"
+        body: "Quarterly business review"
+        schedule: "FREQ=MONTHLY;INTERVAL=3;BYMONTHDAY=1"
+        labels:
+          - quarterly
+          - review
+```
+
+### With Separate Due Dates
+
+Create issues on one schedule with due dates on another:
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  with:
+    config: |
+      - title: "Monthly Report - Due [YYYY-MM-DD]"
+        body: |
+          Monthly report is due on [MMMM D, YYYY] at 5pm.
+
+          Please submit all updates by the deadline.
+        schedule: "every month on the 1st"  # Created on the 1st
+        due: "every month on the 15th"      # Due on the 15th
+        labels:
+          - report
+          - monthly
+```
+
+In this case the "due" date will be used in formatting the issue title and body
+instead of the "schedule" date even though the issue is created using the
+"schedule" date.
+
+## Inputs
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  with:
+    # GitHub token for creating issues
+    # Default: ${{ github.token }}
+    token: ''
+
+    # Either a file path or inline YAML string containing issue configurations
+    # Required: true
+    config: ''
+
+    # Timezone for scheduling (IANA timezone identifier)
+    # Default: 'UTC'
+    timezone: 'America/New_York'
+```
+
+### Input Details
+
+#### `token`
+
+The GitHub token used to create issues. The default `${{ github.token }}` works
+for most cases, but you may need a Personal Access Token (PAT) for certain
+scenarios.
+
+**Required**: `true` (has default) **Default**: `${{ github.token }}`
+
+#### `config`
+
+Either a file path to a YAML configuration file or an inline YAML string
+defining the recurring issues to create.
+
+**Required**: `true` **Format**: YAML (file path or inline string)
+
+**Configuration Schema**:
+
+Each issue configuration supports the following fields:
+
+| Field       | Type     | Required | Description                                              |
+| ----------- | -------- | -------- | -------------------------------------------------------- |
+| `title`     | string   | yes      | Issue title (supports date tokens)                       |
+| `body`      | string   | no       | Issue body content (supports date tokens)                |
+| `labels`    | string[] | no       | Array of label names to apply                            |
+| `assignees` | string[] | no       | Array of GitHub usernames to assign                      |
+| `schedule`  | string   | yes      | Recurrence rule for when to create the issue             |
+| `due`       | string   | no       | Recurrence rule for the issue due date                   |
+| `start`     | date     | no       | Start date for the recurrence (defaults to current date) |
+
+**Recurrence Rules** (`schedule` and `due`):
+
+Recurrence rules can be specified in two formats:
+
+1. **Human-readable text**: "every Monday", "every other Tuesday", "every
+   weekday", "every month on the 15th"
+2. **RFC5545 RRULE syntax**: "FREQ=DAILY;INTERVAL=1",
+   "FREQ=WEEKLY;BYDAY=MO,WE,FR"
+
+> [!IMPORTANT]
+>
+> The `schedule` field works at the **day level only**. Do not include times in
+> the schedule (e.g., "every Monday at 9am", the 9am portion will not be
+> respected). Issues are created when the workflow runs on a day that matches
+> the schedule. Times **can** be specified in the `due` field (e.g.,
+> "FREQ=DAILY;BYHOUR=17" for 5pm daily).
+
+**Date Tokens**:
+
+Date tokens can be used in `title` and `body` fields and will be replaced with
+formatted dates. This action uses [Day.js](https://day.js.org/) for date
+formatting. Any format token supported by Day.js can be used by enclosing it in
+square brackets.
+
+For the complete list of available format tokens, see the
+[Day.js Format documentation](https://day.js.org/docs/en/display/format).
+
+#### `timezone`
+
+The IANA timezone identifier to use for scheduling. This affects when issues are
+considered "due" and how date tokens are formatted.
+
+**Required**: `false` **Default**: `UTC` **Examples**: `America/New_York`,
+`Europe/London`, `Asia/Tokyo`, `Australia/Sydney`
+
+See the
+[IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+for valid identifiers.
+
+## Outputs
+
+### `issues`
+
+A comma-separated list of issue numbers created by this action run.
+
+**Example Usage**:
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  id: recurring-issues
+  with:
+    config: .github/recurring-issues.yml
+
+- name: Comment on created issues
+  if: steps.recurring-issues.outputs.issues != ''
+  run: |
+    echo "Created issues: ${{ steps.recurring-issues.outputs.issues }}"
+```
+
+## Advanced Configuration
+
+### Limiting Recurrence with UNTIL
+
+You can limit how long a recurring issue continues using the `UNTIL` parameter
+in RFC5545 syntax:
+
+```yaml
+- title: 'Project Status Update'
+  schedule: 'FREQ=WEEKLY;BYDAY=FR;UNTIL=20251231T235959Z'
+  body: 'Weekly project status (ends Dec 31, 2025)'
+```
+
+Or with human-readable text:
+
+```yaml
+- title: 'Temporary Weekly Check-in'
+  schedule: 'every Friday until December 31, 2025'
+  body: 'This recurring issue will stop after the specified date'
+```
+
+### Custom Start Dates
+
+By default, recurring issues start from the current date. You can specify a
+custom start date:
+
+```yaml
+- title: 'Future Recurring Issue'
+  schedule: 'every Monday'
+  start: 2025-06-01T00:00:00Z
+  body: 'This issue series starts on June 1, 2025'
+```
+
+### Multiple Issue Types
+
+You can configure multiple different recurring issues in a single workflow:
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.0
+  with:
+    config: |
+      - title: "Daily Standup"
+        schedule: "every weekday"
+        labels: [standup, daily]
+
+      - title: "Weekly Planning"
+        schedule: "every Monday"
+        labels: [planning, weekly]
+
+      - title: "Monthly Review"
+        schedule: "every month on the 1st"
+        labels: [review, monthly]
+```
+
+## Workflow Scheduling
+
+The action determines whether to create an issue based on the current date and
+the recurrence rule. The `schedule` field operates at the day level, so issues
+are created when the workflow runs on a matching day.
+
+**Run the workflow once per day** (or less frequently). Running more than once
+per day may result in duplicate issues:
+
+```yaml
+on:
+  schedule:
+    # Run at midnight UTC every day
+    - cron: '0 0 * * *'
+  # Allow manual triggering for testing
+  workflow_dispatch:
+```
+
+> [!NOTE]
+>
+> GitHub Actions scheduled workflows are scheduled using UTC. The workflow
+> trigger time is independent of the `timezone` input. The `timezone` parameter
+> controls how the action interprets "today's date" when checking if an issue
+> should be created.
+
+## Permissions
+
+This action requires `issues: write` permission:
+
+```yaml
+permissions:
+  issues: write
+```
+
+If using a PAT token, ensure the token has the `repo` scope (for private
+repositories) or `public_repo` scope (for public repositories).
+
+## Examples from Real Use Cases
+
+### Sprint Planning (Every 2 Weeks)
+
+```yaml
+- title: 'Sprint Planning - Sprint [YYYY-MM-DD]'
+  body: |
+    ## Sprint Planning Meeting
+
+    **Sprint Start**: [YYYY-MM-DD]
+
+    ### Pre-Planning Tasks
+    - [ ] Review and refine backlog
+    - [ ] Identify dependencies
+    - [ ] Review team capacity
+
+    ### During Planning
+    - [ ] Define sprint goal
+    - [ ] Commit to sprint backlog
+    - [ ] Estimate effort
+  schedule: 'FREQ=WEEKLY;INTERVAL=2;BYDAY=MO'
+  labels:
+    - sprint-planning
+    - planning
+  assignees:
+    - product-owner
+    - scrum-master
+```
+
+### Monthly Dependency Updates
+
+```yaml
+- title: 'Dependency Updates - [MMMM YYYY]'
+  body: |
+    Time for monthly dependency updates!
+
+    ## Tasks
+    - [ ] Run `npm audit` and review security vulnerabilities
+    - [ ] Update minor versions: `npm update`
+    - [ ] Check for major version updates
+    - [ ] Test updated dependencies
+    - [ ] Create PR with updates
+
+    Due: [YYYY-MM-DD]
+  schedule: 'every month on the 1st'
+  due: 'every month on the 7th'
+  labels:
+    - dependencies
+    - maintenance
+  assignees:
+    - tech-lead
+```
+
+### Weekly Security Review
+
+```yaml
+- title: 'Security Review - Week of [YYYY-MM-DD]'
+  body: |
+    ## Weekly Security Checklist
+
+    - [ ] Review Dependabot alerts
+    - [ ] Check CodeQL scan results
+    - [ ] Review access logs for anomalies
+    - [ ] Verify backup integrity
+    - [ ] Update security documentation
+
+    **Review Date**: [dddd, MMMM D, YYYY]
+  schedule: 'every Friday'
+  labels:
+    - security
+    - review
+  assignees:
+    - security-team
+```
+
+### Quarterly Business Review
+
+```yaml
+- title: 'Quarterly Business Review - Q[Q] [YYYY]'
+  body: |
+    ## Q[Q] [YYYY] Business Review
+
+    Time to review the quarter's performance and plan ahead.
+
+    ### Agenda
+    - Financial review
+    - Product metrics
+    - Team performance
+    - Next quarter planning
+
+    **Due**: [MMMM D, YYYY]
+  schedule: 'FREQ=MONTHLY;INTERVAL=3;BYMONTHDAY=1'
+  due: 'FREQ=MONTHLY;INTERVAL=3;BYMONTHDAY=15'
+  labels:
+    - quarterly-review
+    - business
+```
+
+## Troubleshooting
+
+### Issues aren't being created
+
+1. **Check workflow runs**: Verify the workflow is running in the Actions tab.
+2. **Verify schedule**: Use `workflow_dispatch` to manually trigger and test.
+3. **Check logs**: Review action logs for skipped issues and reasons.
+4. **Verify permissions**: Ensure the workflow has `issues: write` permission.
+5. **Check timezone**: Verify the timezone setting matches your expectations.
+
+### Issues are created at the wrong time
+
+- The action creates issues when the "next occurrence" date matches the current
+  date (floored to midnight in the specified timezone).
+- Adjust the workflow schedule or timezone setting as needed.
+- Use `workflow_dispatch` to test without waiting for scheduled runs.
+
+### Date tokens aren't formatting correctly
+
+- Date tokens are case-sensitive, i.e. `[DD]` and `[dd]` produce different
+  formats.
+- Tokens must be enclosed in square brackets: `[YYYY-MM-DD]`.
+- Date formatting uses the timezone specified in the action input.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+for details.
+
+## Author
+
+[@TimothyWillard](https://github.com/TimothyWillard)
