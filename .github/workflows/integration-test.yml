@@ -8,9 +8,33 @@ permissions:
   issues: 'write'
 
 jobs:
-  integration-test:
-    name: 'Integration Test'
+  cleanup-integration-issues:
+    name: 'Cleanup Integration Test Issues'
     runs-on: 'ubuntu-latest'
+    steps:
+      - name: 'Close integration test issues'
+        id: 'close-issues'
+        run: |
+          echo "Fetching open integration-test issues..."
+          issues=$(gh issue list --repo ${{ github.repository }} --label "integration-test" --state open --json number --jq '.[].number')
+          if [ -z "$issues" ]; then
+            echo "No open integration-test issues found"
+            exit 0
+          fi
+          count=0
+          for issue in $issues; do
+            echo "Closing issue #$issue as not planned..."
+            gh issue close "$issue" --repo ${{ github.repository }} --reason "not planned"
+            count=$((count + 1))
+          done
+          echo "Closed $count integration test issue(s)"
+        env:
+          GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+  config-from-text:
+    name: 'Config From Text'
+    runs-on: 'ubuntu-latest'
+    needs:
+      - 'cleanup-integration-issues'
     steps:
       - name: 'Checkout'
         id: 'checkout'
@@ -27,12 +51,35 @@ jobs:
               assignees:
                 - "TimothyWillard"
               schedule: "every day"
+            - title: "Test issue with due date, [YYYY-MM-DD] at [HH:mm]"
+              body: "This issue is created on [dddd] and is due later today."
+              labels:
+                - "integration-test"
+              schedule: "every day"
+              due: "every friday at 17:00"
             - title: "Another test issue, [YYYY-MM-DD]"
               body: "This is another integration test issue."
               labels:
                 - "integration-test"
               schedule: "every week on Wednesday"
               due: "every week on Friday"
+      - name: 'Print Output'
+        id: 'output'
+        run: 'echo "${{ steps.test-action.outputs.issues }}"'
+  config-from-file:
+    name: 'Config From File'
+    runs-on: 'ubuntu-latest'
+    needs:
+      - 'config-from-text'
+    steps:
+      - name: 'Checkout'
+        id: 'checkout'
+        uses: 'actions/checkout@v5'
+      - name: 'Test Local Action'
+        id: 'test-action'
+        uses: './'
+        with:
+          config: './.github/recurring-issues.yml'
       - name: 'Print Output'
         id: 'output'
         run: 'echo "${{ steps.test-action.outputs.issues }}"'

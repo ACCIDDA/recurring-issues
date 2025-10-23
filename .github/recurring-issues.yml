@@ -1,0 +1,31 @@
+- title: 'Daily Integration Test Issue - [YYYY-MM-DD]'
+  body: |
+    This is a daily integration test issue created on [dddd].
+
+    Please verify that the recurring issues action is functioning correctly.
+  labels:
+    - 'integration-test'
+  assignees:
+    - 'TimothyWillard'
+  schedule: 'every day'
+- title: 'Daily Integration Test Due - [YYYY-MM-DD] at [HH:mm]'
+  body: |
+    This is a daily integration test issue with a due date on [dddd].
+
+    Please ensure that the due date functionality is working as expected.
+  labels:
+    - 'integration-test'
+  schedule: 'every day'
+  due: 'every day at 18:00'
+- title: 'Bi-weekly integration Test Issue - [YYYY-MM-DD]'
+  body: |
+    # Bi-weekly Integration Test Issue
+
+    This is a **bi-weekly** integration test issue created on [dddd].
+
+    Please check that the bi-weekly scheduling is operating properly.
+  labels:
+    - 'integration-test'
+  assignees:
+    - 'TimothyWillard'
+  schedule: 'FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TH'
