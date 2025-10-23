@@ -40787,9 +40787,33 @@ var rruleModule = /*#__PURE__*/Object.freeze({
 	rrulestr: rrulestr
 });
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 // Handle both ESM and CommonJS module formats
 const rrule = rruleModule;
 const { RRule } = rrule;
+/**
+ * Helper to convert a date to a "floating" date in UTC based on the given timezone.
+ *
+ * @param date A Date object to convert.
+ * @param tz The timezone identifier. I.e. "America/New_York".
+ * @returns A Date object in UTC representing the same local time as the input date.
+ */
+function toFloating(date, tz) {
+    const zoned = dayjs(date).tz(tz);
+    return new Date(Date.UTC(zoned.year(), zoned.month(), zoned.date(), zoned.hour(), zoned.minute(), zoned.second(), zoned.millisecond()));
+}
+/**
+ * Helper to convert a "floating" UTC date back to a date in the given timezone.
+ *
+ * @param date A Date object in UTC to convert.
+ * @param tz The timezone identifier. I.e. "America/New_York".
+ * @returns A Date object representing the same local time in the specified timezone.
+ */
+function fromFloating(date, tz) {
+    const formatted = dayjs.utc(date).format('YYYY-MM-DDTHH:mm:ss.SSS');
+    return dayjs.tz(formatted, tz).toDate();
+}
 /**
  * Calculate the next date based on the recurrence rule, timezone, & start date.
  *
@@ -40804,16 +40828,27 @@ const { RRule } = rrule;
  * future occurrences.
  */
 function calculateNextDate(rule, timezone, start, now = new Date()) {
-    let options;
+    let parsed;
     try {
-        options = RRule.parseString(rule);
+        parsed = RRule.parseString(rule);
     }
     catch {
-        options = RRule.fromText(rule).origOptions;
+        parsed = RRule.fromText(rule).origOptions;
     }
-    options.dtstart = start;
-    options.tzid = timezone;
-    return new RRule(options).after(now);
+    const options = { ...parsed, tzid: undefined };
+    options.dtstart = toFloating(start, timezone);
+    if (options.until) {
+        // When parsed from text, the until date is in the system's local timezone.
+        // We need to interpret it as being in the target timezone instead.
+        // Get the local time components and recreate the date in the target timezone.
+        const untilDate = options.until;
+        const localTime = dayjs(untilDate).format('YYYY-MM-DDTHH:mm:ss.SSS');
+        const untilInTargetTz = dayjs.tz(localTime, timezone).toDate();
+        options.until = toFloating(untilInTargetTz, timezone);
+    }
+    const rrule = new RRule(options);
+    const next = rrule.after(toFloating(now, timezone));
+    return next ? fromFloating(next, timezone) : null;
 }
 
 dayjs.extend(utc);
