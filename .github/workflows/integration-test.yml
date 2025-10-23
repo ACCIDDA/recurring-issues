@@ -24,6 +24,8 @@ jobs:
               body: "Today is [dddd]."
               labels:
                 - "integration-test"
+              assignees:
+                - "TimothyWillard"
               schedule: "every day"
             - title: "Another test issue, [YYYY-MM-DD]"
               body: "This is another integration test issue."

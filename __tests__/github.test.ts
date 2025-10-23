@@ -219,10 +219,77 @@ describe('createIssue', () => {
     )
   })
 
+  it('should create an issue with labels', async () => {
+    const mockIssue: z.infer<typeof IssueSchema> = {
+      title: 'Test Issue with Labels',
+      labels: ['bug', 'priority-high'],
+      schedule: 'FREQ=DAILY;BYHOUR=0;BYMINUTE=0',
+      due: 'FREQ=DAILY;BYHOUR=1;BYMINUTE=0',
+      start: new Date('2025-01-01')
+    }
+
+    const mockResponse = {
+      data: {
+        number: 888,
+        html_url: 'https://github.com/test-owner/test-repo/issues/888',
+        id: 4,
+        node_id: 'I_kwDOBcdEfi',
+        title: 'Test Issue with Labels',
+        state: 'open',
+        locked: false,
+        assignee: null,
+        assignees: [],
+        comments: 0,
+        created_at: '2025-07-15T12:00:00Z',
+        updated_at: '2025-07-15T12:00:00Z',
+        closed_at: null,
+        body: null,
+        labels: [
+          {
+            id: 1,
+            node_id: 'L_abc123',
+            url: 'https://api.github.com/repos/test-owner/test-repo/labels/bug',
+            name: 'bug',
+            color: 'd73a4a'
+          },
+          {
+            id: 2,
+            node_id: 'L_abc456',
+            url: 'https://api.github.com/repos/test-owner/test-repo/labels/priority-high',
+            name: 'priority-high',
+            color: 'ff0000'
+          }
+        ]
+      }
+    }
+
+    mockCreate.mockResolvedValue(mockResponse)
+
+    const issueNumber = await createIssue(
+      mockIssue,
+      mockDueDate,
+      mockTimezone,
+      mockOctokit
+    )
+
+    expect(issueNumber).toBe(mockResponse.data.number)
+    expect(mockCreate).toHaveBeenCalledTimes(1)
+    expect(mockCreate).toHaveBeenCalledWith({
+      owner: 'test-owner',
+      repo: 'test-repo',
+      title: 'Test Issue with Labels',
+      labels: ['bug', 'priority-high']
+    })
+    expect(mockInfo).toHaveBeenCalledWith(
+      `Created issue #${mockResponse.data.number}: ${mockResponse.data.html_url}`
+    )
+  })
+
   it('should create an issue with all optional fields', async () => {
     const mockIssue: z.infer<typeof IssueSchema> = {
       title: 'Complete Issue [YYYY-MM-DD]',
       body: 'Issue body with date: [MMMM D, YYYY]',
+      labels: ['enhancement', 'documentation'],
       assignees: ['user1'],
       schedule: 'FREQ=DAILY;BYHOUR=0;BYMINUTE=0',
       due: 'FREQ=DAILY;BYHOUR=1;BYMINUTE=0',
@@ -233,7 +300,7 @@ describe('createIssue', () => {
       data: {
         number: 999,
         html_url: 'https://github.com/test-owner/test-repo/issues/999',
-        id: 4,
+        id: 5,
         node_id: 'I_kwDOBcdEfj',
         title: 'Complete Issue 2025-07-15',
         state: 'open',
@@ -259,7 +326,22 @@ describe('createIssue', () => {
         updated_at: '2025-07-15T12:00:00Z',
         closed_at: null,
         body: 'Issue body with date: July 15, 2025',
-        labels: []
+        labels: [
+          {
+            id: 3,
+            node_id: 'L_abc789',
+            url: 'https://api.github.com/repos/test-owner/test-repo/labels/enhancement',
+            name: 'enhancement',
+            color: 'a2eeef'
+          },
+          {
+            id: 4,
+            node_id: 'L_abc012',
+            url: 'https://api.github.com/repos/test-owner/test-repo/labels/documentation',
+            name: 'documentation',
+            color: '0075ca'
+          }
+        ]
       }
     }
 
@@ -280,6 +362,7 @@ describe('createIssue', () => {
         repo: 'test-repo',
         title: expect.stringContaining('2025-07-15'),
         body: expect.stringContaining('July 15, 2025'),
+        labels: ['enhancement', 'documentation'],
         assignees: ['user1']
       })
     )

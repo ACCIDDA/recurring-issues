@@ -9,6 +9,7 @@ interface CreateIssueParams {
   repo: string
   title: string
   body?: string
+  labels?: string[]
   assignees?: string[]
   // This allows the object to have other keys required by RequestParameters
   [key: string]: unknown
@@ -29,6 +30,12 @@ export function createIssue(
     issueData = {
       ...issueData,
       body: formatDateString(issue.body, dueDate, timezone)
+    }
+  }
+  if (issue.labels) {
+    issueData = {
+      ...issueData,
+      labels: issue.labels
     }
   }
   if (issue.assignees) {

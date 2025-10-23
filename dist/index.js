@@ -40883,6 +40883,12 @@ function createIssue(issue, dueDate, timezone, octokit) {
             body: formatDateString(issue.body, dueDate, timezone)
         };
     }
+    if (issue.labels) {
+        issueData = {
+            ...issueData,
+            labels: issue.labels
+        };
+    }
     if (issue.assignees) {
         issueData = {
             ...issueData,
