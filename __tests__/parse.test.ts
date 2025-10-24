@@ -43,9 +43,9 @@ describe('parseConfig', () => {
       expect.arrayContaining([
         expect.objectContaining({
           title: 'File Issue',
-          schedule: 'FREQ=DAILY;BYHOUR=0;BYMINUTE=0',
-          due: 'FREQ=DAILY;BYHOUR=1;BYMINUTE=0',
-          start: expect.any(Date)
+          schedule: 'FREQ=DAILY',
+          due: 'FREQ=DAILY;BYHOUR=17',
+          start: new Date('2025-01-01')
         })
       ])
     )

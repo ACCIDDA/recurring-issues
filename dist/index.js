@@ -36549,9 +36549,10 @@ function _never(Class, params) {
         ...normalizeParams(params),
     });
 }
-function _date(Class, params) {
+function _coercedDate(Class, params) {
     return new Class({
         type: "date",
+        coerce: true,
         ...normalizeParams(params),
     });
 }
@@ -37062,9 +37063,6 @@ const ZodDate = /*@__PURE__*/ $constructor("ZodDate", (inst, def) => {
     inst.minDate = c.minimum ? new Date(c.minimum) : null;
     inst.maxDate = c.maximum ? new Date(c.maximum) : null;
 });
-function date(params) {
-    return _date(ZodDate, params);
-}
 const ZodArray = /*@__PURE__*/ $constructor("ZodArray", (inst, def) => {
     $ZodArray.init(inst, def);
     ZodType.init(inst, def);
@@ -37332,6 +37330,10 @@ function refine(fn, _params = {}) {
 // superRefine
 function superRefine(fn) {
     return _superRefine(fn);
+}
+
+function date(params) {
+    return _coercedDate(ZodDate, params);
 }
 
 const IssueSchema = object({
@@ -40938,7 +40940,7 @@ async function run() {
             // Log the issue being processed
             coreExports.info(`Processing Issue ${index + 1}: ${issue.title}`);
             // Calculate the next occurrence date based on the schedule
-            const nextDate = calculateNextDate(issue.schedule, timezone, issue.start || roundedNow, roundedNow);
+            const nextDate = calculateNextDate(issue.schedule, timezone, dayjs(issue.start).tz(timezone).startOf('day').toDate() || roundedNow, roundedNow);
             const roundedNextDate = nextDate
                 ? dayjs(nextDate).tz(timezone).startOf('day').toDate()
                 : null;

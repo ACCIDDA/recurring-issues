@@ -22,7 +22,7 @@ export const IssueSchema = z.object({
         `or human-readable text (e.g., "Every day at 5pm")`
     )
     .optional(),
-  start: z
+  start: z.coerce
     .date()
     .optional()
     .default(() => new Date())

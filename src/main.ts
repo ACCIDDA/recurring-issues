@@ -47,7 +47,7 @@ export async function run(): Promise<void> {
       const nextDate = calculateNextDate(
         issue.schedule,
         timezone,
-        issue.start || roundedNow,
+        dayjs(issue.start).tz(timezone).startOf('day').toDate() || roundedNow,
         roundedNow
       )
       const roundedNextDate = nextDate
