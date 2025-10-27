@@ -27,8 +27,12 @@ export async function run(): Promise<void> {
     core.info(`Action started at: ${now.toISOString()}`)
 
     // Create a rounded "now" timestamp floored to midnight (00:00:00)
-    const roundedNow = dayjs(now).tz(timezone).startOf('day').toDate()
-    core.info(`Rounded now (midnight): ${roundedNow.toISOString()}`)
+    const roundedNow = dayjs(now)
+      .tz(timezone)
+      .startOf('day')
+      .subtract(1, 'second')
+      .toDate()
+    core.info(`Rounded now: ${roundedNow.toISOString()}`)
 
     // Parse the configuration
     const parsed = parseConfig(config)
@@ -44,16 +48,26 @@ export async function run(): Promise<void> {
       core.info(`Processing Issue ${index + 1}: ${issue.title}`)
 
       // Calculate the next occurrence date based on the schedule
+      const start =
+        dayjs(issue.start)
+          .tz(timezone)
+          .startOf('day')
+          .subtract(1, 'second')
+          .toDate() || roundedNow
       const nextDate = calculateNextDate(
         issue.schedule,
         timezone,
-        dayjs(issue.start).tz(timezone).startOf('day').toDate() || roundedNow,
+        start,
         roundedNow
       )
       const roundedNextDate = nextDate
         ? dayjs(nextDate).tz(timezone).startOf('day').toDate()
         : null
-      if (roundedNextDate === null || roundedNextDate > roundedNow) {
+      if (
+        roundedNextDate === null ||
+        dayjs(roundedNextDate).tz(timezone).subtract(1, 'second').toDate() >
+          roundedNow
+      ) {
         core.info(
           `The next occurrence for "${issue.title}" is ` +
             `${roundedNextDate?.toISOString()}, which is in the future or there are ` +

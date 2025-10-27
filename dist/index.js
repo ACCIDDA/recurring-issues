@@ -40927,8 +40927,12 @@ async function run() {
         const now = dayjs().tz(timezone).toDate();
         coreExports.info(`Action started at: ${now.toISOString()}`);
         // Create a rounded "now" timestamp floored to midnight (00:00:00)
-        const roundedNow = dayjs(now).tz(timezone).startOf('day').toDate();
-        coreExports.info(`Rounded now (midnight): ${roundedNow.toISOString()}`);
+        const roundedNow = dayjs(now)
+            .tz(timezone)
+            .startOf('day')
+            .subtract(1, 'second')
+            .toDate();
+        coreExports.info(`Rounded now: ${roundedNow.toISOString()}`);
         // Parse the configuration
         const parsed = parseConfig(config);
         // Get an octokit client for GitHub API requests
@@ -40940,11 +40944,18 @@ async function run() {
             // Log the issue being processed
             coreExports.info(`Processing Issue ${index + 1}: ${issue.title}`);
             // Calculate the next occurrence date based on the schedule
-            const nextDate = calculateNextDate(issue.schedule, timezone, dayjs(issue.start).tz(timezone).startOf('day').toDate() || roundedNow, roundedNow);
+            const start = dayjs(issue.start)
+                .tz(timezone)
+                .startOf('day')
+                .subtract(1, 'second')
+                .toDate() || roundedNow;
+            const nextDate = calculateNextDate(issue.schedule, timezone, start, roundedNow);
             const roundedNextDate = nextDate
                 ? dayjs(nextDate).tz(timezone).startOf('day').toDate()
                 : null;
-            if (roundedNextDate === null || roundedNextDate > roundedNow) {
+            if (roundedNextDate === null ||
+                dayjs(roundedNextDate).tz(timezone).subtract(1, 'second').toDate() >
+                    roundedNow) {
                 coreExports.info(`The next occurrence for "${issue.title}" is ` +
                     `${roundedNextDate?.toISOString()}, which is in the future or there are ` +
                     `no future occurrences. Skipping issue creation.`);

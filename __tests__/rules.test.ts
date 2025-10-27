@@ -105,6 +105,24 @@ describe('calculateNextDate', () => {
     )
     expect(noFutureDates).toBeNull()
   })
+
+  it('example of a meeting occurring every Monday', () => {
+    const rule = 'every monday'
+    const timezone = 'UTC'
+    const now = new Date('2025-10-26T23:59:00Z') // Midnight minus one minute
+
+    const nextDate = calculateNextDate(rule, timezone, now)
+    expect(nextDate).toEqual(new Date('2025-10-27T23:59:00Z'))
+  })
+
+  it('example of a meeting occurring every Monday in eastern time', () => {
+    const rule = 'every monday'
+    const timezone = 'America/New_York'
+    const now = new Date('2025-10-26T23:59:00Z') // Midnight minus one minute
+
+    const nextDate = calculateNextDate(rule, timezone, now)
+    expect(nextDate).toEqual(new Date('2025-10-27T23:59:00Z'))
+  })
 })
 
 describe('timezone helpers', () => {
