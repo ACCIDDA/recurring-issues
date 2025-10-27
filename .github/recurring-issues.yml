@@ -1,3 +1,4 @@
+# General tests
 - title: 'Daily Integration Test Issue - [YYYY-MM-DD]'
   body: |
     This is a daily integration test issue created on [dddd].
@@ -29,3 +30,24 @@
   assignees:
     - 'TimothyWillard'
   schedule: 'FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TH'
+# Meetings for specific days of the week
+- title: 'Monday meeting [YYYY-MM-DD]'
+  labels:
+    - 'integration-test'
+  schedule: 'every monday'
+- title: 'Tuesday meeting [YYYY-MM-DD]'
+  labels:
+    - 'integration-test'
+  schedule: 'every tuesday'
+- title: 'Wednesday meeting [YYYY-MM-DD]'
+  labels:
+    - 'integration-test'
+  schedule: 'every wednesday'
+- title: 'Thursday meeting [YYYY-MM-DD]'
+  labels:
+    - 'integration-test'
+  schedule: 'every Thursday'
+- title: 'Friday meeting [YYYY-MM-DD]'
+  labels:
+    - 'integration-test'
+  schedule: 'every friday'
