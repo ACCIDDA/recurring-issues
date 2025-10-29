@@ -40965,7 +40965,7 @@ async function run() {
             // Calculate the due date based on the due rule
             let dueDate = null;
             if (issue.due) {
-                dueDate = calculateNextDate(issue.due, timezone, roundedNextDate, roundedNow);
+                dueDate = calculateNextDate(issue.due, timezone, roundedNextDate, roundedNextDate);
                 if (dueDate === null) {
                     coreExports.info(`The due date for "${issue.title}" could not ` +
                         `be calculated. Skipping issue creation.`);

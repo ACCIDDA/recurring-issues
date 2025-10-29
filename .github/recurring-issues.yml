@@ -51,3 +51,11 @@
   labels:
     - 'integration-test'
   schedule: 'every friday'
+# Schedule and due are the same, should push due date forward
+- title: 'Same day schedule and due test - [YYYY-MM-DD]'
+  body: |
+    This issue tests the scenario where the schedule and due date are the same.
+  labels:
+    - 'integration-test'
+  schedule: 'every day'
+  due: 'every day'

@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ACCIDDA/recurring-issues@v0.1.0
+      - uses: ACCIDDA/recurring-issues@v0.1.3
         with:
           config: |
             - title: "Weekly Team Sync - [YYYY-MM-DD]"
@@ -111,7 +111,7 @@ For complex configurations, use an external YAML file:
 **Workflow**:
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   with:
     config: .github/recurring-issues.yml
 ```
@@ -121,7 +121,7 @@ For complex configurations, use an external YAML file:
 Schedule issues in a specific timezone:
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   with:
     timezone: 'America/New_York'
     config: |
@@ -137,7 +137,7 @@ Schedule issues in a specific timezone:
 For advanced scheduling, use RFC5545 RRULE syntax:
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   with:
     config: |
       - title: "Quarterly Review - Q[Q] [YYYY]"
@@ -153,7 +153,7 @@ For advanced scheduling, use RFC5545 RRULE syntax:
 Create issues on one schedule with due dates on another:
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   with:
     config: |
       - title: "Monthly Report - Due [YYYY-MM-DD]"
@@ -170,12 +170,35 @@ Create issues on one schedule with due dates on another:
 
 In this case the "due" date will be used in formatting the issue title and body
 instead of the "schedule" date even though the issue is created using the
-"schedule" date.
+"schedule" date. Unlike "schedule", "due" will consider and respect times
+included in the recurrence rule. The "due" date is calculated from the
+"schedule" date. To understand this consider the following two examples:
+
+```yaml
+- uses: ACCIDDA/recurring-issues@v0.1.3
+  with:
+    config: |
+      - title: "Due the following day - [YYYY-MM-DD] at [HHa]"
+        schedule: "every day"
+        due: "every day"
+      - title: "Due the same day - [YYY-MM-DD] at [HHa]"
+        schedule: "every day"
+        due: "every day at 5pm"
+```
+
+Suppose that today is 2025-01-01. Then:
+
+1. For the first issue the schedule date calculated would be 2025-01-01T00:00:00
+   and the due date would be 2025-01-02T00:00:00. Since the time is not
+   specified the due time is implicitly midnight.
+2. For the second issue the schedule date calculated would be
+   2025-01-01T00:00:00 and the due date would be 2025-01-01T17:00:00. Since the
+   time is specified the next occurence is the same date as the scheduled.
 
 ## Inputs
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   with:
     # GitHub token for creating issues
     # Default: ${{ github.token }}
@@ -269,7 +292,7 @@ A comma-separated list of issue numbers created by this action run.
 **Example Usage**:
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   id: recurring-issues
   with:
     config: .github/recurring-issues.yml
@@ -318,7 +341,7 @@ custom start date:
 You can configure multiple different recurring issues in a single workflow:
 
 ```yaml
-- uses: ACCIDDA/recurring-issues@v0.1.0
+- uses: ACCIDDA/recurring-issues@v0.1.3
   with:
     config: |
       - title: "Daily Standup"

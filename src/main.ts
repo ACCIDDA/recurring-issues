@@ -86,7 +86,7 @@ export async function run(): Promise<void> {
           issue.due,
           timezone,
           roundedNextDate,
-          roundedNow
+          roundedNextDate
         )
         if (dueDate === null) {
           core.info(
