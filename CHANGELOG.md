@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.3
+
+- Bugfix for the calculation of due relative to schedule. The previous behaivor
+  calculated the due relative to when the action is being ran, which could lead
+  to the due and the schedule being the same (i.e. both are "every day"). The
+  correct behavior is for the due to be the following day, because if users want
+  them to be the same the user can simply omit the due. This still allows for
+  due being later on the same day though.
+
 ## v0.1.2
 
 - Bugfix for rounding of now causing issues to skip creation. The previous
