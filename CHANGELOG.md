@@ -2,7 +2,7 @@
 
 ## v0.1.3
 
-- Bugfix for the calculation of due relative to schedule. The previous behaivor
+- Bugfix for the calculation of due relative to schedule. The previous behavior
   calculated the due relative to when the action is being ran, which could lead
   to the due and the schedule being the same (i.e. both are "every day"). The
   correct behavior is for the due to be the following day, because if users want
