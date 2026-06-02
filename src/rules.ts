@@ -1,38 +1,10 @@
-import * as rruleModule from 'rrule'
+import { RRule, type Options } from 'rrule'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
-
-// Handle both ESM and CommonJS module formats
-const rrule =
-  (rruleModule as typeof rruleModule & { default?: typeof rruleModule })
-    .default || rruleModule
-const { RRule } = rrule
-
-interface RuleOptions {
-  freq: RRule.Frequency
-  dtstart?: Date
-  interval?: number
-  wkst?: number | RRule.Weekday
-  count?: number
-  until?: Date
-  tzid?: string
-  bysetpos?: number | number[]
-  bymonth?: number | number[]
-  bymonthday?: number | number[]
-  byyearday?: number | number[]
-  byweekno?: number | number[]
-  byweekday?: number | number[] | RRule.Weekday | RRule.Weekday[]
-  byhour?: number | number[]
-  byminute?: number | number[]
-  bysecond?: number | number[]
-  byeaster?: number | number[]
-  bynmonthday?: number[]
-  bynweekday?: number[]
-}
 
 /**
  * Helper to convert a date to a "floating" date in UTC based on the given timezone.
@@ -87,13 +59,13 @@ export function calculateNextDate(
   start: Date,
   now = new Date()
 ): Date | null {
-  let parsed: RuleOptions
+  let parsed: Partial<Options>
   try {
     parsed = RRule.parseString(rule)
   } catch {
     parsed = RRule.fromText(rule).origOptions
   }
-  const options: RuleOptions = { ...parsed, tzid: undefined }
+  const options: Partial<Options> = { ...parsed, tzid: undefined }
   options.dtstart = toFloating(start, timezone)
   if (options.until) {
     // When parsed from text, the until date is in the system's local timezone.

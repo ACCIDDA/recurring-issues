@@ -9,7 +9,7 @@ process.env.GITHUB_REPOSITORY = 'test-owner/test-repo'
 const mockInfo = jest.fn()
 const mockError = jest.fn()
 
-jest.mock('@actions/core', () => ({
+jest.unstable_mockModule('@actions/core', () => ({
   __esModule: true,
   info: mockInfo,
   error: mockError
