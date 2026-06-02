@@ -27427,7 +27427,7 @@ function requireUtils$1 () {
 	return utils;
 }
 
-function getUserAgent() {
+function getUserAgent$2() {
     if (typeof navigator === "object" && "userAgent" in navigator) {
         return navigator.userAgent;
     }
@@ -27629,9 +27629,19 @@ function requireBeforeAfterHook () {
 
 var beforeAfterHookExports = requireBeforeAfterHook();
 
+function getUserAgent$1() {
+    if (typeof navigator === "object" && "userAgent" in navigator) {
+        return navigator.userAgent;
+    }
+    if (typeof process === "object" && process.version !== undefined) {
+        return `Node.js/${process.version.substr(1)} (${process.platform}; ${process.arch})`;
+    }
+    return "<environment undetectable>";
+}
+
 const VERSION$5 = "9.0.6";
 
-const userAgent = `octokit-endpoint.js/${VERSION$5} ${getUserAgent()}`;
+const userAgent = `octokit-endpoint.js/${VERSION$5} ${getUserAgent$1()}`;
 const DEFAULTS = {
   method: "GET",
   baseUrl: "https://api.github.com",
@@ -27959,6 +27969,16 @@ function withDefaults$2(oldDefaults, newDefaults) {
 }
 
 const endpoint = withDefaults$2(null, DEFAULTS);
+
+function getUserAgent() {
+    if (typeof navigator === "object" && "userAgent" in navigator) {
+        return navigator.userAgent;
+    }
+    if (typeof process === "object" && process.version !== undefined) {
+        return `Node.js/${process.version.substr(1)} (${process.platform}; ${process.arch})`;
+    }
+    return "<environment undetectable>";
+}
 
 const VERSION$4 = "8.4.1";
 
@@ -28409,7 +28429,7 @@ function withDefaults(request2, newDefaults) {
 // pkg/dist-src/index.js
 withDefaults(request, {
   headers: {
-    "user-agent": `octokit-graphql.js/${VERSION$3} ${getUserAgent()}`
+    "user-agent": `octokit-graphql.js/${VERSION$3} ${getUserAgent$2()}`
   },
   method: "POST",
   url: "/graphql"
@@ -28477,7 +28497,7 @@ var noop = () => {
 };
 var consoleWarn = console.warn.bind(console);
 var consoleError = console.error.bind(console);
-var userAgentTrail = `octokit-core.js/${VERSION$2} ${getUserAgent()}`;
+var userAgentTrail = `octokit-core.js/${VERSION$2} ${getUserAgent$2()}`;
 var Octokit = class {
   static {
     this.VERSION = VERSION$2;
