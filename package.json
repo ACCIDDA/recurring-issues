@@ -37,8 +37,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/github": "^6.0.1",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
     "dayjs": "^1.11.21",
     "js-yaml": "^4.1.0",
     "rrule": "^2.8.1",
@@ -66,7 +66,6 @@
     "jest": "^30.4.2",
     "make-coverage-badge": "^1.2.0",
     "prettier": "^3.8.3",
-    "prettier-eslint": "^16.4.2",
     "rollup": "^4.61.0",
     "ts-jest": "^29.4.11",
     "ts-jest-resolver": "^2.0.1",
@@ -74,5 +73,14 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "*"
+  },
+  "overrides": {
+    "@github/local-action": {
+      "@actions/artifact": "^6.2.1",
+      "@actions/github": "^9.1.1"
+    },
+    "@actions/artifact": {
+      "@actions/github": "^9.1.1"
+    }
   }
 }
