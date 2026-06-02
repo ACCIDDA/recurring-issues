@@ -193,7 +193,7 @@ Suppose that today is 2025-01-01. Then:
    specified the due time is implicitly midnight.
 2. For the second issue the schedule date calculated would be
    2025-01-01T00:00:00 and the due date would be 2025-01-01T17:00:00. Since the
-   time is specified the next occurence is the same date as the scheduled.
+   time is specified the next occurrence is the same date as the scheduled.
 
 ## Inputs
 
