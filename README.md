@@ -9,11 +9,6 @@
 Automatically create GitHub issues on a recurring schedule using human-readable
 recurrence rules or RFC5545 RRULE syntax.
 
-> [!CAUTION]
->
-> This GitHub action is still under development and API is subject to change
-> until a v1 release.
-
 ## Features
 
 - **Flexible Scheduling**: Use natural language ("every Monday") or RFC5545

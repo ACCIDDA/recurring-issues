@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.0
+
+- Update dependencies, re-enable dependabot, and enable codeql analysis.
+- Internal refactor of the entrypoint for testability.
+
 ## v0.1.3
 
 - Bugfix for the calculation of due relative to schedule. The previous behavior
