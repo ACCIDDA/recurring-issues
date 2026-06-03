@@ -1,9 +1,9 @@
 # Recurring Issues
 
-[![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
+[![GitHub Super-Linter](https://github.com/ACCIDDA/recurring-issues/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+![CI](https://github.com/ACCIDDA/recurring-issues/actions/workflows/ci.yml/badge.svg)
+[![Check dist/](https://github.com/ACCIDDA/recurring-issues/actions/workflows/check-dist.yml/badge.svg)](https://github.com/ACCIDDA/recurring-issues/actions/workflows/check-dist.yml)
+[![CodeQL](https://github.com/ACCIDDA/recurring-issues/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ACCIDDA/recurring-issues/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
 Automatically create GitHub issues on a recurring schedule using human-readable
