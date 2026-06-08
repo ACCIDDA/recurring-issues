@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: 'Checkout'
         id: 'checkout'
-        uses: 'actions/checkout@v6.0.2'
+        uses: 'actions/checkout@v6.0.3'
       - name: 'Test Local Action'
         id: 'test-action'
         uses: './'
@@ -74,7 +74,7 @@ jobs:
     steps:
       - name: 'Checkout'
         id: 'checkout'
-        uses: 'actions/checkout@v6.0.2'
+        uses: 'actions/checkout@v6.0.3'
       - name: 'Test Local Action'
         id: 'test-action'
         uses: './'
